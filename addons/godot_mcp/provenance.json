@@ -1,0 +1,9 @@
+{
+  "package": "@tugcantopaloglu/godot-mcp",
+  "version": "3.1.0",
+  "upstream": "https://github.com/tugcantopaloglu/godot-mcp",
+  "upstream_commit": "fcbc29e03297900b9a1fcc6c7cbae116fe9d532a",
+  "local_integration": "Debug-only, GODOT_MCP_ENABLED=1, loopback 127.0.0.1; optional GODOT_MCP_PORT, default 9090",
+  "bridge_sha256": "eef4d393475fd47cffb0411be0acf275fa4bf68b066004dcdfe755a3cbde7adb",
+  "installed_on": "2026-10-01"
+}

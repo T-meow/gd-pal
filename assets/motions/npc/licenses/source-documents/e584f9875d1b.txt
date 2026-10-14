@@ -1,0 +1,89 @@
+01,0000,0058,Sneak
+02,0059,0113,Angry
+03,0114,0170,Chimpanzee
+04,0171,0226,Sassy
+05,0227,0284,Dancer
+06,0285,0338,Secret Run
+07,0339,0395,Old Man
+08,0396,0452,Hippy
+09,0453,0508,Timid
+10,0509,0563,Confident
+11,0564,0620,In The Dark
+12,0621,0676,Skip
+13,0677,0731,Bad Posture
+14,0732,0788,Good Posture
+15,0789,0845,Runway Model
+16,0846,0902,Creeper
+17,0903,0958,Sore Back
+18,0959,1013,Teenage Hooligan
+19,1014,1070,Ballerina
+20,1071,1126,Cowboy
+21,1127,1184,SWAT
+22,1185,1240,Clown
+23,1241,1295,SCUBA Diver
+24,1296,1352,Waiter
+25,1353,1408,Marionette
+26,1409,1463,Tight Rope
+27,1464,1522,On Hot Coals
+28,1523,1577,Fainting
+29,1578,1634,Ultimate Fighter
+30,1635,1690,Old Timey Fighter
+31,1691,1745,Dance Fight
+32,1746,1802,Sword Fight
+33,1803,1859,Mime
+34,1860,1916,Pushing
+35,1917,1972,Pulling
+36,1973,2027,Moonwalk
+37,2028,2084,Cold
+38,2085,2140,Hot
+39,2141,2195,Royal Guard
+40,2196,2254,Pirate
+41,2255,2309,Getting Married
+42,2310,2366,Fancy Feet
+43,2367,2422,Texting
+44,2423,2477,On The Phone
+45,2478,2534,Stepping Over Stuff
+46,2535,2591,Sleep Walk
+47,2592,2648,March
+48,2649,2704,Hurried
+49,2705,2759,Lost In Thought
+50,2760,2816,Speed Walk
+51,2817,2872,Paralyzed By Fear
+52,2873,2927,Flower Child
+53,2928,2986,Crawl
+54,2987,3041,Toddler
+55,3042,3098,Detective
+56,3099,3154,Being Chased
+57,3155,3209,Chasing
+58,3210,3266,Tourist
+59,3267,3322,Hot Tea
+60,3323,3380,Emergency
+61,3381,3436,Looking At Art
+62,3437,3491,Broadway Musical
+63,3492,3548,Something In Shoe
+64,3549,3604,In A Wind Storm
+65,3605,3659,Limbo
+66,3660,3718,Charlie Chaplin
+67,3719,3773,All Is Lost
+68,3774,3830,Trying To Hide
+69,3831,3886,Leg Asleep
+70,3887,3941,Line Dance
+71,3942,3998,Sweeping
+72,3999,4054,Ducking
+73,4055,4112,Through A Crowd
+74,4113,4168,Wedgie
+75,4169,4223,Helicopter
+76,4224,4280,Backwards
+77,4281,4336,Kicking
+78,4337,4391,Stumble
+79,4392,4450,Penguin
+80,4451,4505,Football Training
+81,4506,4562,Sick
+82,4563,4618,In The Rain
+83,4619,4673,Stepped In Something
+84,4674,4730,Look At Me
+85,4731,4786,Collapsing
+86,4787,4844,Double Bounce
+87,4845,4900,Carrying Weight
+88,4901,4955,Lunging
+89,4956,5004,Stomp, Clap

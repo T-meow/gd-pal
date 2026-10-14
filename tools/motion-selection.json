@@ -1,0 +1,29 @@
+{
+  "preserveExisting": [
+    "idle_breathe", "idle_look", "idle_relaxed", "idle_wait",
+    "walk", "walk_start", "walk_stop", "jog", "run_start", "run_stop", "walk_to_run", "run_to_walk", "sprint",
+    "greet", "clap", "drowse", "drowse_wake", "hair_flick", "wake_up", "cheer", "leg_stretch",
+    "talk_calm", "talk_explain", "talk_lively", "listen", "react_nod", "react_shake_head",
+    "photo_stand_01", "photo_stand_02", "photo_stand_03", "photo_stand_04", "photo_stand_05", "photo_stand_06",
+    "photo_sit_01", "photo_sit_02"
+  ],
+  "clips": [
+    { "id": "greet_wave", "label": "挥手招呼", "expressions": { "preset": "happy", "weight": 0.22 } },
+    { "id": "celebrate_e734fbc0", "label": "爱心回应", "expressions": { "preset": "happy", "weight": 0.3 } },
+    { "id": "celebrate_1c0ef690_cycle", "label": "加油应援", "expressions": { "preset": "happy", "weight": 0.38 } },
+    { "id": "skip", "label": "轻快跳步", "expressions": { "preset": "happy", "weight": 0.2 } },
+    { "id": "walk_shy", "label": "害羞行走" },
+    { "id": "walk_lost_in_thought", "label": "沉思行走" },
+    { "id": "walk_tired", "label": "疲惫行走" },
+    { "id": "gait_a10", "label": "背手散步" },
+    { "id": "photo_floor_535e3af6", "label": "坐地屈膝", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_floor_9c61e0c8", "label": "侧坐伸腿", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_floor_34508a0a", "label": "放松坐地", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_floor_3669d1d5", "label": "坐地撑手", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_lying_0808f286", "label": "仰躺休息", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_lying_738b2263", "label": "侧躺休息", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_lying_465b1844", "label": "侧躺枕臂", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "rest_cross_legs_2", "label": "坐地调整腿部", "category": "06_rest", "categoryLabel": "坐地与躺卧" },
+    { "id": "photo_lying_f7710610", "label": "俯卧翘腿", "category": "06_rest", "categoryLabel": "坐地与躺卧" }
+  ]
+}

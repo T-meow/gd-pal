@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/presenters/sprite_2d_presenter.gd" id="1"]
+
+[node name="Sprite2DPresenter" type="Node"]
+script = ExtResource("1")

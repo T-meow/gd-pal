@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+ <defs>
+  <linearGradient id="wall" x2="1" y2=".8"><stop stop-color="#243c45"/><stop offset=".58" stop-color="#293c43"/><stop offset="1" stop-color="#25343b"/></linearGradient>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#142839"/><stop offset=".52" stop-color="#344e5d"/><stop offset="1" stop-color="#5f7376"/></linearGradient>
+  <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#3e4d4e"/><stop offset="1" stop-color="#1b2d38"/></linearGradient>
+  <linearGradient id="sofa" x2=".2" y2="1"><stop stop-color="#637b7d"/><stop offset=".5" stop-color="#4c656c"/><stop offset="1" stop-color="#344d58"/></linearGradient>
+  <radialGradient id="lamp"><stop stop-color="#ddbd8a" stop-opacity=".25"/><stop offset=".4" stop-color="#ddbd8a" stop-opacity=".06"/><stop offset="1" stop-color="#ddbd8a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="reflected"><stop stop-color="#bfd3d3" stop-opacity=".12"/><stop offset="1" stop-color="#bfd3d3" stop-opacity="0"/></radialGradient>
+  <pattern id="rain" width="123" height="151" patternUnits="userSpaceOnUse"><g fill="none" stroke="#cbdfde" stroke-linecap="round"><path d="m12 11-7 31m81 15-9 39m-35-6-4 20m68 13-3 17" stroke-opacity=".14"/><path d="m51 17-2 9m55 7-3 13m-83 71-2 8" stroke-opacity=".3" stroke-width="1.5"/></g></pattern>
+  <clipPath id="glass"><rect x="79" y="97" width="1386" height="667" rx="2"/></clipPath>
+ </defs>
+ <path d="M0 0h1920v1080H0z" fill="url(#wall)"/>
+ <path d="M0 0h1920v36H0zM0 811h1920v15H0z" fill="#1b303a"/>
+ <path d="M0 826h1920v254H0z" fill="url(#floor)"/>
+ <g stroke="#708583" opacity=".11" stroke-width="2"><path d="m237 826-165 254m432-254-97 254m400-254-36 254m276-254 41 254m268-254 134 254m166-254 181 254M0 934h1920M0 1048h1920"/></g>
+ <!-- Wide rain-streaked windows with layered city silhouettes. -->
+ <rect x="57" y="74" width="1430" height="714" rx="5" fill="#122937"/><rect x="73" y="91" width="1398" height="679" fill="#516671"/>
+ <g clip-path="url(#glass)">
+  <path d="M79 97h1386v667H79z" fill="url(#sky)"/>
+  <path d="M79 272q344-140 711-12t675-32v123q-304 49-641-17T79 365z" fill="#57717e" opacity=".09"/>
+  <path d="M79 594h49V409h54v83h41V374h85v161h52V462h62v-77h73v141h67V337h96v113h34V398h52v161h62V462h94V333h63v192h57V439h43v95h87V363h59v168h56V407h75v86h45V374h89v152h76v238H79z" fill="#2d4654"/>
+  <path d="M79 667h73V553h76v75h53V471h76v154h54V519h83v102h58V488h76v147h52V547h72v79h65V464h89v173h33V519h74v108h62V478h94v131h45V538h70v108h56V509h88v88h76v167H79z" fill="#213b49"/>
+  <g fill="#dbc491" opacity=".39"><path d="M241 399h6v13h-6zm15 22h6v13h-6zm-15 38h6v12h-6zm341-97h7v14h-7zm17 33h7v14h-7zm-17 34h7v14h-7zm330-70h7v12h-7zm15 17h7v12h-7zm201 15h7v14h-7zm-1 51h7v14h-7zm193-43h7v15h-7zm16 31h7v15h-7zM300 494h7v11h-7zm14 31h7v11h-7zm266-8h8v13h-8zm20 27h8v13h-8zm218-58h6v11h-6zm17 23h6v11h-6zm194 14h7v12h-7zm22-17h7v12h-7zm186 33h8v11h-8z"/></g>
+  <path d="M79 732q345-20 692-8t694-19v60H79z" fill="#758582" opacity=".23"/>
+  <g stroke="#d2be8e" stroke-width="2" opacity=".25"><path d="M132 749h35m107-8h48m60 10h92m150-3h77m164-7h101m106 8h87m99-13h48m81 6h121"/></g>
+  <path d="M79 97h1386v667H79z" fill="url(#rain)"/>
+  <g fill="none" stroke="#e2e8df" stroke-opacity=".2" stroke-width="1.4"><path d="M279 182q-2 11-5 17t-2 15l-20 99m493-166q-11 22-7 32l-26 123m481-161-21 92q-8 14-6 31l-17 87M414 432q2 10-4 22l-17 76m632-34-25 107"/></g>
+  <path d="m94 97 109 0-124 526V390zm874 0h37L823 764h-65z" fill="#b8d2d7" opacity=".025"/>
+ </g>
+ <path d="M499 90v680m482-680v680M73 426h1398" stroke="#172f3d" stroke-width="18"/>
+ <path d="M510 97v663m482-663v663M79 437h1386" stroke="#8aa1a6" stroke-opacity=".16" stroke-width="2"/>
+ <path d="M47 781h1452v17H47z" fill="#576b6f"/><path d="M47 797h1452v8H47z" fill="#203b48"/>
+ <!-- Soft curtain at one edge, leaving the room open. -->
+ <path d="M1450 58q36 14 82 5l27 757-74-9q-26-111-29-261z" fill="#3e565d"/><path d="m1494 79 38 714m-56-711 25 680" stroke="#849797" stroke-opacity=".12" stroke-width="3"/>
+ <ellipse cx="852" cy="978" rx="611" ry="236" fill="url(#reflected)"/>
+ <path d="m284 934 1028 0 335 146H109z" fill="#84918a" opacity=".06"/>
+ <!-- Low sofa, wool throw, and small coffee table. -->
+ <ellipse cx="534" cy="1006" rx="449" ry="49" fill="#102835" opacity=".33"/>
+ <path d="M144 758q2-79 72-83h653q73 3 76 87v184H144z" fill="url(#sofa)"/>
+ <path d="M198 701h298v182H181V730q0-29 17-29m322 0h338q46 0 46 38v144H520z" fill="#8fa29e" opacity=".16"/>
+ <path d="M173 873q157-22 325-3l-1 78H167zm345-3q194-15 392 3l6 75H519z" fill="#6b8285" opacity=".76"/>
+ <rect x="114" y="832" width="74" height="145" rx="21" fill="#49656f"/><rect x="900" y="832" width="70" height="145" rx="21" fill="#3c5967"/>
+ <path d="m149 976-6 47h14l20-47m733 0 20 47h14l-6-47" fill="#1c3642"/>
+ <path d="m207 813 50-91 118 30-34 110z" fill="#a69f84" opacity=".77"/><path d="m745 799 84-69 62 97-96 34z" fill="#718e8b"/>
+ <path d="M507 830q43-5 92 0l41 158-109 29z" fill="#b7afa0" opacity=".5"/><g stroke="#ddd3b9" stroke-opacity=".13" stroke-width="2"><path d="m527 840 30 157m-16-157 30 157m-16-157 30 157m-16-157 30 149"/></g>
+ <ellipse cx="1198" cy="1020" rx="230" ry="37" fill="#16313d" opacity=".55"/>
+ <path d="m1039 904-22 136h16l42-133m281-1 43 134h16l-27-140" fill="#283e46"/>
+ <ellipse cx="1200" cy="898" rx="229" ry="55" fill="#626d67"/><ellipse cx="1200" cy="887" rx="229" ry="52" fill="#93988b"/>
+ <ellipse cx="1130" cy="876" rx="46" ry="11" fill="#66776f"/><path d="M1102 824h45v43q-23 13-45 0z" fill="#bfc4b1"/><path d="M1147 831h13q18 15-3 25h-10" stroke="#bfc4b1" stroke-width="5" fill="none"/><ellipse cx="1124" cy="824" rx="23" ry="6" fill="#656754"/>
+ <path d="M1117 805q-10-17 0-30m12 28q8-9 0-23" stroke="#d6e0cb" stroke-opacity=".25" fill="none" stroke-width="2"/>
+ <path d="m1213 867 107-17 40 31-104 20z" fill="#4a6572"/><path d="m1215 862 106-17 39 31-104 20z" fill="#b6b19a"/><path d="m1224 861 94-15" stroke="#666f69" stroke-width="2"/>
+ <!-- Floor lamp and a plant. -->
+ <path d="M1654 1000V547" stroke="#92917d" stroke-width="7"/><ellipse cx="1654" cy="1009" rx="78" ry="17" fill="#445958"/>
+ <path d="m1570 406 167 0 42 176h-252z" fill="#a5a48b"/><ellipse cx="1654" cy="582" rx="127" ry="17" fill="#d2cba3"/>
+ <path d="m1593 418-32 151m62-151-13 155m44-155v155m35-155 17 155m7-155 32 151" stroke="#647e79" stroke-opacity=".21" stroke-width="2"/>
+ <ellipse cx="1629" cy="574" rx="369" ry="464" fill="url(#lamp)"/>
+ <path d="M1770 814h107l-17 133h-71z" fill="#5c716c"/><path d="M1766 812h115v17h-115z" fill="#899585"/>
+ <g fill="none" stroke="#647e6f" stroke-width="5"><path d="M1821 816V641m0 109-62-91m62 108 64-68m-64 20-8-124"/></g>
+ <g fill="#6d8a77"><ellipse cx="1755" cy="652" rx="22" ry="47" transform="rotate(-35 1755 652)"/><ellipse cx="1880" cy="696" rx="21" ry="48" transform="rotate(42 1880 696)"/><ellipse cx="1810" cy="618" rx="21" ry="46" transform="rotate(-8 1810 618)"/></g>
+</svg>

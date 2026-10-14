@@ -1,0 +1,4606 @@
+{
+  "schema_version": 1,
+  "pack_id": "blue_whale",
+  "name": "蓝色肥鱼",
+  "default_visual": "portrait2d",
+  "preview": "images/call/call_listen.png",
+  "visuals": {
+    "portrait2d": {
+      "type": "portrait2d",
+      "render_mode": "static",
+      "views": {
+        "full_body": {
+          "default_pose": "full_idle",
+          "anchor_kind": "feet"
+        },
+        "call": {
+          "default_pose": "call_listen",
+          "anchor_kind": "bottom_center"
+        }
+      },
+      "poses": {
+        "full_idle": {
+          "file": "images/full_body/full_idle.png",
+          "label": "全身·安静待机",
+          "view": "full_body",
+          "tags": [
+            "neutral"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            0.98568
+          ],
+          "alpha_bounds": [
+            104,
+            11,
+            857,
+            1503
+          ],
+          "outfit": "maid"
+        },
+        "full_greet": {
+          "file": "images/full_body/full_greet.png",
+          "label": "全身·挥手招呼",
+          "view": "full_body",
+          "tags": [
+            "greet"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.57275,
+            0.98958
+          ],
+          "alpha_bounds": [
+            46,
+            9,
+            952,
+            1511
+          ],
+          "outfit": "maid"
+        },
+        "full_happy": {
+          "file": "images/full_body/full_happy.png",
+          "label": "全身·开心微笑",
+          "view": "full_body",
+          "tags": [
+            "happy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.52637,
+            0.98893
+          ],
+          "alpha_bounds": [
+            60,
+            8,
+            937,
+            1511
+          ],
+          "outfit": "maid"
+        },
+        "full_laugh": {
+          "file": "images/full_body/full_laugh.png",
+          "label": "全身·开怀大笑",
+          "view": "full_body",
+          "tags": [
+            "laugh"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.52002,
+            0.98828
+          ],
+          "alpha_bounds": [
+            34,
+            4,
+            976,
+            1514
+          ],
+          "outfit": "maid"
+        },
+        "full_shy": {
+          "file": "images/full_body/full_shy.png",
+          "label": "全身·害羞脸红",
+          "view": "full_body",
+          "tags": [
+            "shy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.52686,
+            0.98958
+          ],
+          "alpha_bounds": [
+            69,
+            8,
+            904,
+            1512
+          ],
+          "outfit": "maid"
+        },
+        "full_surprised": {
+          "file": "images/full_body/full_surprised.png",
+          "label": "全身·吃惊反应",
+          "view": "full_body",
+          "tags": [
+            "surprised"
+          ],
+          "canvas_size": [
+            1024,
+            1535
+          ],
+          "anchor": [
+            0.54102,
+            0.98762
+          ],
+          "alpha_bounds": [
+            54,
+            7,
+            944,
+            1509
+          ],
+          "outfit": "maid"
+        },
+        "full_sad": {
+          "file": "images/full_body/full_sad.png",
+          "label": "全身·低落难过",
+          "view": "full_body",
+          "tags": [
+            "sad"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.50977,
+            0.98698
+          ],
+          "alpha_bounds": [
+            85,
+            10,
+            885,
+            1506
+          ],
+          "outfit": "maid"
+        },
+        "full_pout": {
+          "file": "images/full_body/full_pout.png",
+          "label": "全身·轻微不满",
+          "view": "full_body",
+          "tags": [
+            "annoyed"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.53809,
+            0.99349
+          ],
+          "alpha_bounds": [
+            65,
+            7,
+            940,
+            1519
+          ],
+          "outfit": "maid"
+        },
+        "full_thinking": {
+          "file": "images/full_body/full_thinking.png",
+          "label": "全身·认真思考",
+          "view": "full_body",
+          "tags": [
+            "thinking"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.50781,
+            0.99349
+          ],
+          "alpha_bounds": [
+            77,
+            8,
+            920,
+            1518
+          ],
+          "outfit": "maid"
+        },
+        "full_worried": {
+          "file": "images/full_body/full_worried.png",
+          "label": "全身·担心关切",
+          "view": "full_body",
+          "tags": [
+            "worried"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.49951,
+            0.99284
+          ],
+          "alpha_bounds": [
+            77,
+            7,
+            911,
+            1518
+          ],
+          "outfit": "maid"
+        },
+        "full_comfort": {
+          "file": "images/full_body/full_comfort.png",
+          "label": "全身·温柔安慰",
+          "view": "full_body",
+          "tags": [
+            "affectionate"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.52539,
+            0.98958
+          ],
+          "alpha_bounds": [
+            56,
+            6,
+            937,
+            1514
+          ],
+          "outfit": "maid"
+        },
+        "full_cheer": {
+          "file": "images/full_body/full_cheer.png",
+          "label": "全身·鼓励加油",
+          "view": "full_body",
+          "tags": [
+            "cheer"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.50586,
+            0.99154
+          ],
+          "alpha_bounds": [
+            33,
+            4,
+            963,
+            1519
+          ],
+          "outfit": "maid"
+        },
+        "full_drink": {
+          "file": "images/full_body/full_drink.png",
+          "label": "全身·喝水休息",
+          "view": "full_body",
+          "tags": [
+            "drink_water"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.52295,
+            0.98958
+          ],
+          "alpha_bounds": [
+            54,
+            4,
+            952,
+            1516
+          ],
+          "outfit": "maid"
+        },
+        "full_snack": {
+          "file": "images/full_body/full_snack.png",
+          "label": "全身·吃饼干",
+          "view": "full_body",
+          "tags": [
+            "eat_snack"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.53809,
+            0.98503
+          ],
+          "alpha_bounds": [
+            75,
+            4,
+            912,
+            1509
+          ],
+          "outfit": "maid"
+        },
+        "full_read": {
+          "file": "images/full_body/full_read.png",
+          "label": "全身·安静阅读",
+          "view": "full_body",
+          "tags": [
+            "read"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.53174,
+            0.98958
+          ],
+          "alpha_bounds": [
+            70,
+            8,
+            910,
+            1512
+          ],
+          "outfit": "maid"
+        },
+        "full_work": {
+          "file": "images/full_body/full_work.png",
+          "label": "全身·记录工作",
+          "view": "full_body",
+          "tags": [
+            "work"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.55127,
+            0.98763
+          ],
+          "alpha_bounds": [
+            118,
+            9,
+            859,
+            1508
+          ],
+          "outfit": "maid"
+        },
+        "full_sleepy": {
+          "file": "images/full_body/full_sleepy.png",
+          "label": "全身·困倦哈欠",
+          "view": "full_body",
+          "tags": [
+            "sleepy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.51221,
+            0.98828
+          ],
+          "alpha_bounds": [
+            60,
+            6,
+            937,
+            1512
+          ],
+          "outfit": "maid"
+        },
+        "full_sleep": {
+          "file": "images/full_body/full_sleep.png",
+          "label": "全身·闭眼小睡",
+          "view": "full_body",
+          "tags": [
+            "sleep"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.49951,
+            0.99284
+          ],
+          "alpha_bounds": [
+            64,
+            7,
+            921,
+            1518
+          ],
+          "outfit": "maid"
+        },
+        "full_stretch": {
+          "file": "images/full_body/full_stretch.png",
+          "label": "全身·舒展身体",
+          "view": "full_body",
+          "tags": [
+            "stretch"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.51221,
+            0.99023
+          ],
+          "alpha_bounds": [
+            54,
+            5,
+            938,
+            1516
+          ],
+          "outfit": "maid"
+        },
+        "full_headpat": {
+          "file": "images/full_body/full_headpat.png",
+          "label": "全身·摸头回应",
+          "view": "full_body",
+          "tags": [
+            "headpat"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            0.99219
+          ],
+          "alpha_bounds": [
+            55,
+            4,
+            926,
+            1520
+          ],
+          "outfit": "maid"
+        },
+        "full_pickup": {
+          "file": "images/full_body/full_pickup.png",
+          "label": "全身·被提起反应",
+          "view": "full_body",
+          "tags": [
+            "pickup"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.44971,
+            0.96615
+          ],
+          "alpha_bounds": [
+            18,
+            11,
+            988,
+            1473
+          ],
+          "outfit": "maid"
+        },
+        "full_edge_sit": {
+          "file": "images/full_body/full_edge_sit.png",
+          "label": "全身·坐在窗口边缘",
+          "view": "full_body",
+          "tags": [
+            "edge_sit"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.47119,
+            0.97852
+          ],
+          "alpha_bounds": [
+            32,
+            11,
+            977,
+            1492
+          ],
+          "outfit": "maid"
+        },
+        "full_walk_left": {
+          "file": "images/full_body/full_walk_left.png",
+          "label": "全身·向左慢走",
+          "view": "full_body",
+          "tags": [
+            "walk_left"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.36475,
+            0.97396
+          ],
+          "alpha_bounds": [
+            77,
+            12,
+            932,
+            1484
+          ],
+          "outfit": "maid"
+        },
+        "full_walk_right": {
+          "file": "images/full_body/full_walk_right.png",
+          "label": "全身·向右慢走",
+          "view": "full_body",
+          "tags": [
+            "walk_right"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.70313,
+            0.98307
+          ],
+          "alpha_bounds": [
+            21,
+            11,
+            997,
+            1499
+          ],
+          "outfit": "maid"
+        },
+        "call_listen": {
+          "file": "images/call/call_listen.png",
+          "label": "通话·倾听待机",
+          "view": "call",
+          "tags": [
+            "neutral"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            13,
+            6,
+            1003,
+            1530
+          ],
+          "outfit": "maid"
+        },
+        "call_speak": {
+          "file": "images/call/call_speak.png",
+          "label": "通话·温柔回应",
+          "view": "call",
+          "tags": [
+            "respond"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            20,
+            7,
+            990,
+            1529
+          ],
+          "outfit": "maid"
+        },
+        "call_happy": {
+          "file": "images/call/call_happy.png",
+          "label": "通话·开心微笑",
+          "view": "call",
+          "tags": [
+            "happy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            2,
+            1022,
+            1534
+          ],
+          "outfit": "maid"
+        },
+        "call_laugh": {
+          "file": "images/call/call_laugh.png",
+          "label": "通话·开怀大笑",
+          "view": "call",
+          "tags": [
+            "laugh"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            3,
+            4,
+            1018,
+            1532
+          ],
+          "outfit": "maid"
+        },
+        "call_shy": {
+          "file": "images/call/call_shy.png",
+          "label": "通话·害羞脸红",
+          "view": "call",
+          "tags": [
+            "shy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            19,
+            4,
+            1001,
+            1532
+          ],
+          "outfit": "maid"
+        },
+        "call_surprised": {
+          "file": "images/call/call_surprised.png",
+          "label": "通话·吃惊反应",
+          "view": "call",
+          "tags": [
+            "surprised"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            9,
+            4,
+            1015,
+            1532
+          ],
+          "outfit": "maid"
+        },
+        "call_sad": {
+          "file": "images/call/call_sad.png",
+          "label": "通话·低落难过",
+          "view": "call",
+          "tags": [
+            "sad"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            10,
+            6,
+            1002,
+            1530
+          ],
+          "outfit": "maid"
+        },
+        "call_pout": {
+          "file": "images/call/call_pout.png",
+          "label": "通话·轻微不满",
+          "view": "call",
+          "tags": [
+            "annoyed"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            17,
+            3,
+            1007,
+            1533
+          ],
+          "outfit": "maid"
+        },
+        "call_thinking": {
+          "file": "images/call/call_thinking.png",
+          "label": "通话·认真思考",
+          "view": "call",
+          "tags": [
+            "thinking"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            14,
+            1024,
+            1522
+          ],
+          "outfit": "maid"
+        },
+        "call_worried": {
+          "file": "images/call/call_worried.png",
+          "label": "通话·担心关切",
+          "view": "call",
+          "tags": [
+            "worried"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            12,
+            1014,
+            1524
+          ],
+          "outfit": "maid"
+        },
+        "call_comfort": {
+          "file": "images/call/call_comfort.png",
+          "label": "通话·温柔安慰",
+          "view": "call",
+          "tags": [
+            "affectionate"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            6,
+            1024,
+            1530
+          ],
+          "outfit": "maid"
+        },
+        "call_cheer": {
+          "file": "images/call/call_cheer.png",
+          "label": "通话·鼓励加油",
+          "view": "call",
+          "tags": [
+            "cheer"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            12,
+            7,
+            1005,
+            1529
+          ],
+          "outfit": "maid"
+        },
+        "call_drink": {
+          "file": "images/call/call_drink.png",
+          "label": "通话·喝水休息",
+          "view": "call",
+          "tags": [
+            "drink_water"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            11,
+            3,
+            1006,
+            1533
+          ],
+          "outfit": "maid"
+        },
+        "call_snack": {
+          "file": "images/call/call_snack.png",
+          "label": "通话·吃饼干",
+          "view": "call",
+          "tags": [
+            "eat_snack"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            8,
+            8,
+            1014,
+            1528
+          ],
+          "outfit": "maid"
+        },
+        "call_read": {
+          "file": "images/call/call_read.png",
+          "label": "通话·安静阅读",
+          "view": "call",
+          "tags": [
+            "read"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            11,
+            12,
+            1004,
+            1524
+          ],
+          "outfit": "maid"
+        },
+        "call_work": {
+          "file": "images/call/call_work.png",
+          "label": "通话·记录工作",
+          "view": "call",
+          "tags": [
+            "work"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            2,
+            5,
+            1013,
+            1531
+          ],
+          "outfit": "maid"
+        },
+        "call_sleepy": {
+          "file": "images/call/call_sleepy.png",
+          "label": "通话·困倦哈欠",
+          "view": "call",
+          "tags": [
+            "sleepy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            10,
+            6,
+            1006,
+            1530
+          ],
+          "outfit": "maid"
+        },
+        "call_sleep": {
+          "file": "images/call/call_sleep.png",
+          "label": "通话·闭眼小睡",
+          "view": "call",
+          "tags": [
+            "sleep"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            5,
+            2,
+            1014,
+            1534
+          ],
+          "outfit": "maid"
+        },
+        "call_stretch": {
+          "file": "images/call/call_stretch.png",
+          "label": "通话·舒展身体",
+          "view": "call",
+          "tags": [
+            "stretch"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            8,
+            1022,
+            1528
+          ],
+          "outfit": "maid"
+        },
+        "call_headpat": {
+          "file": "images/call/call_headpat.png",
+          "label": "通话·摸头回应",
+          "view": "call",
+          "tags": [
+            "headpat"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            8,
+            6,
+            1016,
+            1530
+          ],
+          "outfit": "maid"
+        },
+        "call_greet": {
+          "file": "images/call/call_greet.png",
+          "label": "通话·挥手招呼",
+          "view": "call",
+          "tags": [
+            "greet"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            10,
+            8,
+            1014,
+            1528
+          ],
+          "outfit": "maid"
+        },
+        "call_apologize": {
+          "file": "images/call/call_apologize.png",
+          "label": "通话·认真道歉",
+          "view": "call",
+          "tags": [
+            "apologize"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            11,
+            5,
+            1008,
+            1531
+          ],
+          "outfit": "maid"
+        },
+        "call_proud": {
+          "file": "images/call/call_proud.png",
+          "label": "通话·小小得意",
+          "view": "call",
+          "tags": [
+            "proud"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            6,
+            1016,
+            1530
+          ],
+          "outfit": "maid"
+        },
+        "call_blink": {
+          "file": "images/call/call_blink.png",
+          "label": "通话·闭眼瞬间",
+          "view": "call",
+          "tags": [
+            "blink"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            5,
+            5,
+            1019,
+            1531
+          ],
+          "outfit": "maid"
+        },
+        "full_nightdress_happy": {
+          "file": "images/outfits/nightdress/full_nightdress_happy.png",
+          "label": "睡衣·开心",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            73,
+            4,
+            913,
+            1525
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "call_nightdress_happy": {
+          "file": "images/call/call_nightdress_happy.png",
+          "label": "近景·睡裙开心",
+          "view": "call",
+          "tags": [
+            "nightdress",
+            "happy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            15,
+            0,
+            1009,
+            1536
+          ],
+          "outfit": "nightdress"
+        },
+        "full_nightdress_shy": {
+          "file": "images/outfits/nightdress/full_nightdress_shy.png",
+          "label": "睡衣·害羞",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            69,
+            5,
+            930,
+            1522
+          ],
+          "anchor": [
+            0.5,
+            0.994140625
+          ]
+        },
+        "call_nightdress_shy": {
+          "file": "images/call/call_nightdress_shy.png",
+          "label": "近景·睡裙害羞",
+          "view": "call",
+          "tags": [
+            "nightdress",
+            "shy"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            13,
+            0,
+            1011,
+            1536
+          ],
+          "outfit": "nightdress"
+        },
+        "call_tease_popsicle": {
+          "file": "images/call/call_tease_popsicle.png",
+          "label": "近景·舔蓝色冰棍",
+          "view": "call",
+          "tags": [
+            "nightdress",
+            "tease",
+            "sexsual",
+            "tease_popsicle"
+          ],
+          "canvas_size": [
+            1792,
+            2400
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            0,
+            1792,
+            2400
+          ],
+          "outfit": "nightdress"
+        },
+        "call_tease_tongue_ok": {
+          "file": "images/call/call_tease_tongue_ok.png",
+          "label": "近景·吐舌比 OK",
+          "view": "call",
+          "tags": [
+            "nightdress",
+            "tease",
+            "sexsual",
+            "tease_tongue_ok"
+          ],
+          "canvas_size": [
+            1792,
+            2400
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            0,
+            1792,
+            2400
+          ],
+          "outfit": "nightdress"
+        },
+        "full_teary": {
+          "file": "images/outfits/maid/full_teary.png",
+          "label": "委屈含泪",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            89,
+            12,
+            873,
+            1505
+          ],
+          "anchor": [
+            0.5,
+            0.9876302083333334
+          ]
+        },
+        "full_crying": {
+          "file": "images/outfits/maid/full_crying.png",
+          "label": "伤心哭泣",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            97,
+            6,
+            875,
+            1512
+          ],
+          "anchor": [
+            0.5,
+            0.98828125
+          ]
+        },
+        "full_disappointed": {
+          "file": "images/outfits/maid/full_disappointed.png",
+          "label": "失望",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            88,
+            13,
+            886,
+            1501
+          ],
+          "anchor": [
+            0.5,
+            0.9856770833333334
+          ]
+        },
+        "full_anxious": {
+          "file": "images/outfits/maid/full_anxious.png",
+          "label": "焦虑担忧",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            97,
+            10,
+            864,
+            1509
+          ],
+          "anchor": [
+            0.5,
+            0.9889322916666666
+          ]
+        },
+        "full_angry": {
+          "file": "images/outfits/maid/full_angry.png",
+          "label": "生气",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            88,
+            7,
+            881,
+            1514
+          ],
+          "anchor": [
+            0.5,
+            0.990234375
+          ]
+        },
+        "full_jealous": {
+          "file": "images/outfits/maid/full_jealous.png",
+          "label": "吃醋",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            94,
+            5,
+            884,
+            1521
+          ],
+          "anchor": [
+            0.5,
+            0.9934895833333334
+          ]
+        },
+        "full_confused": {
+          "file": "images/outfits/maid/full_confused.png",
+          "label": "困惑",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            93,
+            12,
+            867,
+            1507
+          ],
+          "anchor": [
+            0.5,
+            0.9889322916666666
+          ]
+        },
+        "full_skeptical": {
+          "file": "images/outfits/maid/full_skeptical.png",
+          "label": "怀疑",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            77,
+            9,
+            903,
+            1516
+          ],
+          "anchor": [
+            0.5,
+            0.9928385416666666
+          ]
+        },
+        "full_embarrassed": {
+          "file": "images/outfits/maid/full_embarrassed.png",
+          "label": "尴尬",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            100,
+            12,
+            861,
+            1511
+          ],
+          "anchor": [
+            0.5,
+            0.9915364583333334
+          ]
+        },
+        "full_scared": {
+          "file": "images/outfits/maid/full_scared.png",
+          "label": "害怕",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            82,
+            8,
+            905,
+            1513
+          ],
+          "anchor": [
+            0.5,
+            0.990234375
+          ]
+        },
+        "full_speechless": {
+          "file": "images/outfits/maid/full_speechless.png",
+          "label": "无语",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            87,
+            9,
+            882,
+            1514
+          ],
+          "anchor": [
+            0.5,
+            0.9915364583333334
+          ]
+        },
+        "full_relieved": {
+          "file": "images/outfits/maid/full_relieved.png",
+          "label": "释然",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            82,
+            6,
+            893,
+            1513
+          ],
+          "anchor": [
+            0.5,
+            0.9889322916666666
+          ]
+        },
+        "full_expectant": {
+          "file": "images/outfits/maid/full_expectant.png",
+          "label": "期待",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            86,
+            6,
+            888,
+            1512
+          ],
+          "anchor": [
+            0.5,
+            0.98828125
+          ]
+        },
+        "full_dreamy": {
+          "file": "images/outfits/maid/full_dreamy.png",
+          "label": "心动迷离",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            64,
+            10,
+            898,
+            1509
+          ],
+          "anchor": [
+            0.5,
+            0.9889322916666666
+          ]
+        },
+        "full_dazed": {
+          "file": "images/outfits/maid/full_dazed.png",
+          "label": "恍惚发呆",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            99,
+            7,
+            864,
+            1506
+          ],
+          "anchor": [
+            0.5,
+            0.9850260416666666
+          ]
+        },
+        "call_teary": {
+          "file": "images/outfits/maid/call_teary.png",
+          "label": "委屈含泪",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            17,
+            5,
+            1001,
+            1531
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_crying": {
+          "file": "images/outfits/maid/call_crying.png",
+          "label": "伤心哭泣",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            12,
+            1,
+            1002,
+            1535
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_disappointed": {
+          "file": "images/outfits/maid/call_disappointed.png",
+          "label": "失望",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            13,
+            6,
+            1010,
+            1530
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_anxious": {
+          "file": "images/outfits/maid/call_anxious.png",
+          "label": "焦虑担忧",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            11,
+            7,
+            1012,
+            1529
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_angry": {
+          "file": "images/outfits/maid/call_angry.png",
+          "label": "生气",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            14,
+            6,
+            1004,
+            1530
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_jealous": {
+          "file": "images/outfits/maid/call_jealous.png",
+          "label": "吃醋",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            9,
+            5,
+            1008,
+            1531
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_confused": {
+          "file": "images/outfits/maid/call_confused.png",
+          "label": "困惑",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            8,
+            7,
+            1009,
+            1529
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_skeptical": {
+          "file": "images/outfits/maid/call_skeptical.png",
+          "label": "怀疑",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            13,
+            5,
+            1003,
+            1531
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_embarrassed": {
+          "file": "images/outfits/maid/call_embarrassed.png",
+          "label": "尴尬",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            5,
+            7,
+            1011,
+            1529
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_scared": {
+          "file": "images/outfits/maid/call_scared.png",
+          "label": "害怕",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            0,
+            6,
+            1024,
+            1530
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_speechless": {
+          "file": "images/outfits/maid/call_speechless.png",
+          "label": "无语",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            13,
+            7,
+            1003,
+            1529
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_relieved": {
+          "file": "images/outfits/maid/call_relieved.png",
+          "label": "释然",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            14,
+            7,
+            1009,
+            1529
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_expectant": {
+          "file": "images/outfits/maid/call_expectant.png",
+          "label": "期待",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            9,
+            6,
+            1015,
+            1530
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_dreamy": {
+          "file": "images/outfits/maid/call_dreamy.png",
+          "label": "心动迷离",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            14,
+            6,
+            1002,
+            1530
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_dazed": {
+          "file": "images/outfits/maid/call_dazed.png",
+          "label": "恍惚发呆",
+          "view": "call",
+          "outfit": "maid",
+          "landscape": false,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            14,
+            8,
+            1002,
+            1528
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_teary": {
+          "file": "images/outfits/nightdress/call_nightdress_teary.png",
+          "label": "委屈含泪",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            19,
+            4,
+            1000,
+            1532
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_crying": {
+          "file": "images/outfits/nightdress/call_nightdress_crying.png",
+          "label": "伤心哭泣",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            12,
+            3,
+            1006,
+            1533
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_disappointed": {
+          "file": "images/outfits/nightdress/call_nightdress_disappointed.png",
+          "label": "失望",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            13,
+            6,
+            1001,
+            1530
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_anxious": {
+          "file": "images/outfits/nightdress/call_nightdress_anxious.png",
+          "label": "焦虑担忧",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            18,
+            8,
+            1002,
+            1528
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_angry": {
+          "file": "images/outfits/nightdress/call_nightdress_angry.png",
+          "label": "生气",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            10,
+            4,
+            1013,
+            1532
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_jealous": {
+          "file": "images/outfits/nightdress/call_nightdress_jealous.png",
+          "label": "吃醋",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            19,
+            5,
+            1003,
+            1531
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_confused": {
+          "file": "images/outfits/nightdress/call_nightdress_confused.png",
+          "label": "困惑",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            21,
+            5,
+            999,
+            1531
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_skeptical": {
+          "file": "images/outfits/nightdress/call_nightdress_skeptical.png",
+          "label": "怀疑",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            11,
+            7,
+            1010,
+            1529
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_embarrassed": {
+          "file": "images/outfits/nightdress/call_nightdress_embarrassed.png",
+          "label": "尴尬",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            21,
+            8,
+            994,
+            1528
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_scared": {
+          "file": "images/outfits/nightdress/call_nightdress_scared.png",
+          "label": "害怕",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            8,
+            5,
+            1016,
+            1531
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_speechless": {
+          "file": "images/outfits/nightdress/call_nightdress_speechless.png",
+          "label": "无语",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            26,
+            9,
+            989,
+            1527
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_relieved": {
+          "file": "images/outfits/nightdress/call_nightdress_relieved.png",
+          "label": "释然",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            4,
+            4,
+            1020,
+            1532
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_expectant": {
+          "file": "images/outfits/nightdress/call_nightdress_expectant.png",
+          "label": "期待",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            12,
+            4,
+            1004,
+            1532
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_dreamy": {
+          "file": "images/outfits/nightdress/call_nightdress_dreamy.png",
+          "label": "心动迷离",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            13,
+            10,
+            1008,
+            1526
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "call_nightdress_dazed": {
+          "file": "images/outfits/nightdress/call_nightdress_dazed.png",
+          "label": "恍惚发呆",
+          "view": "call",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            17,
+            9,
+            1003,
+            1527
+          ],
+          "anchor": [
+            0.5,
+            1
+          ]
+        },
+        "full_sit": {
+          "file": "images/outfits/maid/full_sit-v2.png",
+          "label": "女仆装·坐下",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": true,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1536,
+            1024
+          ],
+          "alpha_bounds": [
+            55,
+            8,
+            1447,
+            1004
+          ],
+          "anchor": [
+            0.5,
+            0.98828125
+          ]
+        },
+        "full_prone": {
+          "file": "images/outfits/maid/full_prone.png",
+          "label": "女仆装·趴下",
+          "view": "full_body",
+          "outfit": "maid",
+          "landscape": true,
+          "tags": [
+            "maid"
+          ],
+          "canvas_size": [
+            1536,
+            1024
+          ],
+          "alpha_bounds": [
+            11,
+            58,
+            1511,
+            927
+          ],
+          "anchor": [
+            0.5,
+            0.9619140625
+          ]
+        },
+        "full_nightdress_sit": {
+          "file": "images/outfits/nightdress/full_nightdress_sit.png",
+          "label": "睡衣·坐下",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": true,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1536,
+            1024
+          ],
+          "alpha_bounds": [
+            65,
+            8,
+            1447,
+            984
+          ],
+          "anchor": [
+            0.5,
+            0.96875
+          ]
+        },
+        "full_nightdress_prone": {
+          "file": "images/outfits/nightdress/full_nightdress_prone.png",
+          "label": "睡衣·趴下",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": true,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1536,
+            1024
+          ],
+          "alpha_bounds": [
+            7,
+            56,
+            1518,
+            820
+          ],
+          "anchor": [
+            0.5,
+            0.85546875
+          ]
+        },
+        "full_nightdress_walk_left": {
+          "file": "images/outfits/nightdress/full_nightdress_walk_left.png",
+          "label": "向左慢走",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            20,
+            7,
+            998,
+            1506
+          ],
+          "anchor": [
+            0.5,
+            0.9850260416666666
+          ]
+        },
+        "full_nightdress_walk_right": {
+          "file": "images/outfits/nightdress/full_nightdress_walk_right.png",
+          "label": "向右慢走",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            13,
+            8,
+            1004,
+            1513
+          ],
+          "anchor": [
+            0.5,
+            0.990234375
+          ]
+        },
+        "full_nightdress_idle": {
+          "file": "images/outfits/nightdress/full_nightdress_idle.png",
+          "label": "安静待机",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            110,
+            6,
+            851,
+            1520
+          ],
+          "anchor": [
+            0.5,
+            0.9934895833333334
+          ]
+        },
+        "full_nightdress_greet": {
+          "file": "images/outfits/nightdress/full_nightdress_greet.png",
+          "label": "挥手招呼",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            110,
+            5,
+            876,
+            1524
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "full_nightdress_cheer": {
+          "file": "images/outfits/nightdress/full_nightdress_cheer.png",
+          "label": "鼓励加油",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            112,
+            8,
+            881,
+            1520
+          ],
+          "anchor": [
+            0.5,
+            0.9947916666666666
+          ]
+        },
+        "full_nightdress_comfort": {
+          "file": "images/outfits/nightdress/full_nightdress_comfort.png",
+          "label": "安慰陪伴",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            103,
+            4,
+            886,
+            1524
+          ],
+          "anchor": [
+            0.5,
+            0.9947916666666666
+          ]
+        },
+        "full_nightdress_drink": {
+          "file": "images/outfits/nightdress/full_nightdress_drink.png",
+          "label": "喝水休息",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            109,
+            7,
+            873,
+            1517
+          ],
+          "anchor": [
+            0.5,
+            0.9921875
+          ]
+        },
+        "full_nightdress_snack": {
+          "file": "images/outfits/nightdress/full_nightdress_snack.png",
+          "label": "吃零食",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            106,
+            5,
+            888,
+            1525
+          ],
+          "anchor": [
+            0.5,
+            0.99609375
+          ]
+        },
+        "full_nightdress_read": {
+          "file": "images/outfits/nightdress/full_nightdress_read.png",
+          "label": "安静阅读",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            141,
+            9,
+            855,
+            1521
+          ],
+          "anchor": [
+            0.5,
+            0.99609375
+          ]
+        },
+        "full_nightdress_work": {
+          "file": "images/outfits/nightdress/full_nightdress_work.png",
+          "label": "记录工作",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            126,
+            7,
+            860,
+            1519
+          ],
+          "anchor": [
+            0.5,
+            0.9934895833333334
+          ]
+        },
+        "full_nightdress_sleepy": {
+          "file": "images/outfits/nightdress/full_nightdress_sleepy.png",
+          "label": "困倦哈欠",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            116,
+            4,
+            854,
+            1526
+          ],
+          "anchor": [
+            0.5,
+            0.99609375
+          ]
+        },
+        "full_nightdress_sleep": {
+          "file": "images/outfits/nightdress/full_nightdress_sleep.png",
+          "label": "闭眼小睡",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            98,
+            8,
+            902,
+            1522
+          ],
+          "anchor": [
+            0.5,
+            0.99609375
+          ]
+        },
+        "full_nightdress_stretch": {
+          "file": "images/outfits/nightdress/full_nightdress_stretch.png",
+          "label": "舒展身体",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            138,
+            7,
+            845,
+            1524
+          ],
+          "anchor": [
+            0.5,
+            0.9967447916666666
+          ]
+        },
+        "full_nightdress_pickup": {
+          "file": "images/outfits/nightdress/full_nightdress_pickup.png",
+          "label": "移动惊讶反应",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            109,
+            7,
+            875,
+            1518
+          ],
+          "anchor": [
+            0.5,
+            0.9928385416666666
+          ]
+        },
+        "full_nightdress_thinking": {
+          "file": "images/outfits/nightdress/full_nightdress_thinking.png",
+          "label": "认真思考",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            165,
+            6,
+            819,
+            1525
+          ],
+          "anchor": [
+            0.5,
+            0.9967447916666666
+          ]
+        },
+        "full_nightdress_laugh": {
+          "file": "images/outfits/nightdress/full_nightdress_laugh.png",
+          "label": "开怀大笑",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            96,
+            6,
+            866,
+            1522
+          ],
+          "anchor": [
+            0.5,
+            0.9947916666666666
+          ]
+        },
+        "full_nightdress_surprised": {
+          "file": "images/outfits/nightdress/full_nightdress_surprised.png",
+          "label": "吃惊反应",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            68,
+            8,
+            919,
+            1513
+          ],
+          "anchor": [
+            0.5,
+            0.990234375
+          ]
+        },
+        "full_nightdress_sad": {
+          "file": "images/outfits/nightdress/full_nightdress_sad.png",
+          "label": "低落难过",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            154,
+            9,
+            820,
+            1518
+          ],
+          "anchor": [
+            0.5,
+            0.994140625
+          ]
+        },
+        "full_nightdress_pout": {
+          "file": "images/outfits/nightdress/full_nightdress_pout.png",
+          "label": "轻微不满",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            92,
+            4,
+            897,
+            1526
+          ],
+          "anchor": [
+            0.5,
+            0.99609375
+          ]
+        },
+        "full_nightdress_worried": {
+          "file": "images/outfits/nightdress/full_nightdress_worried.png",
+          "label": "担心关切",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            122,
+            8,
+            836,
+            1515
+          ],
+          "anchor": [
+            0.5,
+            0.9915364583333334
+          ]
+        },
+        "full_nightdress_headpat": {
+          "file": "images/outfits/nightdress/full_nightdress_headpat.png",
+          "label": "摸头回应",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            94,
+            4,
+            895,
+            1527
+          ],
+          "anchor": [
+            0.5,
+            0.9967447916666666
+          ]
+        },
+        "full_nightdress_teary": {
+          "file": "images/outfits/nightdress/full_nightdress_teary.png",
+          "label": "委屈含泪",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            135,
+            5,
+            835,
+            1524
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "full_nightdress_crying": {
+          "file": "images/outfits/nightdress/full_nightdress_crying.png",
+          "label": "伤心哭泣",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            149,
+            6,
+            830,
+            1517
+          ],
+          "anchor": [
+            0.5,
+            0.9915364583333334
+          ]
+        },
+        "full_nightdress_disappointed": {
+          "file": "images/outfits/nightdress/full_nightdress_disappointed.png",
+          "label": "失望",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            143,
+            4,
+            852,
+            1521
+          ],
+          "anchor": [
+            0.5,
+            0.9928385416666666
+          ]
+        },
+        "full_nightdress_anxious": {
+          "file": "images/outfits/nightdress/full_nightdress_anxious.png",
+          "label": "焦虑担忧",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            100,
+            5,
+            877,
+            1527
+          ],
+          "anchor": [
+            0.5,
+            0.9973958333333334
+          ]
+        },
+        "full_nightdress_angry": {
+          "file": "images/outfits/nightdress/full_nightdress_angry.png",
+          "label": "生气",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            134,
+            7,
+            850,
+            1517
+          ],
+          "anchor": [
+            0.5,
+            0.9921875
+          ]
+        },
+        "full_nightdress_jealous": {
+          "file": "images/outfits/nightdress/full_nightdress_jealous.png",
+          "label": "吃醋",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            56,
+            7,
+            822,
+            1522
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "full_nightdress_confused": {
+          "file": "images/outfits/nightdress/full_nightdress_confused.png",
+          "label": "困惑",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            108,
+            6,
+            883,
+            1522
+          ],
+          "anchor": [
+            0.5,
+            0.9947916666666666
+          ]
+        },
+        "full_nightdress_skeptical": {
+          "file": "images/outfits/nightdress/full_nightdress_skeptical.png",
+          "label": "怀疑",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            149,
+            4,
+            820,
+            1523
+          ],
+          "anchor": [
+            0.5,
+            0.994140625
+          ]
+        },
+        "full_nightdress_embarrassed": {
+          "file": "images/outfits/nightdress/full_nightdress_embarrassed.png",
+          "label": "尴尬",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            107,
+            8,
+            885,
+            1524
+          ],
+          "anchor": [
+            0.5,
+            0.9973958333333334
+          ]
+        },
+        "full_nightdress_scared": {
+          "file": "images/outfits/nightdress/full_nightdress_scared.png",
+          "label": "害怕",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            115,
+            6,
+            853,
+            1523
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "full_nightdress_speechless": {
+          "file": "images/outfits/nightdress/full_nightdress_speechless.png",
+          "label": "无语",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            80,
+            4,
+            911,
+            1525
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "full_nightdress_relieved": {
+          "file": "images/outfits/nightdress/full_nightdress_relieved.png",
+          "label": "释然",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            71,
+            6,
+            922,
+            1525
+          ],
+          "anchor": [
+            0.5,
+            0.9967447916666666
+          ]
+        },
+        "full_nightdress_expectant": {
+          "file": "images/outfits/nightdress/full_nightdress_expectant.png",
+          "label": "期待",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            92,
+            4,
+            860,
+            1528
+          ],
+          "anchor": [
+            0.5,
+            0.9973958333333334
+          ]
+        },
+        "full_nightdress_dreamy": {
+          "file": "images/outfits/nightdress/full_nightdress_dreamy.png",
+          "label": "心动迷离",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            95,
+            5,
+            879,
+            1516
+          ],
+          "anchor": [
+            0.5,
+            0.990234375
+          ]
+        },
+        "full_nightdress_dazed": {
+          "file": "images/outfits/nightdress/full_nightdress_dazed.png",
+          "label": "恍惚发呆",
+          "view": "full_body",
+          "outfit": "nightdress",
+          "landscape": false,
+          "tags": [
+            "nightdress"
+          ],
+          "canvas_size": [
+            1024,
+            1536
+          ],
+          "alpha_bounds": [
+            144,
+            4,
+            824,
+            1525
+          ],
+          "anchor": [
+            0.5,
+            0.9954427083333334
+          ]
+        },
+        "call_tease_yogurt": {
+          "file": "images/call/call_tease_yogurt.png",
+          "label": "近景·喝酸奶",
+          "view": "call",
+          "tags": [
+            "nightdress",
+            "tease",
+            "sexsual",
+            "tease_yogurt"
+          ],
+          "canvas_size": [
+            1792,
+            2400
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            0,
+            1792,
+            2400
+          ],
+          "outfit": "nightdress"
+        },
+        "call_tease_sweaty_shy": {
+          "file": "images/call/call_tease_sweaty_shy.png",
+          "label": "近景·出汗害羞",
+          "view": "call",
+          "tags": [
+            "nightdress",
+            "tease",
+            "sexsual",
+            "tease_sweaty_shy"
+          ],
+          "canvas_size": [
+            1792,
+            2400
+          ],
+          "anchor": [
+            0.5,
+            1
+          ],
+          "alpha_bounds": [
+            0,
+            0,
+            1792,
+            2400
+          ],
+          "outfit": "nightdress"
+        }
+      },
+      "actions": {
+        "idle": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_idle",
+            "call": "call_listen"
+          },
+          "label": "安静待机",
+          "category": "交流",
+          "preserve_activity": false,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_idle",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "listen": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_idle",
+            "call": "call_listen"
+          },
+          "label": "认真倾听",
+          "category": "交流",
+          "preserve_activity": false,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_idle",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "respond": {
+          "mode": "segment",
+          "views": {
+            "full_body": "full_greet",
+            "call": "call_speak"
+          },
+          "label": "温柔回应",
+          "category": "交流",
+          "preserve_activity": false,
+          "seconds": 2.5,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_greet",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "greet": {
+          "mode": "once",
+          "seconds": 3,
+          "views": {
+            "full_body": "full_greet",
+            "call": "call_greet"
+          },
+          "label": "挥手招呼",
+          "category": "交流",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_greet"
+            }
+          }
+        },
+        "cheer": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_cheer",
+            "call": "call_cheer"
+          },
+          "label": "鼓励加油",
+          "category": "交流",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_cheer"
+            }
+          }
+        },
+        "drink_water": {
+          "mode": "once",
+          "seconds": 5,
+          "views": {
+            "full_body": "full_drink",
+            "call": "call_drink"
+          },
+          "label": "喝水",
+          "category": "日常",
+          "preserve_activity": true,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_drink"
+            }
+          }
+        },
+        "eat_snack": {
+          "mode": "once",
+          "seconds": 6,
+          "views": {
+            "full_body": "full_snack",
+            "call": "call_snack"
+          },
+          "label": "吃零食",
+          "category": "日常",
+          "preserve_activity": true,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_snack"
+            }
+          }
+        },
+        "read": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_read",
+            "call": "call_read"
+          },
+          "label": "阅读",
+          "category": "日常",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_read"
+            }
+          }
+        },
+        "work": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_work",
+            "call": "call_work"
+          },
+          "label": "记录与工作",
+          "category": "日常",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_work"
+            }
+          }
+        },
+        "comfort": {
+          "mode": "once",
+          "seconds": 5,
+          "views": {
+            "full_body": "full_comfort",
+            "call": "call_comfort"
+          },
+          "label": "安慰陪伴",
+          "category": "交流",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_comfort"
+            }
+          }
+        },
+        "yawn": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_sleepy",
+            "call": "call_sleepy"
+          },
+          "label": "打哈欠",
+          "category": "日常",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sleepy"
+            }
+          }
+        },
+        "sleep": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_sleep",
+            "call": "call_sleep"
+          },
+          "label": "闭眼小睡",
+          "category": "日常",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sleep"
+            }
+          }
+        },
+        "stretch": {
+          "mode": "once",
+          "seconds": 5,
+          "views": {
+            "full_body": "full_stretch",
+            "call": "call_stretch"
+          },
+          "label": "伸懒腰",
+          "category": "日常",
+          "preserve_activity": true,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_stretch"
+            }
+          }
+        },
+        "pickup": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_pickup"
+          },
+          "label": "被提起",
+          "category": "桌宠",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_pickup"
+            }
+          }
+        },
+        "sit_edge": {
+          "label": "坐在边缘",
+          "category": "桌宠",
+          "mode": "hold",
+          "seconds": 0,
+          "preserve_activity": true,
+          "internal": false,
+          "views": {
+            "full_body": "full_sit"
+          },
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sit"
+            }
+          }
+        },
+        "walk_left": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_walk_left"
+          },
+          "label": "向左慢走",
+          "category": "桌宠",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_walk_left"
+            }
+          }
+        },
+        "walk_right": {
+          "mode": "hold",
+          "views": {
+            "full_body": "full_walk_right"
+          },
+          "label": "向右慢走",
+          "category": "桌宠",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_walk_right"
+            }
+          }
+        },
+        "apologize": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "call": "call_apologize"
+          },
+          "label": "认真道歉",
+          "category": "交流",
+          "preserve_activity": false
+        },
+        "proud": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "call": "call_proud"
+          },
+          "label": "小小得意",
+          "category": "表情",
+          "preserve_activity": false
+        },
+        "blink": {
+          "mode": "once",
+          "seconds": 2,
+          "views": {
+            "call": "call_blink"
+          },
+          "label": "闭眼片刻",
+          "category": "日常",
+          "preserve_activity": true
+        },
+        "tease_popsicle": {
+          "label": "舔蓝色冰棍",
+          "adult_only": true,
+          "category": "sexsual",
+          "category_label": "亲密动作",
+          "mode": "once",
+          "seconds": 6,
+          "preserve_activity": true,
+          "views": {
+            "call": "call_tease_popsicle"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_tease_popsicle"
+            }
+          }
+        },
+        "tease_tongue_ok": {
+          "label": "吐舌比 OK",
+          "adult_only": true,
+          "category": "sexsual",
+          "category_label": "亲密动作",
+          "mode": "once",
+          "seconds": 6,
+          "preserve_activity": true,
+          "views": {
+            "call": "call_tease_tongue_ok"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_tease_tongue_ok"
+            }
+          }
+        },
+        "thinking": {
+          "mode": "once",
+          "views": {
+            "full_body": "full_thinking",
+            "call": "call_thinking"
+          },
+          "seconds": 4,
+          "label": "认真思考",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_thinking"
+            }
+          }
+        },
+        "happy": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_happy",
+            "call": "call_happy"
+          },
+          "label": "开心",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_happy",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "laugh": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_laugh",
+            "call": "call_laugh"
+          },
+          "label": "开怀大笑",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_laugh"
+            }
+          }
+        },
+        "shy": {
+          "mode": "once",
+          "seconds": 5,
+          "views": {
+            "full_body": "full_shy",
+            "call": "call_shy"
+          },
+          "label": "害羞脸红",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_shy",
+              "call": "call_nightdress_shy"
+            }
+          }
+        },
+        "surprised": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_surprised",
+            "call": "call_surprised"
+          },
+          "label": "惊讶",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_surprised"
+            }
+          }
+        },
+        "sad": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_sad",
+            "call": "call_sad"
+          },
+          "label": "低落",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sad"
+            }
+          }
+        },
+        "annoyed": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_pout",
+            "call": "call_pout"
+          },
+          "label": "轻微不满",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_pout"
+            }
+          }
+        },
+        "worried": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_worried",
+            "call": "call_worried"
+          },
+          "label": "担心",
+          "category": "表情",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_worried"
+            }
+          }
+        },
+        "sleepy": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_sleepy",
+            "call": "call_sleepy"
+          },
+          "label": "困倦",
+          "category": "日常",
+          "preserve_activity": false,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sleepy"
+            }
+          }
+        },
+        "head_pat": {
+          "mode": "once",
+          "seconds": 4,
+          "views": {
+            "full_body": "full_headpat",
+            "call": "call_headpat"
+          },
+          "label": "摸摸头",
+          "category": "交流",
+          "preserve_activity": true,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_headpat"
+            }
+          }
+        },
+        "drag": {
+          "mode": "hold",
+          "internal": true,
+          "views": {
+            "full_body": "full_pickup",
+            "call": "call_surprised"
+          },
+          "label": "拖动反应",
+          "category": "桌宠",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_pickup",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "walk": {
+          "mode": "hold",
+          "internal": true,
+          "views": {
+            "full_body": "full_walk_right"
+          },
+          "label": "慢走",
+          "category": "桌宠",
+          "preserve_activity": true,
+          "seconds": 0,
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_walk_right"
+            }
+          }
+        },
+        "teary": {
+          "label": "委屈含泪",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_teary",
+            "call": "call_teary"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_teary",
+              "full_body": "full_nightdress_teary"
+            }
+          }
+        },
+        "crying": {
+          "label": "伤心哭泣",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_crying",
+            "call": "call_crying"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_crying",
+              "full_body": "full_nightdress_crying"
+            }
+          }
+        },
+        "disappointed": {
+          "label": "失望",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_disappointed",
+            "call": "call_disappointed"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_disappointed",
+              "full_body": "full_nightdress_disappointed"
+            }
+          }
+        },
+        "anxious": {
+          "label": "焦虑担忧",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_anxious",
+            "call": "call_anxious"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_anxious",
+              "full_body": "full_nightdress_anxious"
+            }
+          }
+        },
+        "angry": {
+          "label": "生气",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_angry",
+            "call": "call_angry"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_angry",
+              "full_body": "full_nightdress_angry"
+            }
+          }
+        },
+        "jealous": {
+          "label": "吃醋",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_jealous",
+            "call": "call_jealous"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_jealous",
+              "full_body": "full_nightdress_jealous"
+            }
+          }
+        },
+        "confused": {
+          "label": "困惑",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_confused",
+            "call": "call_confused"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_confused",
+              "full_body": "full_nightdress_confused"
+            }
+          }
+        },
+        "skeptical": {
+          "label": "怀疑",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_skeptical",
+            "call": "call_skeptical"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_skeptical",
+              "full_body": "full_nightdress_skeptical"
+            }
+          }
+        },
+        "embarrassed": {
+          "label": "尴尬",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_embarrassed",
+            "call": "call_embarrassed"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_embarrassed",
+              "full_body": "full_nightdress_embarrassed"
+            }
+          }
+        },
+        "scared": {
+          "label": "害怕",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_scared",
+            "call": "call_scared"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_scared",
+              "full_body": "full_nightdress_scared"
+            }
+          }
+        },
+        "speechless": {
+          "label": "无语",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_speechless",
+            "call": "call_speechless"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_speechless",
+              "full_body": "full_nightdress_speechless"
+            }
+          }
+        },
+        "relieved": {
+          "label": "释然",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_relieved",
+            "call": "call_relieved"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_relieved",
+              "full_body": "full_nightdress_relieved"
+            }
+          }
+        },
+        "expectant": {
+          "label": "期待",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_expectant",
+            "call": "call_expectant"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_expectant",
+              "full_body": "full_nightdress_expectant"
+            }
+          }
+        },
+        "dreamy": {
+          "label": "心动迷离",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_dreamy",
+            "call": "call_dreamy"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_dreamy",
+              "full_body": "full_nightdress_dreamy"
+            }
+          }
+        },
+        "dazed": {
+          "label": "恍惚发呆",
+          "category": "表情",
+          "mode": "once",
+          "seconds": 4,
+          "preserve_activity": false,
+          "views": {
+            "full_body": "full_dazed",
+            "call": "call_dazed"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_dazed",
+              "full_body": "full_nightdress_dazed"
+            }
+          }
+        },
+        "sit": {
+          "label": "坐下",
+          "category": "桌宠",
+          "mode": "hold",
+          "seconds": 0,
+          "preserve_activity": true,
+          "internal": false,
+          "views": {
+            "full_body": "full_sit"
+          },
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sit"
+            }
+          }
+        },
+        "prone": {
+          "label": "趴下",
+          "category": "桌宠",
+          "mode": "hold",
+          "seconds": 0,
+          "preserve_activity": true,
+          "internal": false,
+          "views": {
+            "full_body": "full_prone"
+          },
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_prone"
+            }
+          }
+        },
+        "edge_rest": {
+          "label": "趴在边缘",
+          "category": "桌宠",
+          "mode": "hold",
+          "seconds": 0,
+          "preserve_activity": true,
+          "internal": true,
+          "views": {
+            "full_body": "full_prone"
+          },
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_prone"
+            }
+          }
+        },
+        "tease_yogurt": {
+          "label": "喝酸奶",
+          "adult_only": true,
+          "category": "sexsual",
+          "category_label": "亲密动作",
+          "mode": "once",
+          "seconds": 6,
+          "preserve_activity": true,
+          "views": {
+            "call": "call_tease_yogurt"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_tease_yogurt"
+            }
+          }
+        },
+        "tease_sweaty_shy": {
+          "label": "出汗害羞",
+          "adult_only": true,
+          "category": "sexsual",
+          "category_label": "亲密动作",
+          "mode": "once",
+          "seconds": 6,
+          "preserve_activity": true,
+          "views": {
+            "call": "call_tease_sweaty_shy"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_tease_sweaty_shy"
+            }
+          }
+        }
+      },
+      "expressions": {
+        "neutral": {
+          "views": {
+            "full_body": "full_idle",
+            "call": "call_listen"
+          },
+          "label": "平静",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_idle",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "happy": {
+          "views": {
+            "full_body": "full_happy",
+            "call": "call_happy"
+          },
+          "label": "开心",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_happy",
+              "call": "call_nightdress_happy"
+            }
+          }
+        },
+        "laugh": {
+          "views": {
+            "full_body": "full_laugh",
+            "call": "call_laugh"
+          },
+          "label": "开怀大笑",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_laugh"
+            }
+          }
+        },
+        "shy": {
+          "views": {
+            "full_body": "full_shy",
+            "call": "call_shy"
+          },
+          "blush": true,
+          "label": "害羞脸红",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_shy",
+              "call": "call_nightdress_shy"
+            }
+          }
+        },
+        "surprised": {
+          "views": {
+            "full_body": "full_surprised",
+            "call": "call_surprised"
+          },
+          "label": "惊讶",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_surprised"
+            }
+          }
+        },
+        "sad": {
+          "views": {
+            "full_body": "full_sad",
+            "call": "call_sad"
+          },
+          "label": "低落",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sad"
+            }
+          }
+        },
+        "annoyed": {
+          "views": {
+            "full_body": "full_pout",
+            "call": "call_pout"
+          },
+          "label": "轻微不满",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_pout"
+            }
+          }
+        },
+        "worried": {
+          "views": {
+            "full_body": "full_worried",
+            "call": "call_worried"
+          },
+          "label": "担心",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_worried"
+            }
+          }
+        },
+        "thinking": {
+          "views": {
+            "full_body": "full_thinking",
+            "call": "call_thinking"
+          },
+          "label": "认真思考",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_thinking"
+            }
+          }
+        },
+        "sleepy": {
+          "views": {
+            "full_body": "full_sleepy",
+            "call": "call_sleepy"
+          },
+          "label": "困倦",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_sleepy"
+            }
+          }
+        },
+        "affectionate": {
+          "views": {
+            "full_body": "full_comfort",
+            "call": "call_comfort"
+          },
+          "label": "温柔亲近",
+          "outfits": {
+            "nightdress": {
+              "full_body": "full_nightdress_comfort"
+            }
+          }
+        },
+        "proud": {
+          "views": {
+            "call": "call_proud"
+          },
+          "label": "小小得意"
+        },
+        "teary": {
+          "label": "委屈含泪",
+          "views": {
+            "full_body": "full_teary",
+            "call": "call_teary"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_teary",
+              "full_body": "full_nightdress_teary"
+            }
+          }
+        },
+        "crying": {
+          "label": "伤心哭泣",
+          "views": {
+            "full_body": "full_crying",
+            "call": "call_crying"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_crying",
+              "full_body": "full_nightdress_crying"
+            }
+          }
+        },
+        "disappointed": {
+          "label": "失望",
+          "views": {
+            "full_body": "full_disappointed",
+            "call": "call_disappointed"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_disappointed",
+              "full_body": "full_nightdress_disappointed"
+            }
+          }
+        },
+        "anxious": {
+          "label": "焦虑担忧",
+          "views": {
+            "full_body": "full_anxious",
+            "call": "call_anxious"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_anxious",
+              "full_body": "full_nightdress_anxious"
+            }
+          }
+        },
+        "angry": {
+          "label": "生气",
+          "views": {
+            "full_body": "full_angry",
+            "call": "call_angry"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_angry",
+              "full_body": "full_nightdress_angry"
+            }
+          }
+        },
+        "jealous": {
+          "label": "吃醋",
+          "views": {
+            "full_body": "full_jealous",
+            "call": "call_jealous"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_jealous",
+              "full_body": "full_nightdress_jealous"
+            }
+          }
+        },
+        "confused": {
+          "label": "困惑",
+          "views": {
+            "full_body": "full_confused",
+            "call": "call_confused"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_confused",
+              "full_body": "full_nightdress_confused"
+            }
+          }
+        },
+        "skeptical": {
+          "label": "怀疑",
+          "views": {
+            "full_body": "full_skeptical",
+            "call": "call_skeptical"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_skeptical",
+              "full_body": "full_nightdress_skeptical"
+            }
+          }
+        },
+        "embarrassed": {
+          "label": "尴尬",
+          "views": {
+            "full_body": "full_embarrassed",
+            "call": "call_embarrassed"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_embarrassed",
+              "full_body": "full_nightdress_embarrassed"
+            }
+          }
+        },
+        "scared": {
+          "label": "害怕",
+          "views": {
+            "full_body": "full_scared",
+            "call": "call_scared"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_scared",
+              "full_body": "full_nightdress_scared"
+            }
+          }
+        },
+        "speechless": {
+          "label": "无语",
+          "views": {
+            "full_body": "full_speechless",
+            "call": "call_speechless"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_speechless",
+              "full_body": "full_nightdress_speechless"
+            }
+          }
+        },
+        "relieved": {
+          "label": "释然",
+          "views": {
+            "full_body": "full_relieved",
+            "call": "call_relieved"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_relieved",
+              "full_body": "full_nightdress_relieved"
+            }
+          }
+        },
+        "expectant": {
+          "label": "期待",
+          "views": {
+            "full_body": "full_expectant",
+            "call": "call_expectant"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_expectant",
+              "full_body": "full_nightdress_expectant"
+            }
+          }
+        },
+        "dreamy": {
+          "label": "心动迷离",
+          "views": {
+            "full_body": "full_dreamy",
+            "call": "call_dreamy"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_dreamy",
+              "full_body": "full_nightdress_dreamy"
+            }
+          }
+        },
+        "dazed": {
+          "label": "恍惚发呆",
+          "views": {
+            "full_body": "full_dazed",
+            "call": "call_dazed"
+          },
+          "outfits": {
+            "nightdress": {
+              "call": "call_nightdress_dazed",
+              "full_body": "full_nightdress_dazed"
+            }
+          }
+        }
+      },
+      "selection_policy": {
+        "preserve_activity_props": true,
+        "combine_whole_body_expressions": false,
+        "missing_view": "use_current_view_default"
+      },
+      "capabilities": {
+        "can_wander": false,
+        "look_at_mouse": false
+      },
+      "outfits": {
+        "maid": {
+          "label": "女仆装",
+          "defaults": {
+            "full_body": "full_idle",
+            "call": "call_listen"
+          }
+        },
+        "nightdress": {
+          "label": "睡衣",
+          "defaults": {
+            "full_body": "full_nightdress_idle",
+            "call": "call_nightdress_happy"
+          }
+        }
+      },
+      "default_outfit": "maid"
+    }
+  },
+  "description": "鲸鱼娘 AI 女仆，26 张全身立绘与 28 张通话近景。"
+}

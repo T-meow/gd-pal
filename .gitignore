@@ -1,0 +1,43 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# .NET and local development outputs
+.vs/
+bin/
+obj/
+*.csproj.user
+exports/
+.env
+.env.*
+!.env.example
+/runtime/laplace/win-x64/
+/runtime/laplace/android/
+/runtime/laplace/native-win-x64/
+*.keystore
+*.jks
+_pending_delete/
+
+# Release-only portraits, generated assets and local previews.
+/output/
+/assets/characters/blue_whale/images/
+*.png
+*.png.import
+*.jpg
+*.jpg.import
+*.jpeg
+*.jpeg.import
+*.webp
+*.webp.import
+*.gif
+*.gif.import
+*.bmp
+*.bmp.import
+*.psd
+*.psd.import
+*.log
+
+# Signing and machine-local configuration.
+*.pfx
+*.p12
+/release-signing/

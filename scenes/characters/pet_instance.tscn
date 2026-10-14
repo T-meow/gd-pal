@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/characters/pet_instance.gd" id="1"]
+
+[node name="PetInstance" type="SubViewport"]
+transparent_bg = true
+size = Vector2i(320, 320)
+render_target_update_mode = 2
+script = ExtResource("1")

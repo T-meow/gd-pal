@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "rooms": [
+    {
+      "id": "night-study", "name": "夜间书房", "english": "THE NIGHT STUDY", "kind": "image",
+      "resource": "res://assets/rooms/night-study.svg", "thumbnail": "res://assets/rooms/night-study.svg",
+      "caption": "夜深了，这盏灯为你留着。", "description": "窗外是沉静的蓝，手边的茶还温热。", "mood": "安静 · 阅读 · 慢慢聊"
+    },
+    {
+      "id": "warm-bedroom", "name": "暖光卧室", "english": "A SOFTER EVENING", "kind": "image",
+      "resource": "res://assets/rooms/warm-bedroom.svg", "thumbnail": "res://assets/rooms/warm-bedroom.svg",
+      "caption": "今天也辛苦了，慢慢放松下来吧。", "description": "把灯调暗一点，把今天轻轻放下来。", "mood": "温暖 · 放松 · 晚安"
+    },
+    {
+      "id": "rainy-lounge", "name": "雨夜客厅", "english": "WHEN THE RAIN FALLS", "kind": "image",
+      "resource": "res://assets/rooms/rainy-lounge.svg", "thumbnail": "res://assets/rooms/rainy-lounge.svg",
+      "caption": "外面在下雨，幸好你在这里。", "description": "雨落在玻璃上，世界只剩下我们。", "mood": "雨声 · 热茶 · 心事"
+    }
+  ]
+}

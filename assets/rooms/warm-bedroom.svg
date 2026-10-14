@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+ <defs>
+  <linearGradient id="wall" x2="1" y2=".5"><stop stop-color="#504543"/><stop offset=".53" stop-color="#493f43"/><stop offset="1" stop-color="#2c303c"/></linearGradient>
+  <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#473d3c"/><stop offset="1" stop-color="#272b34"/></linearGradient>
+  <linearGradient id="arch" x2="1" y2=".8"><stop stop-color="#8d7262"/><stop offset=".5" stop-color="#725e57"/><stop offset="1" stop-color="#5c5151"/></linearGradient>
+  <linearGradient id="blanket" x2=".25" y2="1"><stop stop-color="#8c8880"/><stop offset=".6" stop-color="#747d7e"/><stop offset="1" stop-color="#495b65"/></linearGradient>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#142236"/><stop offset="1" stop-color="#455362"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#f3c287" stop-opacity=".27"/><stop offset=".45" stop-color="#dfa66c" stop-opacity=".09"/><stop offset="1" stop-color="#d9a26a" stop-opacity="0"/></radialGradient>
+  <radialGradient id="pool"><stop stop-color="#deb589" stop-opacity=".14"/><stop offset="1" stop-color="#deb589" stop-opacity="0"/></radialGradient>
+  <linearGradient id="curtain"><stop stop-color="#635c5a"/><stop offset=".35" stop-color="#7c6e63"/><stop offset=".58" stop-color="#635d59"/><stop offset="1" stop-color="#3d424b"/></linearGradient>
+ </defs>
+ <path fill="url(#wall)" d="M0 0h1920v1080H0z"/><path d="M0 0h1920v43H0z" fill="#282831"/><path d="M0 48h1920" stroke="#ac9b80" stroke-opacity=".12" stroke-width="2"/>
+ <path d="M0 880h1920v200H0z" fill="url(#floor)"/><path d="M0 871h1920v13H0z" fill="#2f2d35"/>
+ <g stroke="#8b8071" opacity=".08" stroke-width="2"><path d="M140 884 31 1080m376-196-87 196m386-196-16 196m301-196 28 196m301-196 90 196m194-196 130 196M0 974h1920"/></g>
+ <!-- Padded architectural arch, quiet behind the character. -->
+ <path d="M402 844V379c0-212 146-295 366-295s366 83 366 295v465z" fill="#2f2c35" opacity=".28"/>
+ <path d="M423 842V385c0-196 138-278 346-278s344 82 344 278v457z" fill="url(#arch)" opacity=".38"/>
+ <path d="M438 806V388c0-183 131-266 331-266s329 83 329 266v418" stroke="#c7aa8e" stroke-opacity=".11" stroke-width="2" fill="none"/>
+ <g stroke="#251f2a" stroke-opacity=".1"><path d="M478 300v540m55-609v609m57-664v664m58-689v689m59-703v703m59-710v710m59-703v703m58-689v689m58-664v664m58-609v609m55-540v540"/></g>
+ <rect x="659" y="208" width="222" height="247" rx="2" fill="#413735"/><rect x="668" y="217" width="204" height="229" fill="#ab9a82" opacity=".4"/>
+ <path d="M682 426V306c31-74 97-63 127-17v137z" fill="#796e61"/><path d="M744 432V324c27-54 76-52 112-9v117z" fill="#b3a58b" opacity=".5"/><circle cx="817" cy="257" r="17" fill="#d8bd8e" opacity=".56"/>
+ <!-- Bed and woven bedding, kept below the portrait's face. -->
+ <ellipse cx="768" cy="1019" rx="571" ry="48" fill="#1c222c" opacity=".32"/>
+ <rect x="324" y="642" width="889" height="230" rx="32" fill="#564b4c"/><rect x="343" y="655" width="850" height="138" rx="26" fill="#938575" opacity=".38"/>
+ <path d="m351 768-89 172v77h1009v-77l-84-172z" fill="#726c66"/>
+ <path d="m365 735-48 121h420l-18-123q-158-52-354 2" fill="#b3aa94"/><path d="m811 733-21 123h427l-40-121q-195-48-366-2" fill="#ada48f"/>
+ <path d="m392 737-25 90q149-27 316-3l-15-88" stroke="#d3c3a4" stroke-opacity=".18" stroke-width="3" fill="none"/>
+ <path d="m283 887 980 0 31 87v98H238V974z" fill="url(#blanket)"/>
+ <path d="M264 925q224-45 435-2t581 0v62q-233 22-474 2t-557 0z" fill="#9da29a" opacity=".13"/>
+ <g stroke="#c5c1a9" stroke-opacity=".07" fill="none" stroke-width="2"><path d="M280 950q256-25 501-1t477-1M267 968q271-27 512-1t486-4M255 994q265-16 504 0t517-8M255 1018q277-20 513 0t510-8M251 1040q261-18 510 0t512-9"/></g>
+ <path d="m1003 859 95-4 81 212h-134z" fill="#a29279" opacity=".62"/><g stroke="#d8cbb0" opacity=".15"><path d="m1020 860 57 207m-42-207 57 207m-42-207 57 207m-42-207 57 207"/></g>
+ <!-- Warm bedside lamp. -->
+ <rect x="101" y="754" width="177" height="139" rx="9" fill="#6b5d50"/><path d="M101 769h177v8H101z" fill="#93816a"/><path d="M113 785h153v53H113z" fill="#786654"/><rect x="168" y="804" width="37" height="5" rx="2" fill="#b7a083"/><path d="M116 892v65h13l8-65m108 0 6 65h13v-65" fill="#5b5048"/>
+ <path d="M190 755v-142" stroke="#b8986b" stroke-width="6"/><ellipse cx="190" cy="756" rx="44" ry="8" fill="#a58a67"/>
+ <path d="m130 540 119 0 27 107H103z" fill="#d2b58a"/><ellipse cx="190" cy="647" rx="87" ry="14" fill="#e7c698"/>
+ <g stroke="#9d7951" stroke-opacity=".25"><path d="m143 547-13 94m31-94-7 98m29-98v98m25-98 7 98m14-98 15 94"/></g>
+ <ellipse cx="214" cy="595" rx="405" ry="430" fill="url(#glow)"/><ellipse cx="200" cy="930" rx="263" ry="128" fill="url(#pool)"/>
+ <path d="M111 719h49v10h-49zm7-10h42v10h-42z" fill="#b4b49c"/><path d="M123 700h41v9h-41z" fill="#7b8c8f"/>
+ <!-- Night window and curtain. -->
+ <rect x="1304" y="145" width="429" height="523" rx="4" fill="#202735"/><rect x="1323" y="164" width="391" height="484" fill="url(#sky)"/>
+ <circle cx="1603" cy="275" r="33" fill="#c4ced1" opacity=".63"/>
+ <g fill="#dce3df" opacity=".45"><circle cx="1419" cy="253" r="1.4"/><circle cx="1660" cy="191" r="1.2"/><circle cx="1492" cy="380" r="1"/></g>
+ <path d="M1323 571h56v-45h47v51h24v-97h53v99h27v-69h43v41h36v-117h32v111h43v-30h30v133h-391z" fill="#253443"/>
+ <path d="M1517 157v497M1317 428h405" stroke="#222c36" stroke-width="12"/>
+ <path d="M1294 654h448v17h-448z" fill="#746e66"/>
+ <path d="M1253 127q42 18 93 2l-6 308q-2 164-41 274l-65-6z" fill="url(#curtain)"/><path d="M1681 129q57 15 108-2l20 645-81-11q-41-180-47-354z" fill="url(#curtain)"/>
+ <path d="M1240 119h559" stroke="#a09278" stroke-width="5" stroke-linecap="round"/>
+ <g fill="none" stroke="#b2a595" stroke-opacity=".12" stroke-width="2"><path d="m1272 141-17 543m36-529-11 482m467-482 42 583m-60-583 16 516"/></g>
+ <!-- A quiet seat and slippers. -->
+ <ellipse cx="1580" cy="995" rx="238" ry="43" fill="#20232c" opacity=".33"/>
+ <path d="M1400 813q0-70 73-72h188q72 4 72 73v155h-333z" fill="#655e62"/><path d="M1438 758h214v145h-214z" fill="#918179" opacity=".3"/>
+ <path d="M1425 900q143-35 283 0l-12 59h-257z" fill="#87786f"/><path d="M1393 867h45v119h-45zm297 0h49v119h-49z" fill="#6e6261"/>
+ <path d="m1497 851 27-67 100 29-25 72z" fill="#c0ab8b" opacity=".5"/>
+ <path d="m1412 984-12 56h15l23-56m269 0 23 56h15l-12-56" fill="#48444b"/>
+ <path d="M118 1011q-20-41 12-57 37-14 53 28l13 34q-45 25-78-5m91 4q-21-45 14-58 36-10 50 26l13 35q-43 25-77-3" fill="#8d8172" opacity=".6"/>
+ <path d="M0 0h1920v1080H0z" fill="#241d2b" opacity=".09"/>
+</svg>

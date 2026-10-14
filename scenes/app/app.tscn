@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/app/app.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/characters/pet_instance_manager.gd" id="2"]
+[ext_resource type="Script" path="res://platform/windows/WindowsDesktopBridge.cs" id="3"]
+[ext_resource type="Script" path="res://scripts/conversation/ChatService.cs" id="4"]
+
+[node name="App" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="PetInstanceManager" type="Node" parent="."]
+script = ExtResource("2")
+
+[node name="WindowsDesktopBridge" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="ChatService" type="Node" parent="."]
+script = ExtResource("4")

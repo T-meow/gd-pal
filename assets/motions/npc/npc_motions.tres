@@ -1,0 +1,110 @@
+[gd_resource type="AnimationLibrary" load_steps=53 format=3]
+
+[ext_resource type="Animation" path="res://assets/motions/npc/01_idle/idle_breathe__loop.tres" id="1"]
+[ext_resource type="Animation" path="res://assets/motions/npc/01_idle/idle_look__loop.tres" id="2"]
+[ext_resource type="Animation" path="res://assets/motions/npc/01_idle/idle_relaxed__loop.tres" id="3"]
+[ext_resource type="Animation" path="res://assets/motions/npc/01_idle/idle_wait__loop.tres" id="4"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/walk__loop.tres" id="5"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/walk_start__once.tres" id="6"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/walk_stop__once.tres" id="7"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/jog__loop.tres" id="8"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/run_start__once.tres" id="9"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/run_stop__once.tres" id="10"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/walk_to_run__once.tres" id="11"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/run_to_walk__once.tres" id="12"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/sprint__loop.tres" id="13"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/greet__once.tres" id="14"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/clap__loop.tres" id="15"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/drowse__loop.tres" id="16"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/drowse_wake__once.tres" id="17"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/hair_flick__once.tres" id="18"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/wake_up__once.tres" id="19"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/cheer__loop.tres" id="20"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/leg_stretch__once.tres" id="21"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/talk_calm__once.tres" id="22"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/talk_explain__once.tres" id="23"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/talk_lively__once.tres" id="24"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/listen__loop.tres" id="25"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/react_nod__once.tres" id="26"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/react_shake_head__once.tres" id="27"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_stand_01__hold.tres" id="28"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_stand_02__hold.tres" id="29"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_stand_03__hold.tres" id="30"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_stand_04__hold.tres" id="31"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_stand_05__hold.tres" id="32"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_stand_06__hold.tres" id="33"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_sit_01__hold.tres" id="34"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/photo_sit_02__hold.tres" id="35"]
+[ext_resource type="Animation" path="res://assets/motions/npc/04_conversation/gesture/greet_wave__once.tres" id="36"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/exercise/celebrate_e734fbc0__once.tres" id="37"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/exercise/celebrate_1c0ef690_cycle__loop.tres" id="38"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/gait/skip__loop.tres" id="39"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/gait/walk_shy__loop.tres" id="40"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/gait/walk_lost_in_thought__loop.tres" id="41"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/gait/walk_tired__loop.tres" id="42"]
+[ext_resource type="Animation" path="res://assets/motions/npc/02_locomotion/gait/gait_a10__loop.tres" id="43"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/floor/photo_floor_535e3af6__hold.tres" id="44"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/floor/photo_floor_9c61e0c8__hold.tres" id="45"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/floor/photo_floor_34508a0a__hold.tres" id="46"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/floor/photo_floor_3669d1d5__hold.tres" id="47"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/lying/photo_lying_0808f286__hold.tres" id="48"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/lying/photo_lying_738b2263__hold.tres" id="49"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/lying/photo_lying_465b1844__hold.tres" id="50"]
+[ext_resource type="Animation" path="res://assets/motions/npc/03_daily/rest/rest_cross_legs_2__once.tres" id="51"]
+[ext_resource type="Animation" path="res://assets/motions/npc/05_photo/lying/photo_lying_f7710610__hold.tres" id="52"]
+
+[resource]
+_data = {
+"idle_breathe": ExtResource("1"),
+"idle_look": ExtResource("2"),
+"idle_relaxed": ExtResource("3"),
+"idle_wait": ExtResource("4"),
+"walk": ExtResource("5"),
+"walk_start": ExtResource("6"),
+"walk_stop": ExtResource("7"),
+"jog": ExtResource("8"),
+"run_start": ExtResource("9"),
+"run_stop": ExtResource("10"),
+"walk_to_run": ExtResource("11"),
+"run_to_walk": ExtResource("12"),
+"sprint": ExtResource("13"),
+"greet": ExtResource("14"),
+"clap": ExtResource("15"),
+"drowse": ExtResource("16"),
+"drowse_wake": ExtResource("17"),
+"hair_flick": ExtResource("18"),
+"wake_up": ExtResource("19"),
+"cheer": ExtResource("20"),
+"leg_stretch": ExtResource("21"),
+"talk_calm": ExtResource("22"),
+"talk_explain": ExtResource("23"),
+"talk_lively": ExtResource("24"),
+"listen": ExtResource("25"),
+"react_nod": ExtResource("26"),
+"react_shake_head": ExtResource("27"),
+"photo_stand_01": ExtResource("28"),
+"photo_stand_02": ExtResource("29"),
+"photo_stand_03": ExtResource("30"),
+"photo_stand_04": ExtResource("31"),
+"photo_stand_05": ExtResource("32"),
+"photo_stand_06": ExtResource("33"),
+"photo_sit_01": ExtResource("34"),
+"photo_sit_02": ExtResource("35"),
+"greet_wave": ExtResource("36"),
+"celebrate_e734fbc0": ExtResource("37"),
+"celebrate_1c0ef690_cycle": ExtResource("38"),
+"skip": ExtResource("39"),
+"walk_shy": ExtResource("40"),
+"walk_lost_in_thought": ExtResource("41"),
+"walk_tired": ExtResource("42"),
+"gait_a10": ExtResource("43"),
+"photo_floor_535e3af6": ExtResource("44"),
+"photo_floor_9c61e0c8": ExtResource("45"),
+"photo_floor_34508a0a": ExtResource("46"),
+"photo_floor_3669d1d5": ExtResource("47"),
+"photo_lying_0808f286": ExtResource("48"),
+"photo_lying_738b2263": ExtResource("49"),
+"photo_lying_465b1844": ExtResource("50"),
+"rest_cross_legs_2": ExtResource("51"),
+"photo_lying_f7710610": ExtResource("52")
+}
