@@ -6,8 +6,8 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
-if (-not $GodotPath) { $GodotPath = Join-Path $projectRoot '../Godot_v4.7.2-stable_mono_win64/Godot_v4.7.2-stable_mono_win64.exe' }
-if (-not (Test-Path -LiteralPath $GodotPath)) { throw 'Pass -GodotPath with the Godot 4.7.2 .NET executable.' }
+if (-not $GodotPath) { $GodotPath = 'D:/GameEngines/Godot_v4.8-dev7_mono_win64/Godot_v4.8-dev7_mono_win64.exe' }
+if (-not (Test-Path -LiteralPath $GodotPath)) { throw 'Pass -GodotPath with the Godot 4.8 dev7 .NET executable.' }
 $enginePath = (Resolve-Path -LiteralPath $GodotPath).Path -replace '_console\.exe$', '.exe'
 $signingNames = @('GODOT_ANDROID_KEYSTORE_RELEASE_PATH', 'GODOT_ANDROID_KEYSTORE_RELEASE_USER', 'GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD')
 $signingValues = @{}
@@ -60,7 +60,7 @@ try {
 # Godot 4.7.2 may emit this editor-teardown message after a successful signed export.
 $reportedErrors = Select-String -Path $log, $errors -Pattern 'SCRIPT ERROR:|Parse Error:|(^|\s)ERROR:' | Where-Object { $_.Line -notmatch '^ERROR: EditorSettings not instantiated yet when getting setting "export/android/shutdown_adb_on_exit"\.$' }
 if ($job.ExitCode -ne 0 -or $reportedErrors) {
-    throw "Android export failed. Inspect $log and $errors. Install matching .NET Android export templates, .NET 9 and configure Java/Android SDK in Godot editor settings."
+    throw "Android export failed. Inspect $log and $errors. Install matching .NET Android export templates, .NET 10 and configure Java/Android SDK in Godot editor settings."
 }
 if (-not (Test-Path -LiteralPath $apk)) { throw 'Godot did not produce an APK.' }
 Add-Type -AssemblyName System.IO.Compression.FileSystem

@@ -5,8 +5,9 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
+if (-not $GodotPath) { $GodotPath = 'D:/GameEngines/Godot_v4.8-dev7_mono_win64/Godot_v4.8-dev7_mono_win64_console.exe' }
 if (-not $GodotPath -or -not (Test-Path -LiteralPath $GodotPath -PathType Leaf)) {
-    throw 'Pass -GodotPath with the Godot 4.7.2 .NET executable, or set GODOT_PATH.'
+    throw 'Pass -GodotPath with the Godot 4.8 dev7 .NET executable, or set GODOT_PATH.'
 }
 $enginePath = (Resolve-Path -LiteralPath $GodotPath).Path -replace '_console\.exe$', '.exe'
 if (-not (Test-Path -LiteralPath $enginePath)) { $enginePath = (Resolve-Path -LiteralPath $GodotPath).Path }

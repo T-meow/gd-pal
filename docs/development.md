@@ -2,7 +2,7 @@
 
 ## 环境与源码运行
 
-工程使用 Godot **4.7.2 .NET**。Windows 目标为 `net8.0`；Android 目标为 `net9.0`，还需 .NET 9 SDK、对应 mono Android 导出模板、Java 与 Android SDK。设置 `ANDROID_HOME` 或 `ANDROID_SDK_ROOT` 指向包含 build-tools 的 SDK，以便用 `apksigner` 和 `aapt` 核对发布签名。保持引擎、导出模板和 `gd-pal.csproj` 中 Godot SDK 版本一致。
+工程使用 Godot **4.8 dev7 .NET**。Windows 目标为 `net10.0`；Android 目标为 `net10.0`，还需 .NET 10 SDK、对应 mono Android 导出模板、Java 与 Android SDK。设置 `ANDROID_HOME` 或 `ANDROID_SDK_ROOT` 指向包含 build-tools 的 SDK，以便用 `apksigner` 和 `aapt` 核对发布签名。保持引擎、导出模板和 `gd-pal.csproj` 中 Godot SDK 版本一致。
 
 图片不纳入 Git。先从对应 Release 下载肥鱼初始包，将其中的 `assets/` 合并到工程根目录，再构建并用 Godot 打开 `project.godot`：
 
