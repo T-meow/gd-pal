@@ -87,7 +87,7 @@ func _refresh_pose() -> void:
 		return
 	var view := _view()
 	var action_id := _action
-	if _surface_attached and view == "full_body":
+	if _surface_attached and view == "full_body" and _action in ["idle", "edge_rest", "sit", "prone", "sit_edge"]:
 		action_id = _profile.edge_posture
 	elif _action == "walk":
 		action_id = "walk_left" if _walk_direction < 0 else "walk_right"

@@ -29,7 +29,9 @@ var _region_time := 0.0
 var _last_regions: Array[Rect2] = []
 var _region_window_id := -1
 var _sizing := false
+var _close_pending := false
 var _size_save: Timer
+var _popup_layout: RefCounted = preload("res://scripts/desktop/DesktopPopupLayout.cs").new()
 
 
 func _ready() -> void:
@@ -51,7 +53,7 @@ func _ready() -> void:
 	_size_save.wait_time = 0.4
 	_size_save.timeout.connect(_save_dimensions)
 	add_child(_size_save)
-	title = "和伙伴聊一会儿 · GD Pal"
+	title = "对话记录 · GD Pal"
 	force_native = true
 	borderless = true
 	transparent = true
@@ -82,9 +84,15 @@ func _ready() -> void:
 	_heading.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_heading.mouse_filter = Control.MOUSE_FILTER_STOP
 	_heading.gui_input.connect(_drag_header)
-	PalUi.button("通话", header, func() -> void: scene_requested.emit()).add_theme_font_size_override("font_size", 13)
-	PalUi.button("−", header, func() -> void: set_collapsed(true)).tooltip_text = "收起聊天"
-	PalUi.icon_button("", "close", header, func() -> void: set_display_mode("hidden")).tooltip_text = "隐藏气泡，安静陪伴"
+	var hall_button := PalUi.button("回大厅", header, func() -> void: scene_requested.emit())
+	hall_button.add_theme_font_size_override("font_size", 13)
+	hall_button.tooltip_text = "将伙伴召回大厅"
+	var collapse_button := PalUi.button("−", header, func() -> void: set_collapsed(true))
+	collapse_button.name = "CollapseRecords"
+	collapse_button.tooltip_text = "收起为记录摘要"
+	var close_button := PalUi.icon_button("", "close", header, close_records)
+	close_button.name = "CloseRecords"
+	close_button.tooltip_text = "关闭对话记录"
 	panel.make_more_button(header)
 	for control: Node in header.get_children():
 		if control is Button:
@@ -113,7 +121,9 @@ func _ready() -> void:
 	_compact.pressed.connect(func() -> void: open_chat(true))
 	_compact_settings = PalUi.icon_button("", "settings", _compact_row, panel.open_settings)
 	_compact_settings.tooltip_text = "在主窗口打开连接设置"
-	PalUi.icon_button("", "close", _compact_row, func() -> void: set_display_mode("hidden")).tooltip_text = "隐藏气泡"
+	var compact_close := PalUi.icon_button("", "close", _compact_row, close_records)
+	compact_close.name = "CloseRecordsCompact"
+	compact_close.tooltip_text = "关闭对话记录"
 	_compact_row.hide()
 	_tail = Control.new()
 	_tail.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -131,7 +141,7 @@ func _ready() -> void:
 	add_child(_resize)
 	size_changed.connect(_on_size_changed)
 	visibility_changed.connect(func() -> void: _last_regions.clear())
-	close_requested.connect(func() -> void: set_display_mode("hidden"))
+	close_requested.connect(close_records)
 	focus_entered.connect(func() -> void:
 		if not collapsed:
 			unread = 0
@@ -156,8 +166,7 @@ func open_chat(focus: bool = false) -> void:
 	set_display_mode("expanded")
 	unread = 0
 	read_requested.emit()
-	show()
-	if DisplayServer.get_name() != "headless":
+	if visible and DisplayServer.get_name() != "headless":
 		if focus:
 			grab_focus()
 			panel.focus_input()
@@ -167,12 +176,32 @@ func set_collapsed(value: bool) -> void:
 	set_display_mode("compact" if value else "expanded")
 
 
+func close_records() -> void:
+	set_input_as_handled()
+	set_display_mode("hidden")
+
+
+func _finish_close() -> void:
+	if _close_pending and display_mode == "hidden":
+		hide()
+		_last_regions.clear()
+	_close_pending = false
+
+
 func set_display_mode(value: String, persist: bool = true) -> void:
 	if value not in ["hidden", "compact", "expanded"]:
 		value = "hidden"
 	if not collapsed and display_mode != value:
 		_save_dimensions()
 	display_mode = value
+	if persist and preferences != null:
+		preferences.put("desktop/" + profile_id, "bubble_mode", display_mode)
+	if value == "hidden":
+		# Closing does not first resize/collapse the window under the pointer.
+		_close_pending = true
+		_finish_close.call_deferred()
+		return
+	_close_pending = false
 	collapsed = value != "expanded"
 	_sizing = true
 	_expanded.visible = not collapsed
@@ -180,14 +209,11 @@ func set_display_mode(value: String, persist: bool = true) -> void:
 	_resize.visible = not collapsed
 	PalUi.set_window_minimum(self, Vector2i(280, 108) if collapsed else Vector2i(320, 330))
 	size = Vector2i(Vector2(Vector2i(300, 108) if collapsed else _expanded_size) * content_scale_factor)
-	visible = value != "hidden" and is_instance_valid(desktop)
 	if not collapsed:
 		PalUi.reveal(_expanded)
 	_refresh_compact()
 	follow_pet()
 	_sizing = false
-	if persist and preferences != null:
-		preferences.put("desktop/" + profile_id, "bubble_mode", display_mode)
 	_last_regions.clear()
 
 
@@ -198,12 +224,13 @@ func apply_saved_mode() -> void:
 func _save_dimensions() -> void:
 	if collapsed or _sizing:
 		return
-	_expanded_size = Vector2i(Vector2(size) / content_scale_factor).max(Vector2i(320, 330))
 	if preferences != null:
 		preferences.put("desktop/" + profile_id, "bubble_size", _expanded_size)
 
 
 func bind_desktop(host: PalDesktopWindow) -> void:
+	if is_instance_valid(desktop) and desktop.get_meta("pal_chat_window", null) == self:
+		desktop.remove_meta("pal_chat_window")
 	if host == null:
 		_save_dimensions()
 	if is_instance_valid(desktop) and panel.bubbles_changed.is_connected(desktop.set_dialogue):
@@ -211,7 +238,11 @@ func bind_desktop(host: PalDesktopWindow) -> void:
 	if is_instance_valid(desktop) and desktop.bubble_page_requested.is_connected(panel.navigate_bubbles):
 		desktop.bubble_page_requested.disconnect(panel.navigate_bubbles)
 	desktop = host
+	if not is_instance_valid(desktop):
+		hide()
+		_last_regions.clear()
 	if is_instance_valid(desktop):
+		desktop.set_meta("pal_chat_window", self)
 		panel.bubbles_changed.connect(desktop.set_dialogue)
 		desktop.bubble_page_requested.connect(panel.navigate_bubbles)
 		panel._refresh()
@@ -221,18 +252,30 @@ func bind_desktop(host: PalDesktopWindow) -> void:
 
 
 func follow_pet() -> void:
-	if not is_instance_valid(desktop):
+	if not is_instance_valid(desktop) or not desktop.is_inside_tree() or not desktop.visible or desktop.mode == Window.MODE_MINIMIZED or desktop.is_minimal_mode():
+		hide()
+		return
+	if _close_pending or display_mode == "hidden":
 		return
 	var area := desktop.current_work_area()
-	var available := (area.size - Vector2i(16, 16)).max(Vector2i.ONE)
-	min_size = Vector2i(Vector2(Vector2i(280, 108) if collapsed else Vector2i(320, 330)) * content_scale_factor).min(available)
-	size = size.min(available)
-	var left_space := desktop.position.x - area.position.x
-	var right_space := area.end.x - desktop.position.x - desktop.size.x
-	_on_left = left_space >= size.x + 12 or left_space >= right_space
-	var x := desktop.position.x - size.x - 8 if _on_left else desktop.position.x + desktop.size.x + 8
-	var desired := Vector2i(x, desktop.position.y + int(desktop.size.y * 0.16))
-	position = PalDesktopWindow.clamp_position(desired, size, area)
+	var requested := Vector2i(Vector2(Vector2i(300, 108) if collapsed else _expanded_size) * content_scale_factor)
+	var minimum := Vector2i(Vector2(Vector2i(280, 108) if collapsed else Vector2i(320, 330)) * content_scale_factor)
+	var placement: Rect2i = _popup_layout.call("Arrange", area, Rect2i(desktop.position, desktop.size), requested, Rect2i(), minimum)
+	if not placement.has_area():
+		hide()
+		return
+	var was_sizing := _sizing
+	_sizing = true
+	min_size = minimum.min(placement.size)
+	size = placement.size
+	position = placement.position
+	_sizing = was_sizing
+	_on_left = placement.end.x <= desktop.position.x
+	_tail.visible = _on_left or placement.position.x >= desktop.position.x + desktop.size.x
+	if not visible:
+		show()
+	if is_instance_valid(desktop._monitor_window):
+		desktop._monitor_window.call("UpdatePlacement")
 	_tail.queue_redraw()
 
 
@@ -259,7 +302,8 @@ func _drag_header(event: InputEvent) -> void:
 
 
 func _on_size_changed() -> void:
-	if not _sizing and not collapsed and is_instance_valid(desktop) and _size_save != null:
+	if not _sizing and not collapsed and is_instance_valid(desktop) and is_instance_valid(_size_save) and _size_save.is_inside_tree():
+		_expanded_size = Vector2i(Vector2(size) / content_scale_factor).max(Vector2i(320, 330))
 		_size_save.start()
 	if _resize != null:
 		_resize.position = get_visible_rect().size - Vector2(33, 42)
@@ -280,8 +324,9 @@ func _draw_tail() -> void:
 func _on_presentation(display_name: String, state: String, preview: String) -> void:
 	_display_name = display_name
 	_preview = preview
-	_heading.text = display_name + " · " + ("陪着你" if state == "陪伴中" else state)
-	title = display_name + " · GD Pal"
+	_heading.text = display_name + " · 对话记录"
+	_heading.tooltip_text = state
+	title = display_name + " · 对话记录 · GD Pal"
 	_refresh_compact()
 
 

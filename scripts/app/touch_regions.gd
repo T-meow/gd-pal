@@ -2,7 +2,9 @@ extends Control
 ## The same circles drive hit testing and the optional visual overlay.
 
 var surface: SubViewportContainer
+var overlay_enabled := true
 var _regions: Array[Dictionary] = []
+var _bounds := Rect2()
 
 
 func _ready() -> void:
@@ -28,6 +30,7 @@ static func regions_for(bounds: Rect2, close_up: bool) -> Array[Dictionary]:
 
 func refresh() -> void:
 	var next: Array[Dictionary] = []
+	_bounds = Rect2()
 	if is_instance_valid(surface) and surface.is_visible_in_tree():
 		global_position = surface.global_position
 		size = surface.size
@@ -36,19 +39,31 @@ func refresh() -> void:
 				var factor := surface.size / Vector2(child.size).max(Vector2.ONE)
 				var bounds: Rect2 = child.presenter.get_interaction_rect()
 				bounds = Rect2(bounds.position * factor, bounds.size * factor).intersection(Rect2(Vector2.ZERO, surface.size))
+				_bounds = bounds
 				next = regions_for(bounds, child.presentation_mode == "call")
 				break
 	if next != _regions:
 		_regions = next
 		queue_redraw()
-	visible = PalUi.show_touch_regions and not _regions.is_empty()
+	visible = overlay_enabled and PalUi.show_touch_regions and not _regions.is_empty()
 
 
-func region_at(point: Vector2) -> String:
+func region_at(point: Vector2, nearest: bool = false) -> String:
 	refresh()
 	for region: Dictionary in _regions:
 		if point.distance_squared_to(region.center) <= float(region.radius) * float(region.radius):
 			return str(region.region)
+	# Offline reactions cover the character, while conversational touches retain
+	# their explicit hotspots. Empty space never becomes a touch target.
+	if nearest and _bounds.has_point(point):
+		var closest := ""
+		var distance := INF
+		for region: Dictionary in _regions:
+			var candidate := point.distance_squared_to(region.center)
+			if candidate < distance:
+				distance = candidate
+				closest = str(region.region)
+		return closest
 	return ""
 
 

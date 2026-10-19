@@ -1,6 +1,6 @@
 # PC 性能监控：方案评估与 UI 草案
 
-日期：2026-10-16。范围：Windows 桌宠与大厅；本轮为资料评估和 SVG 设计，尚未安装监控库、驱动或接入实时数据。图中硬件名称和读数均为示例。
+日期：2026-10-16。范围：Windows 桌宠与大厅。以下保留方案评估；现已接入共享采样、独立传感器进程和两种界面，实际操作见 [使用说明](usage.md#pc-性能监控windows)。SVG 图中的硬件名称和读数仍为设计示例。
 
 建议采用 **Windows／.NET 基础采集 + LibreHardwareMonitor 温度与风扇 + 共用 C# 数据服务**。自己写采样、统计口径和界面适配；复用现成的系统接口与传感器支持。温度和风扇纳入首轮实现目标，具体可读项目由硬件、驱动及权限决定。
 
@@ -27,7 +27,7 @@
 | CPU 温度 | LibreHardwareMonitor 温度传感器 | 优先已识别的 CPU Package／Tdie 等合适来源，保留来源名称；不要把主板温度或 ACPI 热区误标为 CPU 温度。无法可靠映射时允许选择传感器。 |
 | GPU 温度 | LibreHardwareMonitor GPU 温度传感器 | 默认核心温度；热点、显存温度如可用则放详情，不能混为同一个读数。 |
 | 风扇转速 | LibreHardwareMonitor GPU／主板／控制器传感器 | 区分 CPU、GPU、机箱；主板泛称 Fan #1 不直接猜成 CPU 风扇，允许绑定与重命名。RPM 与转速百分比分开；只有百分比时不换算虚假的 RPM。 |
-| 磁盘活动／读写 | PDH PhysicalDisk | 默认显示选定磁盘的活动时间和读写速率；不要用磁盘容量占用代替 IO 活跃度。 |
+| 磁盘活动／读写 | PDH PhysicalDisk | 同时列出所有硬盘各自的活动时间和读写速率；不要用磁盘容量占用代替 IO 活跃度。 |
 
 微软依据：[CPU 时间](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getsystemtimes)、[物理内存](https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex)、[GPU 引擎与显存口径](https://devblogs.microsoft.com/directx/gpus-in-the-task-manager/)、[接口字节计数](https://learn.microsoft.com/en-us/dotnet/api/system.net.networkinformation.ipinterfacestatistics?view=net-10.0)。
 
@@ -63,4 +63,18 @@ PDH 使用 [PdhAddEnglishCounter](https://learn.microsoft.com/en-us/windows/win3
 
 颜色沿用 `PalUi` 的深蓝灰纸面、浅蓝主色，辅以柔和绿／紫／暖黄区分指标。状态除了颜色，还显示文字；风扇未知的样例为“— 未提供”。实际界面继续响应已有浅色／自定义主题。SVG 为静态草案，按钮不执行操作；角色使用现有立绘的缩小嵌入，UI 形状、文字与曲线均为可编辑矢量。
 
-实现顺序：先贯通共享基础采样与两种视图，再接入温度／风扇 helper、映射与缺失状态，最后接提醒及自定义项目。后续实机重点人工观察 NVIDIA／AMD／Intel、休眠恢复、切换网卡、缺少传感器与普通权限场景；本轮没有执行项目构建或测试。
+实现使用 Vanara.PInvoke.Pdh 5.0.5 与 LibreHardwareMonitorLib 0.9.6。主项目构建会一并构建并放置独立传感器程序；Windows 导出脚本会包含它的独立运行时。基础指标按 1／2／5 秒采集，温度与风扇每 2 秒读取。第三方许可保留在 `licenses/monitoring/`，驱动未内置或安装。
+
+后续实机效果由使用者人工观察，重点包括 NVIDIA／AMD／Intel、休眠恢复、切换网卡、缺少传感器与普通权限场景。补充需求已实现：所有硬盘并排展示、桌宠按伙伴关闭对话且拦截触摸请求、性能页保留对白、桌宠工具栏自动换行。
+
+## 极简模式补充（2026-10-18）
+
+参考 [TrafficMonitor](https://github.com/zhongyang219/TrafficMonitor/blob/master/README_en-us.md) 的紧凑数值展示、右键设置入口，以及 [Rainmeter 的桌面组件](https://docs.rainmeter.net/manual/skins/)形式。采用“左侧近身立绘＋右侧紧凑数据”的单窗口布局，无常驻标题栏、聊天记录或工具栏；保留所有硬盘，多余内容纵向滚动。仅参考交互和排布，未复制它们的代码或皮肤。TrafficMonitor 当前说明已将温度功能迁移至硬件监控插件；更换 UI 或采集前端不能省去底层传感器驱动。
+
+入口位于大厅监控页。采样和来源选择继续共用 PcMonitorService，不增加第二套轮询。极简模式暂时隐藏独立记录窗、性能卡并停止语音，保留用户已有的显示和对话偏好；右键可退出或返回详情。桌面模式仍存入现有 v1 配置。
+
+本机再次实测：传感器 helper 连接和初始化正常，GPU 温度可读；CPU 的 Core (Tctl/Tdie) 无有效读数，Windows 未检测到 PawnIO 驱动。主界面增加具体原因与安装／授权／重新检测入口。真实 CPU 温度仍须完成官方驱动安装和传感器进程授权后验证。
+
+极简窗口随后改为默认 88% 透明的玻璃底色，亮、暗、跟随主题可独立选择，底色透明度支持 65%～95%；只改变背景，文本和立绘维持不透明。进入极简模式同步关闭 ChatService 的运行时对话入口、取消请求及语音；持久化的伙伴对话偏好保持原值，退出后恢复。
+
+PawnIO 使用显式点击的可选组件流程。参照 [LibreHardwareMonitor 的安装入口](https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/blob/master/LibreHardwareMonitor.Windows.Forms/UI/MainForm.cs)，优先使用随包的官方安装器，没有则下载固定版本 2.2.0 并验证 SHA-256 后启动 Windows 授权和安装界面。取消、超时和重启需求单独提示；不会在启动时安装、自动重启或放宽驱动权限。离线发布可通过导出脚本的 `-PawnIOBundlePath` 附带安装器、许可及完整对应源码；[PawnIO 上游许可](https://github.com/namazso/PawnIO)继续独立保留。换机重新检测本地驱动与硬件，过期设备绑定回退到当前自动选择。

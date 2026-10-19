@@ -1,10 +1,25 @@
 <Project Sdk="Godot.NET.Sdk/4.8.0-dev.7">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <TargetFramework Condition="'$(GodotTargetPlatform)' == 'android'">net10.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <AssemblyName>gd-pal</AssemblyName>
     <RootNamespace>GdPal</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(GodotTargetPlatform)' != 'android'">
+    <DefineConstants>$(DefineConstants);WINDOWS_MONITOR</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="tools/monitor-helper/**/*.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(GodotTargetPlatform)' != 'android'">
+    <PackageReference Include="Vanara.PInvoke.Pdh" Version="5.0.5" />
+    <ProjectReference Include="tools/monitor-helper/GdPal.Sensors.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+  <Target Name="CopyMonitorHelper" AfterTargets="Build" Condition="'$(GodotTargetPlatform)' != 'android'">
+    <ItemGroup>
+      <MonitorHelperFiles Include="tools/monitor-helper/bin/$(Configuration)/net10.0/**/*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(MonitorHelperFiles)" DestinationFiles="@(MonitorHelperFiles->'$(TargetDir)monitor-helper/%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

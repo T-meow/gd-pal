@@ -1,7 +1,24 @@
-﻿param([string]$GodotPath = $env:GODOT_PATH)
+﻿param(
+    [string]$GodotPath = $env:GODOT_PATH,
+    [string]$PawnIOBundlePath = ''
+)
 
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
+$pawnIOFiles = @('PawnIO_setup.exe', 'COPYING', 'README.md', 'PawnIO-2.2.0-source.zip')
+if ($PawnIOBundlePath) {
+    $PawnIOBundlePath = (Resolve-Path -LiteralPath $PawnIOBundlePath).Path
+    foreach ($name in $pawnIOFiles) {
+        if (-not (Test-Path -LiteralPath (Join-Path $PawnIOBundlePath $name) -PathType Leaf)) {
+            throw "The optional PawnIO bundle must include the official installer, license and complete corresponding sources. Missing: $name"
+        }
+    }
+    $pawnIOInstaller = Join-Path $PawnIOBundlePath 'PawnIO_setup.exe'
+    if ((Get-FileHash -LiteralPath $pawnIOInstaller -Algorithm SHA256).Hash -ne '1F519A22E47187F70A1379A48CA604981C4FCF694F4E65B734AAA74A9FBA3032' -or
+        (Get-AuthenticodeSignature -LiteralPath $pawnIOInstaller).Status -ne 'Valid') {
+        throw 'PawnIO must be the unmodified, signed official 2.2.0 installer.'
+    }
+}
 if (-not $GodotPath) {
     $GodotPath = 'D:/GameEngines/Godot_v4.8-dev7_mono_win64/Godot_v4.8-dev7_mono_win64_console.exe'
 }
@@ -13,6 +30,10 @@ $enginePath = $GodotPath -replace '_console\.exe$', '.exe'
 if (-not (Test-Path -LiteralPath $enginePath)) { $enginePath = $GodotPath }
 $exportRoot = Join-Path $projectRoot 'exports'
 $packageRoot = Join-Path $exportRoot 'windows'
+$pawnIODestination = Join-Path $packageRoot 'components/PawnIO'
+if (-not $PawnIOBundlePath -and (Test-Path -LiteralPath $pawnIODestination)) {
+    throw 'The export folder contains a previous optional PawnIO component. Pass -PawnIOBundlePath again or remove components/PawnIO before exporting without it.'
+}
 $logRoot = Join-Path $projectRoot '.godot/checks'
 New-Item -ItemType Directory -Path $packageRoot, $logRoot -Force | Out-Null
 [System.IO.File]::WriteAllText((Join-Path $exportRoot '.gdignore'), '')
@@ -30,6 +51,13 @@ if ($job.ExitCode -ne 0 -or $exportErrors) {
 foreach ($name in @('GD-Pal.exe', 'GD-Pal.pck', 'data_gd-pal_windows_x86_64/gd-pal.dll', 'data_gd-pal_windows_x86_64/coreclr.dll')) {
     if (-not (Test-Path -LiteralPath (Join-Path $packageRoot $name))) { throw "Missing exported dependency: $name" }
 }
+$sensorOutput = Join-Path $packageRoot 'monitor-helper'
+dotnet publish (Join-Path $projectRoot 'tools/monitor-helper/GdPal.Sensors.csproj') -c Release -r win-x64 --self-contained true -o $sensorOutput
+if ($LASTEXITCODE -ne 0) { throw 'Performance sensor helper publish failed.' }
+if ($PawnIOBundlePath) {
+    New-Item -ItemType Directory -Path $pawnIODestination -Force | Out-Null
+    foreach ($name in $pawnIOFiles) { Copy-Item -LiteralPath (Join-Path $PawnIOBundlePath $name) -Destination $pawnIODestination -Force }
+}
 $motionNotices = Join-Path $packageRoot 'licenses/motions'
 New-Item -ItemType Directory -Path $motionNotices -Force | Out-Null
 Copy-Item -LiteralPath (Join-Path $projectRoot 'assets/motions/npc/manifest.json') -Destination $motionNotices -Force
@@ -37,6 +65,7 @@ Copy-Item -LiteralPath (Join-Path $projectRoot 'assets/motions/npc/licenses') -D
 Copy-Item -LiteralPath (Join-Path $projectRoot 'docs/assets.md') -Destination (Join-Path $packageRoot 'motions.md') -Force
 Copy-Item -LiteralPath (Join-Path $projectRoot 'LICENSE'), (Join-Path $projectRoot 'THIRD_PARTY_NOTICES.md') -Destination $packageRoot -Force
 Copy-Item -LiteralPath (Join-Path $projectRoot 'licenses/yumo') -Destination (Join-Path $packageRoot 'licenses') -Recurse -Force
+Copy-Item -LiteralPath (Join-Path $projectRoot 'licenses/monitoring') -Destination (Join-Path $packageRoot 'licenses') -Recurse -Force
 foreach ($addon in @('vrm', 'Godot-MToon-Shader', 'godot_mcp')) {
     $noticeRoot = Join-Path $packageRoot "addons/$addon"
     New-Item -ItemType Directory -Path $noticeRoot -Force | Out-Null
@@ -54,6 +83,11 @@ GD Pal - Windows x64
 默认使用肥鱼 2D 角色；切换到 DS 3D 后可使用动作库与窗口／任务栏上沿趴靠，见 motions.md。
 
 关闭大厅会收起到系统托盘，桌宠和聊天继续。
+大厅“性能”页或桌宠工具栏“性能”可查看本机占用、温度与风扇。
+部分温度／主板风扇需要在传感器设置中启用高级读取，并具备 PawnIO 驱动支持。
+点击“安装温度组件”可使用随包安装器，未附带时从官方获取；安装需管理员授权。
+换电脑后需在新电脑安装一次驱动。选择过的旧设备不可用时会自动匹配当前设备。
+极简模式右键可选择亮色／暗色玻璃，监控设置可调整背景透明度。
 单击托盘图标恢复大厅，右键菜单可打开、收起或退出。
 伙伴档案可手动编辑人设、记忆和世界设定。AI 整理的候选条目需确认后才会加入。
 肥鱼初始包中的 persona.zip 可在伙伴档案的“导入导出”中导入。
@@ -67,6 +101,7 @@ $buildInfo = [ordered]@{
     platform = 'Windows x64'
     engine = (& $enginePath --version | Out-String).Trim()
     configuration = 'ExportRelease'
+    pawnio_bundled = [bool]$PawnIOBundlePath
     motion_count = (Get-Content -LiteralPath (Join-Path $projectRoot 'assets/motions/npc/manifest.json') -Raw | ConvertFrom-Json).totals.clips
     exe_sha256 = (Get-FileHash -LiteralPath $executable -Algorithm SHA256).Hash
     pack_sha256 = (Get-FileHash -LiteralPath (Join-Path $packageRoot 'GD-Pal.pck') -Algorithm SHA256).Hash

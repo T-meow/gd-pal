@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>GdPal.Sensors</AssemblyName>
+    <Configurations>Debug;Release;ExportDebug;ExportRelease</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.6" />
+    <Compile Include="../../scripts/monitoring/MonitorData.cs" Link="MonitorData.cs" />
+  </ItemGroup>
+</Project>

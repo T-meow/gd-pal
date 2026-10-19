@@ -64,6 +64,7 @@ var _history_preferred := true
 var _room_stage: PalRoomStage
 var _rooms_page: PalRoomsPage
 var _desktop_page: PalDesktopPage
+var _monitor_page: Control
 var _top_background: Panel
 var _tabs: HBoxContainer
 var _tab_buttons: Dictionary = {}
@@ -139,6 +140,10 @@ func _ready() -> void:
 	_desktop_page.profile_selected.connect(func(id: String) -> void: profile_selected.emit(id))
 	_desktop_page.preference_requested.connect(func(key: String, value: Variant) -> void: desktop_preference_requested.emit(key, value))
 	_desktop_page.return_requested.connect(func() -> void: show_view("call"))
+	if OS.get_name() == "Windows":
+		_monitor_page = preload("res://scripts/monitoring/PcMonitorPanel.cs").new()
+		add_child(_monitor_page)
+		_monitor_page.hide()
 	_notice = PalUi.hint("", self)
 	_notice.add_theme_color_override("font_color", PalUi.ERROR)
 	_notice.add_theme_font_size_override("font_size", 12)
@@ -173,8 +178,8 @@ func _build_touch_regions() -> void:
 	add_to_group("pal_touch_hosts")
 
 
-func touch_region_at(point: Vector2) -> String:
-	return _touch_regions.region_at(point) if _touch_regions != null else ""
+func touch_region_at(point: Vector2, nearest: bool = false) -> String:
+	return _touch_regions.region_at(point, nearest) if _touch_regions != null else ""
 
 
 func refresh_touch_regions() -> void:
@@ -206,10 +211,17 @@ func _on_bubbles(dialogue: String, description: String, index: int = 0, total: i
 func _layout_bubbles() -> void:
 	if _dialogue_bubble == null:
 		return
-	var available := _empty_mode == "hall" and current_view == "call" and surface.visible and _bubble_area.size.y >= 150
+	var dialogue_enabled := _character_pet != null and _character_pet.profile.desktop_dialogue_enabled
+	var available := dialogue_enabled and _empty_mode == "hall" and current_view in ["call", "performance"] and surface.visible and _bubble_area.size.y >= 150
 	_dialogue_bubble.visible = available and _dialogue_bubble.has_text() and _dialogue_bubble.is_enabled()
 	_description_bubble.visible = available and _description_bubble.has_text() and _description_bubble.is_enabled()
 	if not available:
+		return
+	if current_view == "performance":
+		_dialogue_bubble.fit(_bubble_area.size.x, minf(150, _bubble_area.size.y * 0.3))
+		_description_bubble.fit(_bubble_area.size.x, minf(110, _bubble_area.size.y * 0.2))
+		_dialogue_bubble.position = _bubble_area.position
+		_description_bubble.position = Vector2(_bubble_area.position.x, _bubble_area.end.y - _description_bubble.size.y)
 		return
 	var character := Rect2(surface.position, surface.size)
 	var close_up := _portrait_framing == "call" or _selected_visual == "vrm3d"
@@ -287,7 +299,10 @@ func _build_header() -> void:
 	_tabs = HBoxContainer.new()
 	_tabs.add_theme_constant_override("separation", 4)
 	add_child(_tabs)
-	for item: Array in [["call", "通话", "call"], ["rooms", "房间", "room"], ["desktop", "桌宠", "desktop"]]:
+	var tabs: Array = [["call", "通话", "call"], ["rooms", "房间", "room"], ["desktop", "桌宠", "desktop"]]
+	if OS.get_name() == "Windows":
+		tabs.append(["performance", "性能", "performance"])
+	for item: Array in tabs:
 		var id: String = item[0]
 		var button := PalUi.icon_button(item[1], item[2], _tabs, func() -> void: show_view(id))
 		button.add_theme_font_size_override("font_size", 12)
@@ -536,7 +551,7 @@ func select_room(id: String, notify: bool = true) -> void:
 
 
 func show_view(id: String) -> void:
-	if id not in ["call", "rooms", "desktop"]:
+	if id not in ["call", "rooms", "desktop", "performance"] or (id == "performance" and _monitor_page == null):
 		return
 	if is_instance_valid(panel):
 		panel.save_view_state()
@@ -734,6 +749,7 @@ func _layout() -> void:
 		return
 	var dimensions := size
 	var call_visible := current_view == "call"
+	var monitor_portrait := current_view == "performance" and _empty_mode == "hall"
 	var show_chat := call_visible and history_visible and is_instance_valid(panel)
 	var width := clampf(chat_width, 320.0, minf(480.0, dimensions.x - 464.0))
 	var hero_width := dimensions.x - 64.0 - (width if show_chat else 0.0)
@@ -744,8 +760,9 @@ func _layout() -> void:
 	_header.position = Vector2(17, 9)
 	_header.size = Vector2(dimensions.x - 34, 38)
 	_brand_hint.visible = dimensions.x >= 1140
-	_tabs.position = Vector2(dimensions.x * 0.5 - 133, 10)
-	_tabs.size = Vector2(266, 36)
+	var tab_width := float(_tab_buttons.size() * 90 - 4)
+	_tabs.position = Vector2(maxf(150, minf(dimensions.x * 0.5 - tab_width * 0.5, dimensions.x - 397 - tab_width)), 10)
+	_tabs.size = Vector2(tab_width, 36)
 	for id: String in _tab_buttons:
 		PalUi.quiet(_tab_buttons[id], id == current_view)
 	_rail.position = Vector2(0, 56)
@@ -758,9 +775,13 @@ func _layout() -> void:
 	_stage_shade.visible = call_visible
 	# Use the full stage height for both portrait and 3D call framing.
 	var stage_rect := Rect2(Vector2(64, 56), Vector2(maxf(120, hero_width), maxf(100, hero_height)))
+	if monitor_portrait:
+		stage_rect = Rect2(Vector2(dimensions.x - 276, 180), Vector2(256, maxf(180, hero_height - 210)))
 	_bubble_area = Rect2(Vector2(84, 220), Vector2(maxf(100, hero_width - 40), maxf(100, dimensions.y - 326)))
+	if monitor_portrait:
+		_bubble_area = Rect2(Vector2(dimensions.x - 270, 158), Vector2(248, maxf(160, dimensions.y - 202)))
 	_layout_character_surface(stage_rect)
-	surface.visible = call_visible and _empty_mode == "hall"
+	surface.visible = (call_visible or monitor_portrait) and _empty_mode == "hall"
 	_display_controls.position = Vector2(96, 180)
 	_display_controls.size = Vector2(maxf(100, hero_width - 64), 32)
 	_display_controls.visible = call_visible
@@ -781,6 +802,10 @@ func _layout() -> void:
 	_footer.size = Vector2(footer_width, 64)
 	for control: Control in [_stage_kicker, _name, _state, _stage_caption, _focus, _stage_location, _footer]:
 		control.visible = call_visible
+	if monitor_portrait:
+		_name.visible = true
+		_name.position = Vector2(dimensions.x - 260, 102)
+		_name.size = Vector2(232, 39)
 	_sidebar.visible = show_chat
 	_sidebar.position = Vector2(dimensions.x - width, 56)
 	_sidebar.size = Vector2(width, hero_height)
@@ -798,6 +823,10 @@ func _layout() -> void:
 	for page: Control in [_rooms_page, _desktop_page]:
 		page.position = Vector2(64, 56)
 		page.size = Vector2(dimensions.x - 64, hero_height)
+	if _monitor_page != null:
+		_monitor_page.visible = current_view == "performance"
+		_monitor_page.position = Vector2(64, 56)
+		_monitor_page.size = Vector2(dimensions.x - 64 - (290 if monitor_portrait else 0), hero_height - 12)
 	_notice.position = Vector2(84, dimensions.y - 45)
 	_notice.size = Vector2(dimensions.x - 108, 36)
 	_window_resize.visible = not PalUi.is_editor_preview(get_window()) and get_window().mode != Window.MODE_MAXIMIZED
@@ -808,6 +837,8 @@ func _layout() -> void:
 
 
 func refresh_overlay() -> void:
+	if _monitor_page != null:
+		_monitor_page.call("ConfigureTheme", PalUi.PAPER, PalUi.SURFACE, PalUi.TEXT, PalUi.MUTED, PalUi.ACCENT, PalUi.BORDER)
 	if _footer != null:
 		PalUi.overlay_controls(_footer)
 	if _display_controls != null:

@@ -8,6 +8,7 @@ signal reveal_requested
 signal navigation_requested(page_id: String, profile_id: String, context: Dictionary)
 signal speech_requested(text: String)
 signal user_activity(profile_id: String)
+signal dialogue_enable_requested
 
 const DIALOGUE_PAGES := preload("res://scripts/conversation/dialogue_pages.gd")
 const IMAGE_ATTACHMENTS := preload("res://scripts/conversation/chat_image_attachments.gd")
@@ -43,6 +44,8 @@ var _new_messages: Button
 var _message_views: Dictionary = {}
 var _rendered_ids: Array[String] = []
 var _busy := false
+var _dialogue_enabled := true
+var _dialogue_notice: HFlowContainer
 var _mobile_compact := false
 var _context_status: Label
 var _composer_actions: HFlowContainer
@@ -94,6 +97,12 @@ func _ready() -> void:
 	_storage_status.add_theme_color_override("font_color", PalUi.ERROR)
 	_storage_status.max_lines_visible = 2
 	_storage_status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_dialogue_notice = HFlowContainer.new()
+	_dialogue_notice.add_theme_constant_override("h_separation", 10)
+	_composer.add_child(_dialogue_notice)
+	PalUi.label("对话已关闭 · 当前只读", _dialogue_notice, 12, true)
+	PalUi.button("启用对话", _dialogue_notice, func() -> void: dialogue_enable_requested.emit()).add_theme_font_size_override("font_size", 12)
+	_dialogue_notice.hide()
 	_images = IMAGE_ATTACHMENTS.new()
 	_images.service = service
 	_composer.add_child(_images)
@@ -301,6 +310,8 @@ func refresh_theme() -> void:
 
 
 func _read_last_reply() -> void:
+	if not _dialogue_enabled:
+		return
 	var snapshot: Dictionary = JSON.parse_string(service.call("GetSnapshot", _profile_id))
 	var messages: Array = snapshot.get("messages", [])
 	for index: int in range(messages.size() - 1, -1, -1):
@@ -451,6 +462,7 @@ func _refresh() -> void:
 		return
 	var data := _snapshot()
 	if data.is_empty():
+		_dialogue_notice.hide()
 		_images.set_context("", "")
 		_image_button.disabled = true
 		_render_messages([], true)
@@ -474,7 +486,10 @@ func _refresh() -> void:
 		save_view_state()
 		_session_id = str(data.session_id)
 	_images.set_context(_profile_id, _session_id)
-	_input.editable = true
+	_dialogue_enabled = bool(data.get("dialogue_enabled", true))
+	_input.editable = _dialogue_enabled
+	_input.placeholder_text = "想和你说……（留空可继续）" if _dialogue_enabled else "当前伙伴已关闭对话，启用后即可输入。"
+	_dialogue_notice.visible = not _dialogue_enabled
 	_busy = bool(data.busy)
 	var waiting_display: bool = not data.messages.is_empty() and bool(data.messages[-1].get("display_waiting", false))
 	if changed_session:
@@ -494,20 +509,23 @@ func _refresh() -> void:
 		_new_messages.show()
 	_empty.visible = data.messages.is_empty() and not _mobile_compact
 	_empty.text = "从一句你好开始，今天也一起度过吧。" if data.has_key else "点击「接入模型」，开启你们的第一段对话。"
-	_connect_button.visible = not bool(data.has_key)
+	_connect_button.visible = _dialogue_enabled and not bool(data.has_key)
 	_storage_status.text = str(data.storage_error)
 	_storage_status.tooltip_text = _storage_status.text
 	_storage_status.visible = not _storage_status.text.is_empty()
 	_save_retry.visible = _storage_status.visible
-	_stop_button.visible = _busy or waiting_display
+	_stop_button.visible = _dialogue_enabled and (_busy or waiting_display)
 	_stop_button.text = "停止" if _busy else "显示全文"
 	_stop_button.tooltip_text = "停止当前回复" if _busy else "停止表演并立即显示已生成的文字"
 	_send_button.visible = not _busy
-	_retry_button.visible = not _busy and not waiting_display and not data.messages.is_empty() and str(data.messages[-1].status) in ["failed", "interrupted", "stopped", "truncated"]
+	_retry_button.visible = _dialogue_enabled and not _busy and not waiting_display and not data.messages.is_empty() and str(data.messages[-1].status) in ["failed", "interrupted", "stopped", "truncated"]
+	_retry_button.disabled = not _dialogue_enabled or _busy
 	if not PalUi.is_mobile():
 		_composer_actions.visible = _connect_button.visible or _save_retry.visible or (_retry_button.visible and not _desktop_compact)
 	_update_send_button()
 	_status.text = "正在回复，可以先写下一句话。" if _busy else ("" if PalUi.is_mobile() else "Enter 换行 · Ctrl + Enter 发送")
+	if not _dialogue_enabled:
+		_status.text = "当前只读；恢复窗口或切换模式不会自动开启对话。"
 	if not str(data.notice).is_empty():
 		_status.text = str(data.notice)
 	if int(data.total_messages) > 200:
@@ -545,7 +563,13 @@ func _refresh() -> void:
 			elif str(message.status) == "truncated":
 				state = "已达到回复长度"
 			break
-	_update_bubbles(bubble_message)
+	if not _dialogue_enabled:
+		state = "安静陪伴 · 对话已关闭"
+		preview = "可以查看历史记录，启用对话后再聊天。"
+		_bubble_live = false
+		_update_bubbles({})
+	else:
+		_update_bubbles(bubble_message)
 	presentation_changed.emit(str(data.display_name), state, preview)
 	_status.visible = not _status.text.is_empty()
 
@@ -590,6 +614,8 @@ func _publish_bubble_page(play: bool = false) -> void:
 
 
 func navigate_bubbles(direction: int) -> void:
+	if not _dialogue_enabled:
+		return
 	var next := _bubble_index + direction
 	if next < 0 or next >= _bubble_pages.size():
 		return
@@ -607,7 +633,7 @@ func refresh_bubble_preferences() -> void:
 
 
 func _process(delta: float) -> void:
-	if not PalUi.dialogue_autoplay or not _bubble_live or _bubble_pages.is_empty():
+	if not _dialogue_enabled or not PalUi.dialogue_autoplay or not _bubble_live or _bubble_pages.is_empty():
 		return
 	if is_instance_valid(performance) and performance.pet.render_target_update_mode == SubViewport.UPDATE_DISABLED:
 		return
@@ -766,8 +792,8 @@ func _scroll_to_end() -> void:
 func _update_send_button() -> void:
 	if _send_button != null:
 		var continuation: bool = _input.text.strip_edges().is_empty() and _images.images().is_empty()
-		_send_button.disabled = _profile_id.is_empty() or _busy or _input.text.length() > 4000 or _images.is_importing()
-		_send_button.text = "继续" if continuation else "发送"
+		_send_button.disabled = not _dialogue_enabled or _profile_id.is_empty() or _busy or _input.text.length() > 4000 or _images.is_importing()
+		_send_button.text = ("继续" if continuation else "发送") if _dialogue_enabled else "已关闭"
 		_send_button.tooltip_text = ("无需输入，让角色继续当前场景" if continuation else "发送当前对白或动作") + ("" if PalUi.is_mobile() else " · Ctrl + Enter 提交 · Enter 换行")
 	if _action_button != null:
 		_action_button.disabled = _profile_id.is_empty() or not _input.editable
@@ -807,7 +833,7 @@ func _on_input_event(event: InputEvent) -> void:
 
 
 func _send() -> void:
-	if _images.is_importing():
+	if not _dialogue_enabled or _images.is_importing():
 		return
 	user_activity.emit(_profile_id)
 	_retry_error = ""
@@ -850,6 +876,8 @@ func _stop() -> void:
 
 
 func _retry() -> void:
+	if not _dialogue_enabled:
+		return
 	user_activity.emit(_profile_id)
 	if _retry_queued or _busy or _profile_id.is_empty():
 		return
@@ -863,7 +891,7 @@ func _retry() -> void:
 
 func _retry_deferred(profile_id: String, session_id: String) -> void:
 	_retry_queued = false
-	if profile_id != _profile_id or session_id != _session_id or _busy:
+	if not _dialogue_enabled or profile_id != _profile_id or session_id != _session_id or _busy:
 		return
 	var draft := _input.text
 	var last_user := ""
@@ -886,7 +914,7 @@ func _retry_deferred(profile_id: String, session_id: String) -> void:
 			_images.clear_after_send()
 	_retry_error = error
 	_refresh()
-	_retry_button.disabled = _busy
+	_retry_button.disabled = not _dialogue_enabled or _busy
 	if not error.is_empty():
 		_status.text = error
 		_status.show()

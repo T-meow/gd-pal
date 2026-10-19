@@ -4,10 +4,16 @@ extends Control
 
 const HALL_SCENE := preload("res://scenes/app/companion_hall.tscn")
 const UI_STATE_PATH := "user://ui_state.cfg"
+const TOUCH_REACTIONS := {
+	"upper": ["head_pat", "happy", "laugh", "relieved"],
+	"middle": ["happy", "shy", "surprised", "confused"],
+	"lower": ["shy", "embarrassed", "surprised", "expectant"],
+}
 
 @onready var _manager: PalInstanceManager = $PetInstanceManager
 @onready var _bridge: Node = $WindowsDesktopBridge
 @onready var _chat_service: Node = $ChatService
+@onready var _pc_monitor: Node = $PcMonitorService
 var _hall: PalCompanionHall
 var _tray: PalSystemTray
 var _main_hidden := false
@@ -39,6 +45,7 @@ var _idle_routines: Dictionary = {}
 var _idle_actions_enabled := true
 var _pending_touches: Dictionary = {}
 var _last_touch: Dictionary = {}
+var _last_touch_reaction: Dictionary = {}
 var _touch_poll := 0.0
 var _history_deletes: Dictionary = {}
 
@@ -67,6 +74,18 @@ func _ready() -> void:
 		get_window().borderless = true
 	_hall = PalMobileHall.new() if PalUi.is_mobile() else HALL_SCENE.instantiate()
 	add_child(_hall)
+	if _hall._monitor_page != null:
+		_hall._monitor_page.call("Configure", _pc_monitor, 0)
+		_hall._monitor_page.call("ConfigureTheme", PalUi.PAPER, PalUi.SURFACE, PalUi.TEXT, PalUi.MUTED, PalUi.ACCENT, PalUi.BORDER)
+		_hall._monitor_page.connect("MinimalModeRequested", func() -> void:
+			_guard_navigation(func() -> void: _open_minimal_monitor(_selected_profile_id)))
+	_pc_monitor.connect("AlertRaised", func(message: String) -> void:
+		var active_pet := _pet_for_profile(_selected_profile_id)
+		if active_pet != null:
+			if _desktop_windows.has(active_pet.instance_id):
+				(_desktop_windows[active_pet.instance_id] as PalDesktopWindow).say(message, true)
+			else:
+				_hall.set_notice(message))
 	_hall.pomodoro.configure({"focus_minutes": _preferences.get_value("pomodoro", "focus_minutes", 25), "rest_minutes": _preferences.get_value("pomodoro", "rest_minutes", 5), "automatic": _preferences.get_value("pomodoro", "automatic", true)}, _idle_actions_enabled)
 	_hall.pomodoro.settings_changed.connect(func(settings: Dictionary) -> void: _preferences.put_values("pomodoro", settings))
 	_hall.pomodoro.idle_actions_changed.connect(_set_idle_actions_enabled)
@@ -96,10 +115,10 @@ func _ready() -> void:
 			return
 		var pet := _pet_for_profile(_selected_profile_id)
 		if pet != null and pet.presenter != null and _hosts.get(pet.instance_id) == "hall":
-			var region := _hall.touch_region_at(point)
+			var region := _hall.touch_region_at(point, not pet.profile.desktop_dialogue_enabled)
 			if not region.is_empty():
 				_touch_character(pet.instance_id, region)
-			else:
+			elif pet.profile.desktop_dialogue_enabled:
 				_note_user_activity(pet.profile.profile_id)
 				_ensure_chat_window(pet.instance_id).panel.navigate_bubbles(1)
 	)
@@ -180,6 +199,12 @@ func _ready() -> void:
 	get_window().focus_entered.connect(_mark_active_read)
 	if "--chat" in OS.get_cmdline_user_args() and not _manager.instances.is_empty():
 		_open_chat.call_deferred(str(_manager.instances.keys()[0]))
+	if "--performance" in OS.get_cmdline_user_args():
+		_hall.show_view.call_deferred("performance")
+	if "--floating-call" in OS.get_cmdline_user_args() and not _selected_profile_id.is_empty():
+		_restore_floating_call.call_deferred(_selected_profile_id)
+	if "--minimal-monitor" in OS.get_cmdline_user_args() and not _selected_profile_id.is_empty():
+		_open_minimal_monitor.call_deferred(_selected_profile_id)
 	print("GD Pal companion hall ready.")
 
 
@@ -214,6 +239,7 @@ func _add_pet(visual_id: String, saved_profile: PalProfile = null, allow_fallbac
 	_views[pet.instance_id] = {"viewport": viewport}
 	_hosts[pet.instance_id] = "parked"
 	_chat_service.call("RegisterProfile", pet.profile.profile_id, pet.profile.display_name, pet.profile.persona, pet.profile.adult_mode)
+	_chat_service.call("SetDialogueEnabled", pet.profile.profile_id, pet.profile.desktop_dialogue_enabled)
 	var role_data: Dictionary = JSON.parse_string(_chat_service.call("GetRole", pet.profile.profile_id))
 	pet.profile.persona = str(role_data.get("profile", {}).get("persona", pet.profile.persona))
 	pet.profile.display_name = str(role_data.get("profile", {}).get("display_name", pet.profile.display_name))
@@ -264,6 +290,7 @@ func _activate_profile(profile_id: String, focus: bool = true) -> void:
 	if _hosts.get(pet.instance_id) == "desktop":
 		_release_desktop(pet.instance_id)
 	_selected_profile_id = profile_id
+	_chat_service.call("SetDialogueEnabled", profile_id, pet.profile.desktop_dialogue_enabled)
 	_chat_window = _ensure_chat_window(pet.instance_id)
 	if _hosts.get(pet.instance_id) != "hall":
 		_chat_window.panel.save_view_state()
@@ -355,11 +382,12 @@ func _put_on_desktop(instance_id: String) -> void:
 		return
 	_park(instance_id)
 	var pet: PalPetInstance = _manager.instances[instance_id]
-	pet.set_presentation_mode(pet.profile.desktop_mode if pet.profile.visual_id == "sprite2d" else "full_body")
+	pet.set_presentation_mode("call" if pet.profile.visual_id == "sprite2d" and pet.profile.desktop_mode in ["call", "minimal"] else "full_body")
 	pet.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	var window := PalDesktopWindow.new()
 	window.pet = pet
 	window.bridge = _bridge
+	window.pc_monitor = _pc_monitor
 	window.theme = theme
 	window.visible = false
 	window.force_native = true
@@ -371,6 +399,8 @@ func _put_on_desktop(instance_id: String) -> void:
 			open_panel(page, _manager.instances[id].profile.profile_id)
 	)
 	window.settings_changed.connect(func() -> void: _refresh_roster(); _queue_save())
+	window.dialogue_enabled_changed.connect(func(value: bool) -> void: _set_desktop_dialogue(pet, value))
+	window.monitor_mode_changed.connect(func() -> void: _set_desktop_dialogue(pet, pet.profile.desktop_dialogue_enabled))
 	window.framing_requested.connect(func(mode: String) -> void: _set_desktop_mode(pet.profile.profile_id, mode))
 	window.touch_requested.connect(_touch_character)
 	window.touch_regions_requested.connect(_set_touch_regions_visible)
@@ -382,6 +412,7 @@ func _put_on_desktop(instance_id: String) -> void:
 	chat.attach_panel()
 	chat.bind_desktop(window)
 	chat.apply_saved_mode()
+	_set_desktop_dialogue(pet, pet.profile.desktop_dialogue_enabled)
 	if pet.profile.profile_id == _selected_profile_id:
 		_hall.show_presence("desktop", pet.profile.display_name)
 	_refresh_roster()
@@ -391,6 +422,47 @@ func _put_on_desktop(instance_id: String) -> void:
 func _return_pet(instance_id: String) -> void:
 	if _manager.instances.has(instance_id):
 		select_profile(_manager.instances[instance_id].profile.profile_id)
+
+
+func _restore_floating_call(profile_id: String) -> void:
+	var pet := _pet_for_profile(profile_id)
+	if pet == null or PalUi.is_mobile():
+		return
+	pet.profile.desktop_mode = "call"
+	if not _desktop_windows.has(pet.instance_id):
+		_put_on_desktop(pet.instance_id)
+	var window: PalDesktopWindow = _desktop_windows[pet.instance_id]
+	window.refresh_presentation()
+	window.position = PalDesktopWindow.clamp_position(window.position, window.size, window.current_work_area())
+	window.show()
+	var chat := _ensure_chat_window(pet.instance_id)
+	chat.attach_panel()
+	chat.bind_desktop(window)
+	chat.open_chat(true)
+	_refresh_roster()
+	_queue_save()
+
+
+func _open_minimal_monitor(profile_id: String) -> void:
+	var pet := _pet_for_profile(profile_id)
+	if pet == null or PalUi.is_mobile() or pet.profile.visual_id != "sprite2d":
+		return
+	_pending_touches.erase(profile_id)
+	_chat_service.call("StopReply", profile_id)
+	if is_instance_valid(_performances.get(profile_id)):
+		(_performances[profile_id] as PalPerformanceQueue).cancel()
+		(_performances[profile_id] as PalPerformanceQueue).stop_speech()
+	pet.profile.desktop_mode = "minimal"
+	if not _desktop_windows.has(pet.instance_id):
+		_put_on_desktop(pet.instance_id)
+	var window: PalDesktopWindow = _desktop_windows[pet.instance_id]
+	window.refresh_presentation()
+	window.position = PalDesktopWindow.clamp_position(window.position, window.size, window.current_work_area())
+	window.show()
+	_ensure_chat_window(pet.instance_id).follow_pet()
+	_refresh_roster()
+	_queue_save()
+	_hide_main()
 
 
 func _open_scene(instance_id: String) -> void:
@@ -417,7 +489,7 @@ func _ensure_chat_window(instance_id: String) -> PalChatWindow:
 	panel.navigation_requested.connect(open_panel)
 	panel.reveal_requested.connect(func() -> void: _open_chat(instance_id))
 	panel.speech_requested.connect(func(text: String) -> void:
-		if is_instance_valid(_performances.get(pet.profile.profile_id)):
+		if pet.profile.desktop_dialogue_enabled and is_instance_valid(_performances.get(pet.profile.profile_id)):
 			(_performances[pet.profile.profile_id] as PalPerformanceQueue).speak_manual(text)
 	)
 	var window := PalChatWindow.new()
@@ -432,6 +504,7 @@ func _ensure_chat_window(instance_id: String) -> PalChatWindow:
 		_unread[pet.profile.profile_id] = 0
 		_refresh_roster()
 	)
+	panel.dialogue_enable_requested.connect(func() -> void: _set_desktop_dialogue(pet, true))
 	_chat_windows[instance_id] = window
 	add_child(window)
 	panel.open_profile(pet.profile.profile_id)
@@ -452,6 +525,8 @@ func _open_chat(instance_id: String) -> void:
 	var pet: PalPetInstance = _manager.instances[instance_id]
 	_chat_window = _ensure_chat_window(instance_id)
 	if _hosts.get(instance_id) == "desktop":
+		if pet.monitor_only:
+			_set_desktop_mode(pet.profile.profile_id, "call")
 		_chat_window.open_chat(true)
 	else:
 		_guard_navigation(func() -> void:
@@ -472,6 +547,13 @@ func open_panel(page_id: String, profile_id: String = "", context: Dictionary = 
 
 
 func _open_panel_now(page_id: String, profile_id: String, context: Dictionary) -> void:
+	if page_id == "floating_call":
+		_restore_floating_call(profile_id)
+		return
+	if page_id == "performance" and OS.get_name() == "Windows":
+		_show_main()
+		_hall.show_view("performance")
+		return
 	var pet := _pet_for_profile(profile_id)
 	if page_id == "end" and _hall is PalMobileHall:
 		if pet != null:
@@ -920,6 +1002,7 @@ func _remove_pet(instance_id: String) -> void:
 	_performances.erase(pet.profile.profile_id)
 	_pending_touches.erase(pet.profile.profile_id)
 	_last_touch.erase(pet.profile.profile_id)
+	_last_touch_reaction.erase(pet.profile.profile_id)
 	_unread.erase(pet.profile.profile_id)
 	_views[instance_id].viewport.queue_free()
 	_views.erase(instance_id)
@@ -976,6 +1059,9 @@ func _refresh_roster() -> void:
 			_desktop_windows[pet.instance_id].set_unread_count(unread)
 	_hall.update_roster(entries, _selected_profile_id, _session_writable and entries.size() < PalInstanceManager.MAX_PREVIEW_INSTANCES)
 	var selected_pet := _pet_for_profile(_selected_profile_id)
+	if _hall._monitor_page != null:
+		_hall._monitor_page.call("SetProfileId", selected_pet.profile.profile_id if selected_pet != null else "")
+		_hall._monitor_page.call("SetMinimalAvailable", selected_pet != null and selected_pet.profile.visual_id == "sprite2d")
 	_hall.set_character_pet(selected_pet)
 	_hall.motion_actions = selected_pet.behavior.motion_actions if selected_pet != null else PackedStringArray()
 	_hall.motion_definitions = selected_pet.behavior.action_definitions if selected_pet != null else {}
@@ -1022,11 +1108,12 @@ func _set_character_framing(profile_id: String, mode: String) -> void:
 
 func _set_desktop_mode(profile_id: String, mode: String) -> void:
 	var pet := _pet_for_profile(profile_id)
-	if pet == null or mode not in ["full_body", "call"]:
+	if pet == null or mode not in ["full_body", "call", "minimal"]:
 		return
 	pet.profile.desktop_mode = mode
 	if _desktop_windows.has(pet.instance_id):
 		(_desktop_windows[pet.instance_id] as PalDesktopWindow).refresh_presentation()
+		_ensure_chat_window(pet.instance_id).follow_pet()
 	_refresh_roster()
 	_queue_save()
 
@@ -1060,6 +1147,9 @@ func _set_desktop_preference(key: String, value: Variant) -> void:
 	if pet == null:
 		return
 	match key:
+		"desktop_dialogue_enabled":
+			_set_desktop_dialogue(pet, bool(value))
+			return
 		"desktop_mode":
 			_set_desktop_mode(pet.profile.profile_id, str(value))
 			return
@@ -1074,11 +1164,32 @@ func _set_desktop_preference(key: String, value: Variant) -> void:
 		"wander":
 			pet.profile.wander = bool(value)
 		"desktop_scale":
-			pet.profile.desktop_scale = clampf(float(value), 0.5, 2.0)
+			if pet.profile.desktop_mode == "minimal":
+				pet.profile.minimal_monitor_scale = clampf(float(value), 0.65, 1.5)
+			else:
+				pet.profile.desktop_scale = clampf(float(value), 0.5, 2.0)
 			if _desktop_windows.has(pet.instance_id):
-				(_desktop_windows[pet.instance_id] as PalDesktopWindow).resize_pet(pet.profile.desktop_scale)
+				var window: PalDesktopWindow = _desktop_windows[pet.instance_id]
+				window.resize_pet(window.display_scale())
 		_:
 			return
+	_queue_save()
+
+
+func _set_desktop_dialogue(pet: PalPetInstance, value: bool) -> void:
+	pet.profile.desktop_dialogue_enabled = value
+	var active := value and not pet.monitor_only
+	_chat_service.call("SetDialogueEnabled", pet.profile.profile_id, active)
+	if not active:
+		_pending_touches.erase(pet.profile.profile_id)
+		if is_instance_valid(_performances.get(pet.profile.profile_id)):
+			(_performances[pet.profile.profile_id] as PalPerformanceQueue).cancel()
+			(_performances[pet.profile.profile_id] as PalPerformanceQueue).stop_speech()
+	if _desktop_windows.has(pet.instance_id):
+		(_desktop_windows[pet.instance_id] as PalDesktopWindow).refresh_dialogue_controls()
+	if _chat_windows.has(pet.instance_id):
+		(_chat_windows[pet.instance_id] as PalChatWindow).panel._refresh()
+	_refresh_roster()
 	_queue_save()
 
 
@@ -1100,23 +1211,22 @@ func _touch_character(instance_id: String, region: String) -> void:
 	if not _manager.instances.has(instance_id) or region not in ["upper", "middle", "lower"]:
 		return
 	var pet: PalPetInstance = _manager.instances[instance_id]
+	if pet.presenter == null:
+		return
 	var profile_id := pet.profile.profile_id
 	var now := Time.get_ticks_msec()
-	if now - int(_last_touch.get(profile_id, -2000)) < 1500:
+	var local_only := not pet.profile.desktop_dialogue_enabled or pet.monitor_only
+	var cooldown := 250 if local_only else 1500
+	if now - int(_last_touch.get(profile_id, -2000)) < cooldown:
 		return
 	_last_touch[profile_id] = now
 	_note_user_activity(profile_id)
+	_play_touch_reaction(pet, region)
+	if local_only:
+		return
 	var contact := "轻轻摸了摸你的头" if region == "upper" else ("轻轻拍了拍你的肩膀" if region == "middle" else ("轻轻碰了碰你的手" if pet.presentation_mode == "call" else "轻轻碰了碰你的裙摆"))
-	var feedback := "head_pat" if region == "upper" else ("happy" if region == "middle" else "shy")
 	if pet.profile.adult_mode:
 		contact = "触碰了你的" + str({"upper": "嘴唇", "middle": "胸部", "lower": "下体私密处"}[region])
-		feedback = "shy"
-	var attached := _desktop_windows.has(instance_id) and not (_desktop_windows[instance_id] as PalDesktopWindow)._attachment.is_empty()
-	if attached:
-		pet.presenter.set_expression("happy")
-	else:
-		var available: PackedStringArray = pet.presenter.get_capabilities().get("actions", PackedStringArray())
-		pet.behavior.request_action(feedback if feedback in available else "head_pat", "touch")
 	var snapshot: Dictionary = JSON.parse_string(_chat_service.call("GetSnapshot", profile_id))
 	if not bool(snapshot.get("has_key", false)):
 		_touch_notice(pet, "请先在连接设置中接入模型，角色才能回应触摸。")
@@ -1127,11 +1237,41 @@ func _touch_character(instance_id: String, region: String) -> void:
 	_flush_touches.call_deferred()
 
 
+func _play_touch_reaction(pet: PalPetInstance, region: String) -> void:
+	var attached_3d := pet.profile.visual_id != "sprite2d" and _desktop_windows.has(pet.instance_id) and not (_desktop_windows[pet.instance_id] as PalDesktopWindow)._attachment.is_empty()
+	var available: PackedStringArray = pet.presenter.get_capabilities().get("expressions" if attached_3d else "actions", PackedStringArray())
+	var pool: Array = TOUCH_REACTIONS[region]
+	if pet.profile.adult_mode:
+		pool = ["shy", "embarrassed", "surprised", "happy"]
+	var choices: Array[String] = []
+	for reaction: String in pool:
+		if reaction in available:
+			choices.append(reaction)
+	if choices.is_empty():
+		for reaction: String in ["head_pat", "happy", "surprised", "greet"]:
+			if reaction in available:
+				choices.append(reaction)
+	if choices.is_empty():
+		return
+	var fresh := choices.duplicate()
+	fresh.erase(str(_last_touch_reaction.get(pet.profile.profile_id, "")))
+	fresh.erase(pet.behavior.current_action)
+	var feedback: String = fresh.pick_random() if not fresh.is_empty() else choices.pick_random()
+	_last_touch_reaction[pet.profile.profile_id] = feedback
+	if attached_3d:
+		pet.presenter.set_expression(feedback)
+	else:
+		pet.behavior.request_action(feedback, "touch")
+
+
 func _flush_touches() -> void:
 	for profile_id: String in _pending_touches.keys():
 		var pending: Dictionary = _pending_touches[profile_id]
 		var pet := _pet_for_profile(profile_id)
 		if pet == null:
+			_pending_touches.erase(profile_id)
+			continue
+		if not pet.profile.desktop_dialogue_enabled or pet.monitor_only:
 			_pending_touches.erase(profile_id)
 			continue
 		var snapshot: Dictionary = JSON.parse_string(_chat_service.call("GetSnapshot", profile_id))
@@ -1163,10 +1303,12 @@ func _on_hall_view_changed(_view: String) -> void:
 
 
 func _sync_hall_rendering() -> void:
+	if _hall._monitor_page != null:
+		_hall._monitor_page.call("SetHostActive", not _main_hidden and get_window().mode != Window.MODE_MINIMIZED)
 	var pet := _pet_for_profile(_selected_profile_id)
 	if pet == null or _hosts.get(pet.instance_id) != "hall":
 		return
-	var showing := not _main_hidden and get_window().mode != Window.MODE_MINIMIZED and _hall.current_view == "call"
+	var showing := not _main_hidden and get_window().mode != Window.MODE_MINIMIZED and (_hall.current_view == "call" or (_hall.current_view == "performance" and _hall.surface.visible))
 	pet.render_target_update_mode = SubViewport.UPDATE_ALWAYS if showing else SubViewport.UPDATE_DISABLED
 
 

@@ -13,12 +13,15 @@ var _presence: Label
 var _portrait: TextureRect
 var _primary: Button
 var _chat: Button
+var _restore_call: Button
 var _look: CheckButton
 var _wander: CheckButton
+var _dialogue: CheckButton
 var _scale: HSlider
 var _scale_label: Label
 var _partners: HFlowContainer
 var _has_profile := false
+var _presence_mode := "empty"
 var _mode: OptionButton
 var _edge: OptionButton
 var _allow_outfit: CheckButton
@@ -69,7 +72,9 @@ func _ready() -> void:
 	actions.add_theme_constant_override("h_separation", 10)
 	details.add_child(actions)
 	_primary = PalUi.icon_button("放到桌面", "desktop", actions, func() -> void: desktop_requested.emit(), true)
-	_chat = PalUi.icon_button("打开聊天", "chat", actions, func() -> void: page_requested.emit("desktop_chat"))
+	_restore_call = PalUi.icon_button("恢复悬浮通话", "call", actions, func() -> void: page_requested.emit("floating_call"))
+	_restore_call.tooltip_text = "找回角色和对话窗口；保持当前对话开关，不会自动发送消息。"
+	_chat = PalUi.icon_button("查看对话", "chat", actions, func() -> void: page_requested.emit("desktop_chat"))
 	PalUi.icon_button("伙伴档案", "profile", actions, func() -> void: page_requested.emit("profile"))
 	PalUi.hint("拖动角色调整位置，滚轮缩放；右键可以互动。新回复只显示未读提示。", details)
 	var preferences := HBoxContainer.new()
@@ -80,6 +85,11 @@ func _ready() -> void:
 	behavior.add_theme_constant_override("separation", 10)
 	preferences.add_child(behavior)
 	PalUi.label("陪伴的方式", behavior, 17)
+	_dialogue = CheckButton.new()
+	_dialogue.text = "启用对话"
+	_dialogue.tooltip_text = "当前伙伴在大厅和桌面共用此开关。关闭后点击仍会随机切换对应立绘，不发送或朗读对话；也可查看历史记录。"
+	behavior.add_child(_dialogue)
+	_dialogue.toggled.connect(func(value: bool) -> void: preference_requested.emit("desktop_dialogue_enabled", value))
 	_look = CheckButton.new()
 	_look.text = "看向鼠标"
 	behavior.add_child(_look)
@@ -92,6 +102,8 @@ func _ready() -> void:
 	_mode = OptionButton.new()
 	_mode.add_item("桌宠 · 全身与坐趴")
 	_mode.add_item("悬浮通话 · 近景")
+	_mode.add_item("极简监控 · 从性能页开启")
+	_mode.set_item_disabled(2, true)
 	behavior.add_child(_mode)
 	_mode.item_selected.connect(func(index: int) -> void: preference_requested.emit("desktop_mode", "call" if index == 1 else "full_body"))
 	PalUi.label("任务栏 / 窗口边缘姿势", behavior, 13)
@@ -151,8 +163,10 @@ func update_roster(entries: Array, selected: String) -> void:
 			_portrait.texture = entry.get("portrait") if entry.get("portrait") != null else preload("res://assets/ui/pal_mark.svg")
 	_primary.disabled = not _has_profile
 	_chat.disabled = not _has_profile
+	_restore_call.disabled = not _has_profile
 	_look.disabled = not _has_profile
 	_wander.disabled = not _has_profile
+	_dialogue.disabled = not _has_profile
 	_scale.editable = _has_profile
 	for control: BaseButton in [_mode, _edge, _allow_outfit, _outfit_lock]:
 		control.disabled = not _has_profile
@@ -163,6 +177,8 @@ func update_roster(entries: Array, selected: String) -> void:
 
 
 func set_presence(mode: String) -> void:
+	_presence_mode = mode
+	_chat.disabled = not _has_profile
 	_primary.text = "召回通话" if mode == "desktop" else "放到桌面"
 	_presence.text = "● 正在桌面陪伴你" if mode == "desktop" else "当前在通话中，随时可以去桌面陪伴。"
 	if mode == "empty":
@@ -174,9 +190,12 @@ func set_preferences(profile: PalProfile) -> void:
 		return
 	_look.set_pressed_no_signal(profile.look_at_mouse)
 	_wander.set_pressed_no_signal(profile.wander)
-	_scale.set_value_no_signal(profile.desktop_scale)
-	_scale_label.text = "桌宠大小 · %d%%" % roundi(profile.desktop_scale * 100)
-	_mode.select(1 if profile.desktop_mode == "call" else 0)
+	_dialogue.set_pressed_no_signal(profile.desktop_dialogue_enabled)
+	_chat.disabled = not _has_profile
+	var scale_value := profile.minimal_monitor_scale if profile.desktop_mode == "minimal" else profile.desktop_scale
+	_scale.set_value_no_signal(scale_value)
+	_scale_label.text = "桌宠大小 · %d%%" % roundi(scale_value * 100)
+	_mode.select(2 if profile.desktop_mode == "minimal" else (1 if profile.desktop_mode == "call" else 0))
 	_edge.select(1 if profile.edge_posture == "prone" else 0)
 	_allow_outfit.set_pressed_no_signal(profile.allow_model_outfit)
 	_outfit_lock.set_pressed_no_signal(profile.outfit_override)

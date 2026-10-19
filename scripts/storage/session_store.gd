@@ -13,7 +13,8 @@ static func save_profiles(profiles: Array[PalProfile], path: String = DEFAULT_PA
 		var record := {"id": profile.profile_id, "name": profile.display_name,
 			"visual": profile.visual_id, "avatar": profile.avatar_path, "portrait_pack": profile.portrait_pack_path,
 			"portrait_framing": profile.portrait_framing,
-			"desktop_mode": profile.desktop_mode, "outfit": profile.outfit,
+			"desktop_mode": profile.desktop_mode, "desktop_dialogue_enabled": profile.desktop_dialogue_enabled, "outfit": profile.outfit,
+			"minimal_monitor_scale": profile.minimal_monitor_scale,
 			"allow_model_outfit": profile.allow_model_outfit, "outfit_override": profile.outfit_override,
 			"edge_posture": profile.edge_posture,
 			"look_at_mouse": profile.look_at_mouse, "scale": profile.desktop_scale,
@@ -99,7 +100,11 @@ static func _read_session(path: String) -> Dictionary:
 		profile.display_name = str(entry.get("name", PalProfile.DEFAULT_NAME)).left(40)
 		profile.portrait_pack_path = str(entry.get("portrait_pack", PalPortraitPack.DEFAULT_MANIFEST))
 		profile.portrait_framing = "full_body" if entry.get("portrait_framing") == "full_body" else "call"
-		profile.desktop_mode = "call" if entry.get("desktop_mode") == "call" else "full_body"
+		profile.desktop_mode = str(entry.get("desktop_mode", "full_body")) if entry.get("desktop_mode") in ["call", "minimal"] else "full_body"
+		profile.desktop_dialogue_enabled = bool(entry.get("desktop_dialogue_enabled", true))
+		var minimal_scale: Variant = entry.get("minimal_monitor_scale", 1.0)
+		if minimal_scale is float or minimal_scale is int:
+			profile.minimal_monitor_scale = clampf(float(minimal_scale), 0.65, 1.5) if is_finite(float(minimal_scale)) else 1.0
 		profile.outfit = str(entry.get("outfit", "maid"))
 		profile.allow_model_outfit = bool(entry.get("allow_model_outfit", true))
 		profile.outfit_override = bool(entry.get("outfit_override", false))

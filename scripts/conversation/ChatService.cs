@@ -40,6 +40,7 @@ public partial class ChatService : Node
         public string Outfit = "maid";
         public string[] AvailableOutfits = Array.Empty<string>();
         public bool AllowOutfit, OutfitLocked;
+        public bool DialogueEnabled = true;
     }
 
     private readonly Dictionary<string, Companion> _companions = new();
@@ -121,6 +122,7 @@ public partial class ChatService : Node
             profile_id = id, session_id = c.Session.SessionId, display_name = c.Profile.DisplayName, persona = c.Profile.Persona,
             messages = c.Session.Messages.TakeLast(200), total_messages = c.Session.Messages.Count,
             busy = c.Reply is not null, has_key = _key.Length > 0, storage_error = c.StorageError, notice = "",
+            dialogue_enabled = c.DialogueEnabled,
             path = Path.ChangeExtension(SessionPath(id, c.Session.SessionId), ".md"), model = _settings.Model,
             has_images = c.Session.Messages.Any(m => m.Images.Count > 0)
         });
@@ -225,10 +227,19 @@ public partial class ChatService : Node
         catch (Exception ex) { return ex.Message; }
     }
     public string ContinueMessage(string id) => StartReply(id, "", false, true);
+    public void SetDialogueEnabled(string id, bool enabled)
+    {
+        if (!_companions.TryGetValue(id, out var companion)) return;
+        if (companion.DialogueEnabled == enabled) return;
+        companion.DialogueEnabled = enabled;
+        if (!enabled) StopReply(id);
+        Changed(id);
+    }
     public string RetryMessage(string id) => StartReply(id, "", true);
     private string StartReply(string id, string text, bool retry, bool continuation = false, List<ChatImage>? images = null)
     {
         if (!_companions.TryGetValue(id, out var c)) return "伙伴不存在。";
+        if (!c.DialogueEnabled) return "当前伙伴的对话已关闭，请先启用对话。";
         if (c.Reply is not null) return "请先停止当前回复。";
         if (_key.Length == 0) return "请先在连接设置中填写 API Key。";
         if (c.StorageError.Length > 0) return "请先重试保存或恢复本地资料：" + c.StorageError;

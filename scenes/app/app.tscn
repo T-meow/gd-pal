@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/app/app.gd" id="1"]
 [ext_resource type="Script" path="res://scripts/characters/pet_instance_manager.gd" id="2"]
 [ext_resource type="Script" path="res://platform/windows/WindowsDesktopBridge.cs" id="3"]
 [ext_resource type="Script" path="res://scripts/conversation/ChatService.cs" id="4"]
+[ext_resource type="Script" path="res://scripts/monitoring/PcMonitorService.cs" id="5"]
 
 [node name="App" type="Control"]
 layout_mode = 3
@@ -22,3 +23,6 @@ script = ExtResource("3")
 
 [node name="ChatService" type="Node" parent="."]
 script = ExtResource("4")
+
+[node name="PcMonitorService" type="Node" parent="."]
+script = ExtResource("5")

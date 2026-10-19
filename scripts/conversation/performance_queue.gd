@@ -26,6 +26,8 @@ func _ready() -> void:
 
 
 func present_segment(dialogue: String, description: String) -> void:
+	if (not pet.profile.desktop_dialogue_enabled or pet.monitor_only):
+		return
 	# Bubble navigation owns the sequence, so speech never runs ahead of the text.
 	cancel()
 	_queue.append({"segment_id": str(_generation), "data": {"say": dialogue, "aside": description}})
@@ -37,7 +39,7 @@ func is_playing() -> bool:
 
 
 func _start_next() -> void:
-	if not _active.is_empty() or _queue.is_empty() or pet.presenter == null:
+	if (not pet.profile.desktop_dialogue_enabled or pet.monitor_only) or not _active.is_empty() or _queue.is_empty() or pet.presenter == null:
 		return
 	_active = _queue.pop_front()
 	var segment: Dictionary = _active.data
@@ -62,6 +64,11 @@ func _start_next() -> void:
 
 
 func _process(delta: float) -> void:
+	if (not pet.profile.desktop_dialogue_enabled or pet.monitor_only):
+		if is_playing():
+			cancel()
+			stop_speech()
+		return
 	if not _manual_text.is_empty() and not _manual_waiting_cancel:
 		_voice_request = "manual:" + str(_generation)
 		service.call("RequestSpeech", pet.profile.profile_id, _voice_request, _manual_text)
@@ -78,7 +85,7 @@ func _process(delta: float) -> void:
 
 
 func _on_speech(profile_id: String, request_id: String, wav: PackedByteArray, error: String) -> void:
-	if profile_id != pet.profile.profile_id or request_id != _voice_request:
+	if (not pet.profile.desktop_dialogue_enabled or pet.monitor_only) or profile_id != pet.profile.profile_id or request_id != _voice_request:
 		return
 	_waiting_voice = false
 	if not error.is_empty():
@@ -91,6 +98,8 @@ func _on_speech(profile_id: String, request_id: String, wav: PackedByteArray, er
 
 
 func speak_manual(text: String) -> void:
+	if (not pet.profile.desktop_dialogue_enabled or pet.monitor_only):
+		return
 	service.call("CancelPerformance", pet.profile.profile_id)
 	cancel()
 	_manual_text = text

@@ -130,6 +130,8 @@ public partial class ChatService
     public void RequestSpeech(string id, string requestId, string text)
     {
         CancelSpeech(id);
+        if (_companions.TryGetValue(id, out var companion) && !companion.DialogueEnabled)
+        { _pending.Enqueue(() => EmitSignal(SignalName.SpeechReady, id, requestId, Array.Empty<byte>(), "当前伙伴的对话已关闭。")); return; }
         if (!_speechSettings.Enabled)
         { _pending.Enqueue(() => EmitSignal(SignalName.SpeechReady, id, requestId, Array.Empty<byte>(), "请先在连接设置中启用语音服务。")); return; }
         var cancellation = new CancellationTokenSource(); _speech[id] = cancellation;

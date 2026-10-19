@@ -17,6 +17,7 @@ var behavior: PalBehavior
 var presenter: PalPresenter
 var last_error: String = ""
 var presentation_mode := "full_body"
+var monitor_only := false
 
 
 func _ready() -> void:

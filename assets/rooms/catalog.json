@@ -3,18 +3,38 @@
   "rooms": [
     {
       "id": "night-study", "name": "夜间书房", "english": "THE NIGHT STUDY", "kind": "image",
-      "resource": "res://assets/rooms/night-study.svg", "thumbnail": "res://assets/rooms/night-study.svg",
+      "resource": "res://assets/rooms/night-study.png", "thumbnail": "res://assets/rooms/night-study.png",
       "caption": "夜深了，这盏灯为你留着。", "description": "窗外是沉静的蓝，手边的茶还温热。", "mood": "安静 · 阅读 · 慢慢聊"
     },
     {
       "id": "warm-bedroom", "name": "暖光卧室", "english": "A SOFTER EVENING", "kind": "image",
-      "resource": "res://assets/rooms/warm-bedroom.svg", "thumbnail": "res://assets/rooms/warm-bedroom.svg",
+      "resource": "res://assets/rooms/warm-bedroom.png", "thumbnail": "res://assets/rooms/warm-bedroom.png",
       "caption": "今天也辛苦了，慢慢放松下来吧。", "description": "把灯调暗一点，把今天轻轻放下来。", "mood": "温暖 · 放松 · 晚安"
     },
     {
       "id": "rainy-lounge", "name": "雨夜客厅", "english": "WHEN THE RAIN FALLS", "kind": "image",
-      "resource": "res://assets/rooms/rainy-lounge.svg", "thumbnail": "res://assets/rooms/rainy-lounge.svg",
+      "resource": "res://assets/rooms/rainy-lounge.png", "thumbnail": "res://assets/rooms/rainy-lounge.png",
       "caption": "外面在下雨，幸好你在这里。", "description": "雨落在玻璃上，世界只剩下我们。", "mood": "雨声 · 热茶 · 心事"
+    },
+    {
+      "id": "spring-green-outdoors", "name": "春日野餐", "english": "BENEATH THE SPRING LEAVES", "kind": "image",
+      "resource": "res://assets/rooms/spring-green-outdoors.png", "thumbnail": "res://assets/rooms/spring-green-outdoors.png",
+      "caption": "树荫下，连时间也慢了下来。", "description": "桌布已经铺好，春风正从草地吹来。", "mood": "绿荫 · 野餐 · 春日"
+    },
+    {
+      "id": "blue-tears-night-beach", "name": "蓝眼泪海岸", "english": "WHERE THE WAVES GLOW", "kind": "image",
+      "resource": "res://assets/rooms/blue-tears-night-beach.png", "thumbnail": "res://assets/rooms/blue-tears-night-beach.png",
+      "caption": "听，海浪把夜色轻轻点亮了。", "description": "月色落在沙滩，蓝色微光随海浪起伏。", "mood": "夜海 · 荧光 · 浪声"
+    },
+    {
+      "id": "alpine-snow-villa", "name": "雪山别墅", "english": "SNOW BEYOND THE WINDOW", "kind": "image",
+      "resource": "res://assets/rooms/alpine-snow-villa.png", "thumbnail": "res://assets/rooms/alpine-snow-villa.png",
+      "caption": "窗外是雪，屋里是温暖的光。", "description": "隔着落地窗看雪山，安心享受这一刻的温暖。", "mood": "落地窗 · 雪山 · 暖意"
+    },
+    {
+      "id": "seaside-holiday-cottage", "name": "海边凉亭", "english": "A SHELTER BY THE SEA", "kind": "image",
+      "resource": "res://assets/rooms/seaside-holiday-cottage.png", "thumbnail": "res://assets/rooms/seaside-holiday-cottage.png",
+      "caption": "躲进阴凉里，让海风慢慢吹。", "description": "白纱帘轻轻摇晃，亭外是清澈的海。", "mood": "阴凉 · 海风 · 假日"
     }
   ]
 }

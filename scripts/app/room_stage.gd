@@ -26,7 +26,7 @@ func _ready() -> void:
 			seen[id] = true
 			rooms.append(entry.duplicate(true))
 	if rooms.is_empty():
-		rooms.append({"id": "night-study", "name": "夜间书房", "kind": "image", "resource": "res://assets/rooms/night-study.svg", "thumbnail": "res://assets/rooms/night-study.svg", "caption": "今天也陪着你。", "description": "一盏灯，一段还没说完的话。", "mood": "安静 · 阅读"})
+		rooms.append({"id": "night-study", "name": "夜间书房", "kind": "image", "resource": "res://assets/rooms/night-study.png", "thumbnail": "res://assets/rooms/night-study.png", "caption": "今天也陪着你。", "description": "一盏灯，一段还没说完的话。", "mood": "安静 · 阅读"})
 	visibility_changed.connect(_sync_rendering)
 
 
