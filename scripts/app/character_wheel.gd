@@ -102,7 +102,7 @@ func _rebuild() -> void:
 			_entries.append({"id": "action:sit", "label": "坐下", "disabled": not pet.behavior.action_definitions.has("sit")})
 			_entries.append({"id": "action:prone", "label": "趴下", "disabled": not pet.behavior.motion_actions.has("edge_rest") and not pet.behavior.action_definitions.has("prone")})
 			if pet.profile.visual_id == "sprite2d":
-				_entries.append({"id": "mode", "label": "桌宠模式" if pet.profile.desktop_mode == "call" else "通话模式"})
+				_entries.append({"id": "mode", "label": "桌宠模式" if pet.profile.desktop_mode == "call" else "2D 聊天"})
 			_entries.append({"id": "more", "label": "更多设置"})
 	_hover = -1
 	queue_redraw()

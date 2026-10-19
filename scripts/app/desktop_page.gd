@@ -72,8 +72,9 @@ func _ready() -> void:
 	actions.add_theme_constant_override("h_separation", 10)
 	details.add_child(actions)
 	_primary = PalUi.icon_button("放到桌面", "desktop", actions, func() -> void: desktop_requested.emit(), true)
-	_restore_call = PalUi.icon_button("恢复悬浮通话", "call", actions, func() -> void: page_requested.emit("floating_call"))
-	_restore_call.tooltip_text = "找回角色和对话窗口；保持当前对话开关，不会自动发送消息。"
+	_restore_call = PalUi.icon_button("2D 聊天", "call", actions, func() -> void: page_requested.emit("floating_call"))
+	_restore_call.name = "Open2DChat"
+	_restore_call.tooltip_text = "打开近景角色和聊天窗口；保持当前对话开关，不会自动发送消息。"
 	_chat = PalUi.icon_button("查看对话", "chat", actions, func() -> void: page_requested.emit("desktop_chat"))
 	PalUi.icon_button("伙伴档案", "profile", actions, func() -> void: page_requested.emit("profile"))
 	PalUi.hint("拖动角色调整位置，滚轮缩放；右键可以互动。新回复只显示未读提示。", details)
@@ -101,11 +102,12 @@ func _ready() -> void:
 	PalUi.label("2D 桌面模式", behavior, 13)
 	_mode = OptionButton.new()
 	_mode.add_item("桌宠 · 全身与坐趴")
-	_mode.add_item("悬浮通话 · 近景")
+	_mode.add_item("2D 聊天 · 近景与对话")
 	_mode.add_item("极简监控 · 从性能页开启")
 	_mode.set_item_disabled(2, true)
 	behavior.add_child(_mode)
 	_mode.item_selected.connect(func(index: int) -> void: preference_requested.emit("desktop_mode", "call" if index == 1 else "full_body"))
+	PalUi.hint("2D 聊天显示近景角色和对话窗口；极简监控显示角色与性能数据，可从性能页开启。", behavior)
 	PalUi.label("任务栏 / 窗口边缘姿势", behavior, 13)
 	_edge = OptionButton.new()
 	_edge.add_item("坐下")
@@ -188,6 +190,7 @@ func set_presence(mode: String) -> void:
 func set_preferences(profile: PalProfile) -> void:
 	if profile == null:
 		return
+	_restore_call.visible = profile.visual_id == "sprite2d"
 	_look.set_pressed_no_signal(profile.look_at_mouse)
 	_wander.set_pressed_no_signal(profile.wander)
 	_dialogue.set_pressed_no_signal(profile.desktop_dialogue_enabled)

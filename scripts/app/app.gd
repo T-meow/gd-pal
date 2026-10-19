@@ -411,7 +411,10 @@ func _put_on_desktop(instance_id: String) -> void:
 	var chat := _ensure_chat_window(instance_id)
 	chat.attach_panel()
 	chat.bind_desktop(window)
-	chat.apply_saved_mode()
+	if window.is_chat_mode():
+		chat.open_chat()
+	else:
+		chat.apply_saved_mode()
 	_set_desktop_dialogue(pet, pet.profile.desktop_dialogue_enabled)
 	if pet.profile.profile_id == _selected_profile_id:
 		_hall.show_presence("desktop", pet.profile.display_name)
@@ -426,7 +429,7 @@ func _return_pet(instance_id: String) -> void:
 
 func _restore_floating_call(profile_id: String) -> void:
 	var pet := _pet_for_profile(profile_id)
-	if pet == null or PalUi.is_mobile():
+	if pet == null or PalUi.is_mobile() or pet.profile.visual_id != "sprite2d":
 		return
 	pet.profile.desktop_mode = "call"
 	if not _desktop_windows.has(pet.instance_id):
@@ -1110,10 +1113,18 @@ func _set_desktop_mode(profile_id: String, mode: String) -> void:
 	var pet := _pet_for_profile(profile_id)
 	if pet == null or mode not in ["full_body", "call", "minimal"]:
 		return
+	if mode == "minimal":
+		_open_minimal_monitor(profile_id)
+		return
 	pet.profile.desktop_mode = mode
 	if _desktop_windows.has(pet.instance_id):
-		(_desktop_windows[pet.instance_id] as PalDesktopWindow).refresh_presentation()
-		_ensure_chat_window(pet.instance_id).follow_pet()
+		var desktop: PalDesktopWindow = _desktop_windows[pet.instance_id]
+		desktop.refresh_presentation()
+		var chat := _ensure_chat_window(pet.instance_id)
+		if desktop.is_chat_mode():
+			chat.open_chat(true)
+		else:
+			chat.follow_pet()
 	_refresh_roster()
 	_queue_save()
 

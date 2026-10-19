@@ -25,6 +25,7 @@ var _monitor_window: Window
 var _minimal_background: Panel
 var _minimal_scroll: ScrollContainer
 var _minimal_panel: Control
+var _minimal_divider: ColorRect
 var _minimal_menu: PopupMenu
 var surface: SubViewportContainer
 var _overlay: Control
@@ -122,6 +123,7 @@ func _ready() -> void:
 		position = clamp_position(pet.profile.desktop_position, size, area)
 	_position_x = position.x
 	window_input.connect(_on_window_input)
+	visibility_changed.connect(_sync_window_render_size, CONNECT_DEFERRED)
 	close_requested.connect(func() -> void: return_requested.emit(pet.instance_id))
 	pet.behavior.action_requested.connect(_on_action)
 	pet.visual_changed.connect(_on_visual_changed)
@@ -131,6 +133,17 @@ func _ready() -> void:
 	_silent_greeting = true
 	pet.behavior.request_action("greet")
 	_silent_greeting = false
+
+
+func _sync_window_render_size() -> void:
+	if not visible:
+		return
+	# Apply the size after the native window exists; its render target can otherwise
+	# remain at 4x4 even though the window and the character viewport have full size.
+	set_size(size)
+	_layout_character_surface()
+	_last_regions.clear()
+	_region_time = 0.0
 
 
 func _build_controls() -> void:
@@ -223,9 +236,15 @@ func _request_chat() -> void:
 
 
 func _build_minimal_monitor() -> void:
+	_minimal_divider = ColorRect.new()
+	_minimal_divider.name = "MinimalMonitorDivider"
+	_minimal_divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_minimal_divider.visible = false
+	_overlay.add_child(_minimal_divider)
 	_minimal_scroll = ScrollContainer.new()
 	_minimal_scroll.name = "MinimalMonitorData"
 	_minimal_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_minimal_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	_overlay.add_child(_minimal_scroll)
 	_minimal_panel = preload("res://scripts/monitoring/PcMonitorPanel.cs").new()
 	_minimal_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -236,8 +255,9 @@ func _build_minimal_monitor() -> void:
 	_minimal_menu = PopupMenu.new()
 	_minimal_menu.name = "MinimalMonitorMenu"
 	_minimal_menu.add_item("监控详情与温度设置", 0)
-	_minimal_menu.add_item("切换为悬浮通话", 1)
+	_minimal_menu.add_item("切换为 2D 聊天", 1)
 	_minimal_menu.add_item("返回大厅", 2)
+	_minimal_menu.add_item("选择显示的硬盘…", 3)
 	_minimal_menu.add_separator("玻璃外观")
 	_minimal_menu.add_radio_check_item("跟随应用主题", 10)
 	_minimal_menu.add_radio_check_item("亮色玻璃", 11)
@@ -253,6 +273,8 @@ func _build_minimal_monitor() -> void:
 				framing_requested.emit("call")
 			2:
 				return_requested.emit(pet.instance_id)
+			3:
+				_minimal_panel.call_deferred("OpenDiskPicker")
 	)
 	add_child(_minimal_menu)
 	_sync_minimal_mode()
@@ -263,6 +285,8 @@ func _sync_minimal_mode() -> void:
 	var changed := pet.monitor_only != minimal
 	pet.monitor_only = minimal
 	_minimal_background.visible = minimal
+	if _minimal_divider != null:
+		_minimal_divider.visible = minimal
 	if _minimal_scroll != null:
 		_minimal_scroll.visible = minimal
 		_minimal_panel.call("SetHostActive", minimal)
@@ -271,6 +295,8 @@ func _sync_minimal_mode() -> void:
 	_menu.hide()
 	_wheel.hide()
 	_toolbar.hide()
+	if _performance_button != null:
+		_performance_button.visible = not is_chat_mode()
 	if _minimal_menu != null:
 		_minimal_menu.hide()
 	if minimal:
@@ -303,6 +329,8 @@ func _refresh_minimal_glass() -> void:
 	glass.shadow_color = Color(0, 0, 0, 0.07)
 	glass.shadow_size = 3
 	_minimal_background.add_theme_stylebox_override("panel", glass)
+	if _minimal_divider != null:
+		_minimal_divider.color = Color(text, 0.14)
 	_minimal_panel.call("ConfigureTheme", paper, paper, text, muted, accent, Color(text, 0.14))
 	if _minimal_menu != null:
 		for index: int in range(3):
@@ -357,8 +385,10 @@ func resize_pet(scale_value: float, preserve_feet: bool = true) -> void:
 	title = pet.profile.display_name + " · GD Pal"
 	if is_minimal_mode():
 		title = pet.profile.display_name + " · 极简监控 · GD Pal"
+	elif is_chat_mode():
+		title = pet.profile.display_name + " · 2D 聊天 · GD Pal"
 	_framing_button.visible = pet.profile.visual_id == "sprite2d"
-	_framing_button.text = "切换为全身桌宠" if _is_phone() else "切换为通话近景"
+	_framing_button.text = "切换为全身桌宠" if _is_phone() else "切换为 2D 聊天"
 	_layout_dialogue()
 	_toolbar.size = Vector2(minf(344, maxf(120, size.x - 16)), 0)
 	_position_toolbar.call_deferred()
@@ -439,6 +469,8 @@ func _on_window_input(event: InputEvent) -> void:
 	elif event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		if is_minimal_mode() and _minimal_scroll.get_v_scroll_bar().visible and _minimal_scroll.get_v_scroll_bar().get_global_rect().has_point(cursor):
 			return
+		if is_minimal_mode() and _over_minimal_control(cursor):
+			return
 		if _wheel.visible:
 			_wheel.hide()
 			return
@@ -456,6 +488,28 @@ func _on_window_input(event: InputEvent) -> void:
 func _over_controls(cursor: Vector2) -> bool:
 	for control: Control in [_bubble, _description_bubble, _toolbar, _menu, _unread_button, _wheel]:
 		if control.visible and control.get_rect().has_point(cursor):
+			return true
+	return false
+
+
+func _over_minimal_control(cursor: Vector2) -> bool:
+	if _minimal_scroll == null or not _minimal_scroll.visible:
+		return false
+	if not _minimal_scroll.get_global_rect().has_point(cursor):
+		return false
+	return _has_button_at(_minimal_scroll, cursor)
+
+
+func _has_button_at(node: Node, cursor: Vector2) -> bool:
+	for child in node.get_children():
+		if not child is Control:
+			continue
+		var control: Control = child
+		if not control.is_visible_in_tree():
+			continue
+		if control is BaseButton and control.get_global_rect().has_point(cursor):
+			return true
+		if _has_button_at(control, cursor):
 			return true
 	return false
 
@@ -668,7 +722,11 @@ func _on_visual_changed(_visual: String) -> void:
 
 
 func _is_phone() -> bool:
-	return pet.profile.visual_id == "sprite2d" and pet.profile.desktop_mode in ["call", "minimal"]
+	return is_chat_mode() or is_minimal_mode()
+
+
+func is_chat_mode() -> bool:
+	return pet != null and pet.profile.visual_id == "sprite2d" and pet.profile.desktop_mode == "call"
 
 
 func is_minimal_mode() -> bool:
@@ -868,9 +926,12 @@ func _layout_character_surface() -> void:
 		var portrait_width := maxf(96, size.x * 0.34)
 		area = Rect2(4, 4, portrait_width - 4, size.y - 8)
 		_minimal_background.size = Vector2(size)
+		if _minimal_divider != null:
+			_minimal_divider.position = Vector2(portrait_width, 16)
+			_minimal_divider.size = Vector2(1, maxf(0, size.y - 32))
 		if _minimal_scroll != null:
-			_minimal_scroll.position = Vector2(portrait_width, 4)
-			_minimal_scroll.size = Vector2(size.x - portrait_width - 4, size.y - 8)
+			_minimal_scroll.position = Vector2(portrait_width + 6, 4)
+			_minimal_scroll.size = Vector2(size.x - portrait_width - 10, size.y - 8)
 	elif _is_phone() and _bubble != null and _toolbar != null:
 		var upper := _bubble.size.y + 22 if _bubble.visible else 8.0
 		var lower := maxf(54, _toolbar.size.y + 16)

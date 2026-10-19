@@ -58,7 +58,8 @@ public partial class PcMonitorService : Node
                 MinimalTheme = _settings.MinimalTheme is "light" or "dark" ? _settings.MinimalTheme : "follow",
                 MinimalOpacity = double.IsFinite(_settings.MinimalOpacity) ? Math.Clamp(_settings.MinimalOpacity, .05, .35) : .12,
                 CpuLimit = double.IsFinite(_settings.CpuLimit) ? Math.Clamp(_settings.CpuLimit, 40, 110) : 90,
-                GpuLimit = double.IsFinite(_settings.GpuLimit) ? Math.Clamp(_settings.GpuLimit, 40, 110) : 85 };
+                GpuLimit = double.IsFinite(_settings.GpuLimit) ? Math.Clamp(_settings.GpuLimit, 40, 110) : 85,
+                Disks = _settings.Disks is { } disks ? NormalizeDiskIds(disks) : null };
         }
         catch (Exception ex) { PreferenceError = "监控设置读取失败：" + ex.Message; }
         var besideAssembly = Path.GetDirectoryName(typeof(PcMonitorService).Assembly.Location) ?? AppContext.BaseDirectory;
@@ -121,6 +122,17 @@ public partial class PcMonitorService : Node
     public void SetInterval(int value) => Save(Settings with { Interval = value is 2 or 5 ? value : 1 });
     public void SelectGpu(string id) => Save(Settings with { Gpu = id, GpuTemperature = "" });
     public void SelectNetwork(string id) => Save(Settings with { Network = id });
+    /// <summary>Pass null to show every disk automatically; pass ids (possibly none) for an explicit set.</summary>
+    public void SelectDisks(IEnumerable<string>? ids) => Save(Settings with { Disks = ids == null ? null : NormalizeDiskIds(ids) });
+    public bool DisksAutomatic => Settings.Disks == null;
+    public MonitorDevice[] VisibleDisks(MonitorSnapshot? sample = null)
+    {
+        var disks = (sample ?? Latest).Disks;
+        if (Settings.Disks is not { } ids) return disks;
+        return disks.Where(d => ids.Contains(d.Id)).ToArray();
+    }
+    private static string[] NormalizeDiskIds(IEnumerable<string> ids) => ids
+        .Where(id => !string.IsNullOrWhiteSpace(id)).Distinct().Take(32).ToArray();
     public void SelectSensor(string type, string id) => Save(type switch {
         "cpu_temp" => Settings with { CpuTemperature = id }, "gpu_temp" => Settings with { GpuTemperature = id },
         "cpu_fan" => Settings with { CpuFan = id }, _ => Settings });

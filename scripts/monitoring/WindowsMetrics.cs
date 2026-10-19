@@ -85,7 +85,7 @@ internal sealed class WindowsMetrics : IDisposable
         var writes = collected && !baseline ? Values("write") : new();
         var disks = idleDisks.Keys.Concat(reads.Keys).Concat(writes.Keys).Distinct().Where(id => id != "_Total")
             .OrderBy(id => int.TryParse(id.Split(' ')[0], out var n) ? n : int.MaxValue)
-            .Select(id => new MonitorDevice(id, "磁盘 " + id,
+            .Select(id => new MonitorDevice(id, DiskName(id),
                 idleDisks.TryGetValue(id, out var idleDisk) ? Math.Clamp(100 - idleDisk, 0, 100) : null,
                 Receive: reads.TryGetValue(id, out var r) ? r : null, Send: writes.TryGetValue(id, out var w) ? w : null)).ToArray();
         var networks = new List<MonitorDevice>(); string preferred = "";
@@ -160,6 +160,11 @@ internal sealed class WindowsMetrics : IDisposable
         return result;
     }
 
+    private static string DiskName(string id)
+    {
+        int space = id.IndexOf(' ');
+        return space > 0 ? "磁盘 " + id[..space] + " · " + id[(space + 1)..] : "磁盘 " + id;
+    }
     private static string ParseGpu(string instance)
     {
         var m = GpuKey.Match(instance);

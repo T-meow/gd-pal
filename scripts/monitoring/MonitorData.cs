@@ -47,6 +47,8 @@ public sealed record MonitorSettings
     public double MinimalOpacity { get; init; } = .12;
     public string Gpu { get; init; } = "";
     public string Network { get; init; } = "";
+    /// <summary>null means automatic (every disk); an empty array means the user hid all disks.</summary>
+    public string[]? Disks { get; init; }
     public string CpuTemperature { get; init; } = "";
     public string GpuTemperature { get; init; } = "";
     public string CpuFan { get; init; } = "";

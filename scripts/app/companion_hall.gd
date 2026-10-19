@@ -581,9 +581,17 @@ func set_character_display(visual: String, framing: String, available: bool) -> 
 		button.visible = id in ["sprite2d", "vrm3d"] or visual == "sprite2d"
 		PalUi.quiet(button, id == visual or (visual == "sprite2d" and id == framing))
 	if _desktop_button != null and _empty_mode != "desktop":
-		var phone := _character_pet != null and visual == "sprite2d" and _character_pet.profile.desktop_mode == "call"
-		_desktop_button.text = "悬浮通话" if phone else "桌宠"
-		_desktop_button.tooltip_text = "打开独立悬浮通话模式" if phone else "打开全身桌宠；右键可选择动作、衣装和坐趴姿势"
+		var desktop_mode := _character_pet.profile.desktop_mode if _character_pet != null and visual == "sprite2d" else "full_body"
+		match desktop_mode:
+			"call":
+				_desktop_button.text = "2D 聊天"
+				_desktop_button.tooltip_text = "打开近景角色和聊天窗口"
+			"minimal":
+				_desktop_button.text = "极简监控"
+				_desktop_button.tooltip_text = "打开角色与性能数据；聊天模式可在桌面页单独开启"
+			_:
+				_desktop_button.text = "桌宠"
+				_desktop_button.tooltip_text = "打开全身桌宠；右键可选择动作、衣装和坐趴姿势"
 	_layout()
 
 

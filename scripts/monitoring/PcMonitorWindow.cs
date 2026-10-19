@@ -52,7 +52,7 @@ public partial class PcMonitorWindow : Window
         if (_background == null) return;
         _background.AddThemeStyleboxOverride("panel", new StyleBoxFlat { BgColor = new(_surface, .98f), BorderColor = _border,
             BorderWidthLeft = 1, BorderWidthTop = 1, BorderWidthRight = 1, BorderWidthBottom = 1,
-            CornerRadiusTopLeft = 14, CornerRadiusTopRight = 14, CornerRadiusBottomLeft = 14, CornerRadiusBottomRight = 14 });
+            CornerRadiusTopLeft = 16, CornerRadiusTopRight = 16, CornerRadiusBottomLeft = 16, CornerRadiusBottomRight = 16 });
     }
     public override void _Process(double delta) { _elapsed += delta; if (_elapsed >= .1) { _elapsed = 0; Follow(); } }
     public override void _ExitTree() { if (_service != null) _service.PreferencesChanged -= PreferencesChanged; }
@@ -80,7 +80,8 @@ public partial class PcMonitorWindow : Window
     {
         if (_closeQueued) return;
         if (_service == null || _host == null || !IsInstanceValid(_host) || _panel == null) { Hide(); return; }
-        bool show = _service.IsDesktopVisibleFor(_profileId) && _host.IsInsideTree() && _host.Visible && _host.Mode != ModeEnum.Minimized && !_host.Call("is_minimal_mode").AsBool();
+        bool show = _service.IsDesktopVisibleFor(_profileId) && _host.IsInsideTree() && _host.Visible && _host.Mode != ModeEnum.Minimized
+            && !_host.Call("is_minimal_mode").AsBool() && !_host.Call("is_chat_mode").AsBool();
         if (!show || DisplayServer.GetName() == "headless") { Hide(); _panel.SetHostActive(false); return; }
         var area = _host.Call("current_work_area").AsRect2I();
         var occupied = new Rect2I();
