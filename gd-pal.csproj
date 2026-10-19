@@ -3,6 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <AssemblyName>gd-pal</AssemblyName>
+    <Version>0.3.0</Version>
     <RootNamespace>GdPal</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>

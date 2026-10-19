@@ -74,10 +74,10 @@ dotnet build ./gd-pal.csproj
 需要 Node.js、PowerShell 和已经导入角色图片的工程。准备签名后执行：
 
 ```powershell
-./tools/build-release.ps1 -GodotPath 'D:/路径/Godot.exe' -Version '0.1.0'
+./tools/build-release.ps1 -GodotPath 'D:/路径/Godot.exe' -Version '0.3.0'
 ```
 
-发布脚本固定导出 Windows Release 和**正式签名 Android Release**，不使用 debug APK。导出后核对 APK 签名和非调试标记，并在发布说明记录证书 SHA-256。它还生成肥鱼初始包、发布说明与文件校验信息，统一写入 `exports/releases/v0.1.0/`。同名目录已存在时先手动移走旧目录，避免混入旧附件。
+发布脚本固定导出 Windows Release 和**正式签名 Android Release**，不使用 debug APK。导出后核对 APK 签名和非调试标记，并在发布说明记录证书 SHA-256。它还生成肥鱼初始包、发布说明与文件校验信息，统一写入 `exports/releases/v0.3.0/`。同名目录已存在时先手动移走旧目录，避免混入旧附件。
 
 发布附件为 Windows ZIP、Android APK、肥鱼初始包 ZIP、`SHA256SUMS.txt` 与 `RELEASE_NOTES.md`。将这些文件附到同一版本 Release。源码 ZIP 不含图片，程序内已包含所需立绘；初始包同时提供源码补齐用的图片和可在应用中导入的 `persona.zip`。
 

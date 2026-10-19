@@ -1,7 +1,7 @@
 param(
     [string]$GodotPath = $env:GODOT_PATH,
     [ValidatePattern('^\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?$')]
-    [string]$Version = '0.1.0'
+    [string]$Version = '0.3.0'
 )
 
 $ErrorActionPreference = 'Stop'

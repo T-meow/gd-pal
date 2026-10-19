@@ -98,6 +98,7 @@ GD Pal - Windows x64
 [System.IO.File]::WriteAllText((Join-Path $packageRoot 'README.txt'), $instructions, [System.Text.UTF8Encoding]::new($true))
 $buildInfo = [ordered]@{
     built_at = [DateTimeOffset]::Now.ToString('o')
+    version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($executable).ProductVersion
     platform = 'Windows x64'
     engine = (& $enginePath --version | Out-String).Trim()
     configuration = 'ExportRelease'

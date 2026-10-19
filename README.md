@@ -59,10 +59,10 @@ dotnet build ./gd-pal.csproj
 已有证书时恢复本地 `release-signing/` 目录，或配置下述环境变量，不重复生成。然后构建：
 
 ```powershell
-./tools/build-release.ps1 -GodotPath 'D:/路径/Godot.exe' -Version '0.1.0'
+./tools/build-release.ps1 -GodotPath 'D:/路径/Godot.exe' -Version '0.3.0'
 ```
 
-脚本依次导出 Windows Release、正式签名的 Android Release APK，生成肥鱼初始包、发布说明和校验文件，统一放在 `exports/releases/v0.1.0/`。缺少签名配置时直接停止，不使用测试签名。它只整理本地发布文件，不上传仓库，也不安装到设备。将该目录中的文件附到同一版本的 Release；GitHub 自动生成的源码 ZIP 不包含立绘。
+脚本依次导出 Windows Release、正式签名的 Android Release APK，生成肥鱼初始包、发布说明和校验文件，统一放在 `exports/releases/v0.3.0/`。缺少签名配置时直接停止，不使用测试签名。它只整理本地发布文件，不上传仓库，也不安装到设备。将该目录中的文件附到同一版本的 Release；GitHub 自动生成的源码 ZIP 不包含立绘。
 
 签名默认读取本地 `release-signing/android-release.json`。也可完整设置以下环境变量以使用已有发布证书：
 
