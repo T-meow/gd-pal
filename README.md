@@ -1,6 +1,6 @@
 # GD Pal · 轻量桌宠
 
-一个用 Godot 4.8 dev7 .NET 制作的桌面伙伴。Windows 支持透明桌宠、2D 立绘和 3D VRM；Android 提供适合触屏的 2D 聊天界面。聊天、设定和历史记录保存在本机，模型服务由你自行配置。
+一个用 Godot 4.8 beta1 .NET 制作的桌面伙伴。Windows 支持透明桌宠、2D 立绘和 3D VRM；Android 提供适合触屏的 2D 聊天界面。聊天、设定和历史记录保存在本机，模型服务由你自行配置。
 
 项目代码采用 [MIT 许可证](LICENSE)。当前为开发版本，存档与数据包格式统一为 v1。
 
@@ -38,7 +38,7 @@
 
 ## 从源码运行
 
-准备 Godot **4.8 dev7 .NET** 和可构建 `net10.0` 的 .NET SDK。Android 构建另需 .NET 10 SDK、匹配的 mono Android 导出模板，以及在 Godot 中配置好的 Java 与 Android SDK。
+准备 Godot **4.8 beta1 .NET** 和可构建 `net10.0` 的 .NET SDK。Android 构建另需 .NET 10 SDK、匹配的 mono Android 导出模板，以及在 Godot 中配置好的 Java 与 Android SDK。
 
 **图片随 Release 分发，不纳入 Git。** 克隆源码后，先解压对应版本的 `Blue-Whale-Starter.zip`，将其中的 `assets/` 目录合并到项目根目录，使 `assets/characters/blue_whale/images/` 就位。清单、代码、界面 SVG 和图标保留在源码中；`output/`、构建产物及本地凭据不提交。
 

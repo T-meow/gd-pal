@@ -20,9 +20,9 @@ if ($PawnIOBundlePath) {
     }
 }
 if (-not $GodotPath) {
-    $GodotPath = 'D:/GameEngines/Godot_v4.8-dev7_mono_win64/Godot_v4.8-dev7_mono_win64_console.exe'
+    $GodotPath = 'D:/GameEngines/Godot_v4.8-beta1_mono_win64/Godot_v4.8-beta1_mono_win64_console.exe'
 }
-if (-not (Test-Path -LiteralPath $GodotPath)) { throw 'Pass -GodotPath with the Godot 4.8 dev7 .NET console executable.' }
+if (-not (Test-Path -LiteralPath $GodotPath)) { throw 'Pass -GodotPath with the Godot 4.8 beta1 .NET console executable.' }
 $GodotPath = (Resolve-Path -LiteralPath $GodotPath).Path
 # The console wrapper can wait for a key after a hidden child exits. Launch the
 # engine directly while redirecting its output to the same build logs.
