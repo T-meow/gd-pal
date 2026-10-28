@@ -190,6 +190,23 @@ public partial class PcMonitorService : Node
     private static MonitorDevice? Select(MonitorDevice[] devices, string id) => devices.FirstOrDefault(d => d.Id == id) ?? devices.FirstOrDefault();
     public SensorReading? CpuTemperature => Temperature("cpu", Settings.CpuTemperature);
     public SensorReading? GpuTemperature => Temperature("gpu", Settings.GpuTemperature);
+    public SensorReading? CpuClock => Clock("cpu");
+    public SensorReading? GpuClock => Clock("gpu");
+    private SensorReading? Clock(string kind)
+    {
+        if (SensorStale) return null;
+        var candidates = Sensors.Sensors.Where(s => s.Kind == kind && s.Type == "Clock" && s.Value is > 0).ToArray();
+        if (kind == "gpu")
+        {
+            string name = Gpu()?.Name ?? "";
+            candidates = candidates.Where(s => Normalize(s.DeviceName) == Normalize(name)).ToArray();
+            if (candidates.Select(s => s.DeviceId).Distinct().Count() != 1) return null;
+            return candidates.FirstOrDefault(s => s.Name.Equals("GPU Core", StringComparison.OrdinalIgnoreCase));
+        }
+        return candidates.Where(s => s.Name.StartsWith("CPU Core", StringComparison.OrdinalIgnoreCase)
+                || s.Name.StartsWith("Core #", StringComparison.OrdinalIgnoreCase))
+            .OrderByDescending(s => s.Value).FirstOrDefault();
+    }
     private SensorReading? Temperature(string kind, string selected)
     {
         if (SensorStale) return null;

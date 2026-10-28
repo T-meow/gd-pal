@@ -13,8 +13,8 @@ public partial class PcMonitorPanel : MarginContainer
     [Signal] public delegate void MinimalModeRequestedEventHandler();
     private sealed class DiskRow
     {
-        public Label Busy = null!;
-        public Label Io = null!;
+        public Label Read = null!;
+        public Label Write = null!;
         public ProgressBar Bar = null!;
     }
     private sealed class DiskPicker
@@ -247,7 +247,7 @@ public partial class PcMonitorPanel : MarginContainer
         var netChart = Chart(network, 88, false); netChart.Metric = "network"; netChart.Ink = _gold;
         var hardware = Card(_detailGrid, "显卡与显存");
         Choice(hardware, "gpu_device", s => _service?.SelectGpu(s));
-        Label(hardware, "专用显存 —", 14, _mint, "vram"); Label(hardware, "共享显存 —", 12, _muted, "shared");
+        Label(hardware, "专用显存 —", 20, _mint, "vram", true); Label(hardware, "共享显存 —", 16, _muted, "shared", true);
         Label(hardware, "GPU 使用最忙引擎的占用率。显存按整张卡统计；共享显存单独显示。", 12, _muted, wrap: true);
         BuildDisks(Card(content));
         BuildSettings(content);
@@ -281,7 +281,7 @@ public partial class PcMonitorPanel : MarginContainer
         Thermal(main);
         var vram = Row(main, 7);
         Label(vram, "显存", 10, _muted).CustomMinimumSize = new(30, 0);
-        var vramValue = Label(vram, "—", 11, _muted, "vram");
+        var vramValue = Label(vram, "—", 18, _mint, "vram");
         vramValue.SizeFlagsHorizontal = SizeFlags.ExpandFill; vramValue.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
         vramValue.ClipText = true;
         Divider(main);
@@ -304,7 +304,7 @@ public partial class PcMonitorPanel : MarginContainer
             Label(card, MetricName(key), _mode == 0 ? 12 : 10, _muted);
             Label(card, "—", _mode == 0 ? 34 : 26, color, key);
             if (key != "network") _metricBars[key] = Bar(card, color, _mode == 0 ? 4 : 3, _mode == 0 ? 0 : 40);
-            var sub = Label(card, "等待采样", _mode == 0 ? 11 : 10, _muted, key + "_sub");
+            var sub = Label(card, "等待采样", key is "cpu" or "gpu" ? 14 : _mode == 0 ? 12 : 10, _muted, key + "_sub");
             sub.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
             sub.ClipText = true;
             sub.CustomMinimumSize = new(_mode == 0 ? 120 : 0, 0);
@@ -340,16 +340,15 @@ public partial class PcMonitorPanel : MarginContainer
         var row = Row(parent, 14);
         foreach (var key in new[] { "cpu", "gpu" })
         {
-            var c = Column(row, 1);
-            Label(c, key.ToUpperInvariant() + " 温度", 10, _muted);
-            Label(c, "—", _mode == 0 ? 28 : 17, _gold, key + "_temp");
+            var c = Column(row, 3);
+            Label(c, key.ToUpperInvariant() + " 温度", 11, _muted);
+            Label(c, "—", _mode == 0 ? 30 : 24, _gold, key + "_temp");
+            Label(c, "频率", 11, _muted);
+            Label(c, "—", 20, MetricColor(key), key + "_clock");
         }
-        Spacer(row);
-        var fans = Column(row, 1);
-        var cpuFan = Label(fans, "CPU 风扇    —", 10, _muted, "cpu_fan");
-        cpuFan.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; cpuFan.ClipText = true;
-        var gpuFan = Label(fans, "GPU 风扇    —", 10, _muted, "gpu_fan");
-        gpuFan.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; gpuFan.ClipText = true;
+        var fans = Flow(parent);
+        Label(fans, "CPU 风扇    —", 12, _muted, "cpu_fan");
+        Label(fans, "GPU 风扇    —", 12, _muted, "gpu_fan");
         if (_mode != 0)
         {
             var note = Label(parent, "", 10, _muted, "sensor_status", true);
@@ -357,7 +356,7 @@ public partial class PcMonitorPanel : MarginContainer
             return;
         }
         Label(parent, "机箱风扇    — 未提供", 12, _muted, "other_fans", true);
-        Label(parent, "正在读取温度与风扇…", 11, _muted, "sensor_status", true);
+        Label(parent, "正在读取温度、频率与风扇…", 11, _muted, "sensor_status", true);
         var help = Column(parent, 6); _thermalHelp = help; help.Name = "CpuTemperatureHelp";
         Label(help, "", 12, _gold, "cpu_help", true);
         var actions = Flow(help);
@@ -374,20 +373,21 @@ public partial class PcMonitorPanel : MarginContainer
         foreach (var (name, key, color) in new[] { ("CPU", "cpu", _accent), ("内存", "memory", _purple), ("GPU", "gpu", _mint) })
         {
             var row = Row(metrics, 7);
-            Label(row, name, 10, _muted).CustomMinimumSize = new(30, 0);
+            Label(row, name, 11, _muted).CustomMinimumSize = new(30, 0);
             Label(row, "—", 20, color, key).CustomMinimumSize = new(48, 0);
             var bar = Bar(row, color, 3, 36);
             bar.SizeFlagsVertical = SizeFlags.ShrinkCenter;
             _metricBars[key] = bar;
-            var mini = Label(row, "", 9, _muted, key + "_mini");
-            mini.CustomMinimumSize = new(96, 0);
+            bool memory = key == "memory";
+            var mini = Label(row, "—", memory ? 12 : 22, memory ? _muted : _gold, memory ? "memory_mini" : key + "_temp");
+            mini.CustomMinimumSize = new(memory ? 140 : 100, 0);
             mini.HorizontalAlignment = HorizontalAlignment.Right;
             mini.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
             mini.ClipText = true;
-            _minimalSubs.Add(mini);
+            if (memory) _minimalSubs.Add(mini);
         }
         Divider(parent);
-        var details = Column(parent, 3);
+        var details = Column(parent, 7);
         var net = Row(details, 6);
         Label(net, "网络", 10, _muted).CustomMinimumSize = new(30, 0);
         var download = Label(net, "↓ —", 12, _text, "download");
@@ -395,13 +395,19 @@ public partial class PcMonitorPanel : MarginContainer
         download.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; download.ClipText = true;
         var upload = Label(net, "↑ —", 12, _text, "upload");
         upload.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; upload.ClipText = true;
-        var temps = Row(details, 5);
-        Label(temps, "温度", 10, _muted).CustomMinimumSize = new(30, 0);
-        Label(temps, "CPU", 10, _muted); Label(temps, "—", 11, _gold, "cpu_temp");
-        Label(temps, "GPU", 10, _muted); Label(temps, "—", 11, _gold, "gpu_temp");
-        var fans = Label(details, "风扇  CPU —  ·  GPU —", 10, _muted, "fans");
+        var clocks = Row(details, 14);
+        foreach (var key in new[] { "cpu", "gpu" })
+        {
+            var clock = Column(clocks, 2);
+            Label(clock, key.ToUpperInvariant() + " 频率", 11, _muted);
+            Label(clock, "—", 20, MetricColor(key), key + "_clock");
+        }
+        var fans = Label(details, "风扇  CPU —  ·  GPU —", 12, _muted, "fans");
         fans.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; fans.ClipText = true;
-        var vram = Label(details, "显存  —", 10, _muted, "vram");
+        var vramRow = Row(details, 7);
+        Label(vramRow, "显存", 11, _muted).CustomMinimumSize = new(30, 0);
+        var vram = Label(vramRow, "—", 20, _mint, "vram");
+        vram.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         vram.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; vram.ClipText = true;
         Divider(parent);
         BuildDisks(parent);
@@ -419,8 +425,9 @@ public partial class PcMonitorPanel : MarginContainer
         Spacer(header);
         DiskSelector(header, _mode == 3 ? 10 : 11);
         _diskEmpty = Label(parent, "正在读取硬盘…", _mode == 3 ? 10 : 11, _muted, "disk_empty");
-        _diskGrid = new GridContainer { Columns = 1, SizeFlagsHorizontal = SizeFlags.ExpandFill };
-        _diskGrid.AddThemeConstantOverride("h_separation", 12); _diskGrid.AddThemeConstantOverride("v_separation", 8);
+        _diskGrid = new GridContainer { Columns = 2, SizeFlagsHorizontal = SizeFlags.ExpandFill };
+        _diskGrid.AddThemeConstantOverride("h_separation", 16); _diskGrid.AddThemeConstantOverride("v_separation", 12);
+        _diskGrid.Resized += LayoutColumns;
         parent.AddChild(_diskGrid);
     }
 
@@ -482,7 +489,7 @@ public partial class PcMonitorPanel : MarginContainer
         long id = 1;
         foreach (var disk in disks)
         {
-            menu.AddCheckItem(disk.Name + "  " + Percent(disk.Usage), (int)id);
+            menu.AddCheckItem(disk.Name, (int)id);
             menu.SetItemChecked(menu.GetItemIndex((int)id), selected == null || selected.Contains(disk.Id));
             picker.Targets[id] = disk.Id;
             id++;
@@ -577,12 +584,12 @@ public partial class PcMonitorPanel : MarginContainer
         if (_mode == 0) {
             if (_metrics != null) _metrics.Columns = Size.X < 720 ? 2 : 4;
             if (_detailGrid != null) _detailGrid.Columns = Size.X < 850 ? 1 : 2;
-            if (_diskGrid != null) _diskGrid.Columns = Size.X < 720 ? 1 : 2;
         }
         else if (_mode == 3) {
-            foreach (var sub in _minimalSubs) sub.Visible = Size.X <= 0 || Size.X >= 300;
+            foreach (var sub in _minimalSubs) sub.Visible = Size.X <= 0 || Size.X >= 340;
         }
         else if (_metrics != null) _metrics.Columns = Size.X < 300 ? 2 : 3;
+        if (_diskGrid != null) _diskGrid.Columns = _diskGrid.Size.X >= 320 ? 2 : 1;
     }
     private void RefreshDisks(MonitorDevice[] disks, bool stale)
     {
@@ -593,16 +600,24 @@ public partial class PcMonitorPanel : MarginContainer
             _diskRows.Clear();
             foreach (var disk in disks)
             {
-                var column = Column(_diskGrid, _mode == 3 ? 3 : 4);
-                var header = Row(column, 6);
-                var title = Label(header, disk.Name, _mode == 3 ? 11 : 12);
+                var column = Column(_diskGrid, 4);
+                var title = Label(column, disk.Name, 13);
                 title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
                 title.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; title.ClipText = true;
-                var busy = Label(header, "—", _mode == 3 ? 12 : 13, _accent);
-                var bar = Bar(column, _accent, 3);
-                var io = Label(column, "读 — · 写 —", _mode == 3 ? 10 : 11, _muted);
-                io.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; io.ClipText = true;
-                _diskRows[disk.Id] = new DiskRow { Busy = busy, Io = io, Bar = bar };
+                title.TooltipText = disk.Name; title.MouseFilter = MouseFilterEnum.Pass;
+                var readRow = Row(column, 6);
+                Label(readRow, "读", 11, _muted);
+                var read = Label(readRow, "—", 18, _accent);
+                read.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                read.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; read.ClipText = true;
+                var writeRow = Row(column, 6);
+                Label(writeRow, "写", 11, _muted);
+                var write = Label(writeRow, "—", 18, _mint);
+                write.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+                write.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis; write.ClipText = true;
+                var bar = Bar(column, _accent, 5);
+                bar.TooltipText = "磁盘活动负载"; bar.MouseFilter = MouseFilterEnum.Pass;
+                _diskRows[disk.Id] = new DiskRow { Read = read, Write = write, Bar = bar };
             }
         }
         if (_diskEmpty != null)
@@ -613,9 +628,11 @@ public partial class PcMonitorPanel : MarginContainer
         }
         foreach (var disk in disks)
         {
-            var row = _diskRows[disk.Id]; row.Busy.Text = Percent(stale ? null : disk.Usage);
-            row.Io.Text = "读 " + Rate(stale ? null : disk.Receive) + " · 写 " + Rate(stale ? null : disk.Send);
+            var row = _diskRows[disk.Id];
+            row.Read.Text = Rate(stale ? null : disk.Receive);
+            row.Write.Text = Rate(stale ? null : disk.Send);
             row.Bar.Value = !stale ? disk.Usage ?? 0 : 0;
+            row.Bar.TooltipText = stale || disk.Usage == null ? "磁盘负载暂不可用" : "磁盘活动负载";
         }
     }
     private void Put(string key, string value, string tooltip = "")
@@ -650,15 +667,12 @@ public partial class PcMonitorPanel : MarginContainer
             _service.CpuTemperature?.Value == null ? _service.CpuTemperatureHelp : Source(_service.CpuTemperature));
         Put("memory_sub", Bytes(stale ? null : s.MemoryUsed) + " / " + Bytes(s.MemoryTotal));
         Put("gpu_sub", "温度 " + Temperature(_service.GpuTemperature?.Value), gpu?.Name ?? "未提供显卡计数器");
-        Put("cpu_mini", _service.CpuTemperature?.Value is { } hotCpu ? Temperature(hotCpu) : _service.CpuTemperatureState,
-            _service.CpuTemperature?.Value == null ? _service.CpuTemperatureHelp : Source(_service.CpuTemperature));
         Put("memory_mini", Bytes(stale ? null : s.MemoryUsed) + " / " + Bytes(s.MemoryTotal));
-        Put("gpu_mini", Temperature(_service.GpuTemperature?.Value), Source(_service.GpuTemperature));
         Put("network", Rate(stale ? null : nic?.Receive)); Put("network_sub", "↑ " + Rate(stale ? null : nic?.Send), nic?.Name ?? "未连接");
         Put("net_compact", "↓ " + Rate(stale ? null : nic?.Receive) + "    ↑ " + Rate(stale ? null : nic?.Send), nic?.Name ?? "未连接");
         Put("download", "↓ " + Rate(stale ? null : nic?.Receive), nic?.Name ?? "未连接");
         Put("upload", "↑ " + Rate(stale ? null : nic?.Send), nic?.Name ?? "未连接");
-        Put("vram", _mode switch { 0 => "专用显存 ", 3 => "显存 ", _ => "" } + Bytes(stale ? null : gpu?.Used) + " / " + Bytes(gpu?.Total), gpu?.Name ?? "");
+        Put("vram", (_mode == 0 ? "专用显存 " : "") + Bytes(stale ? null : gpu?.Used) + " / " + Bytes(gpu?.Total), gpu?.Name ?? "");
         Put("shared", "共享显存 " + Bytes(stale ? null : gpu?.Shared));
         var disks = _service.VisibleDisks(s);
         string count = _service.DisksAutomatic ? s.Disks.Length + " 个"
@@ -668,6 +682,9 @@ public partial class PcMonitorPanel : MarginContainer
         Put("cpu_temp", _service.CpuTemperature?.Value is { } temperature ? Temperature(temperature) : _service.CpuTemperatureState,
             _service.CpuTemperature?.Value == null ? _service.CpuTemperatureHelp : Source(_service.CpuTemperature));
         Put("gpu_temp", Temperature(_service.GpuTemperature?.Value), Source(_service.GpuTemperature));
+        var cpuClock = _service.CpuClock; var gpuClock = _service.GpuClock;
+        Put("cpu_clock", Frequency(cpuClock), cpuClock == null ? Source(null) : "当前最高核心频率 · " + Source(cpuClock));
+        Put("gpu_clock", Frequency(gpuClock), Source(gpuClock));
         Put("cpu_fan", "CPU 风扇    " + Fan(_service.CpuFan), Source(_service.CpuFan));
         Put("gpu_fan", "GPU 风扇    " + Fan(_service.GpuFan), Source(_service.GpuFan));
         Put("fans", "风扇  CPU " + Fan(_service.CpuFan) + "  ·  GPU " + Fan(_service.GpuFan));
@@ -698,6 +715,7 @@ public partial class PcMonitorPanel : MarginContainer
     private static string Source(SensorReading? s) => s == null ? "未找到可读取的传感器，可在设置中选择来源。" : s.DeviceName + " · " + s.Name;
     private static string Percent(double? n) => n is { } v ? v.ToString("0") + "%" : "—";
     private static string Temperature(double? n) => n is { } v ? v.ToString("0.#") + " °C" : "—";
+    private static string Frequency(SensorReading? s) => s?.Value is not { } v ? "—" : v >= 1000 ? (v / 1000).ToString("0.00") + " GHz" : v.ToString("0") + " MHz";
     private static string Fan(SensorReading? s) => s?.Value is { } v ? v.ToString("N0") + " " + s.Unit : "— 未提供";
     public static string Bytes(double? n) => n is { } v ? (v / 1073741824).ToString("0.0") + " GiB" : "—";
     public static string Rate(double? n) => n is not { } v ? "—" : v >= 1048576 ? (v / 1048576).ToString("0.0") + " MiB/s" : (v / 1024).ToString("0") + " KiB/s";

@@ -35,7 +35,7 @@ try
     {
         if (Volatile.Read(ref sampling) == 0) {
             // Heartbeat keeps the connection alive without claiming cached values are new samples.
-            await output.WriteLineAsync(JsonSerializer.Serialize(latest with { Paused = true, Status = "温度与风扇读取已暂停" }));
+            await output.WriteLineAsync(JsonSerializer.Serialize(latest with { Paused = true, Status = "温度、频率与风扇读取已暂停" }));
             await Task.Delay(1000);
             continue;
         }
@@ -70,13 +70,15 @@ static void Read(IHardware hardware, string kind, string deviceId, string device
         hardware.Update();
         foreach (var sensor in hardware.Sensors)
         {
-            if (sensor.SensorType is not (SensorType.Temperature or SensorType.Fan)) continue;
+            if (sensor.SensorType is not (SensorType.Temperature or SensorType.Fan or SensorType.Clock)) continue;
+            if (sensor.SensorType == SensorType.Clock && kind is not ("cpu" or "gpu")) continue;
             double? value = sensor.Value is { } v && float.IsFinite(v) ? v : null;
             // LHM can expose a zero-valued AMD CPU sensor without usable driver access.
             // GPU temperatures and genuine 0 RPM fan readings remain valid.
             if (kind == "cpu" && sensor.SensorType == SensorType.Temperature && !canReadCpu && value == 0) value = null;
+            string unit = sensor.SensorType switch { SensorType.Fan => "RPM", SensorType.Clock => "MHz", _ => "°C" };
             readings.Add(new SensorReading(sensor.Identifier.ToString(), sensor.Name, deviceId, deviceName,
-                kind, sensor.SensorType.ToString(), sensor.SensorType == SensorType.Fan ? "RPM" : "°C", value));
+                kind, sensor.SensorType.ToString(), unit, value));
         }
     }
     catch (Exception ex) { errors.Add(hardware.Name + "：" + ex.Message); }
